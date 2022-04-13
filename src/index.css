@@ -45,6 +45,16 @@
   display: none;
 }
 
+.app-content{
+  background: #F7F7FC;
+}
+
+.footer{
+  background: #F7F7FC;
+  border-top:none!important;
+}
+
+
 .dash-heading{
 font-family: 'Inter';
 font-style: normal;
@@ -53,4 +63,36 @@ font-size: 40px;
 line-height: 48px;
 letter-spacing: -0.02em;
 color: #4E4B66;
+}
+
+.t-rev{
+ font-weight: 600;
+font-size: 13px;
+padding-top: 15px;
+}
+
+.rev-amount{
+  color: #14142B;
+   font-size: 40px;
+}
+
+.rev-green{
+  color: #00BA88;
+}
+
+.rev-normal{
+color: grey;
+}
+
+
+.Card-border{
+  border-right: 1px solid #F7F7FC;
+}
+
+.p-left{
+  padding-left: 5%;
+}
+
+.rev-red{
+  color:  #F2190D;
 }
