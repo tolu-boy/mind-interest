@@ -25,13 +25,13 @@
 
 
 .ant-input-affix-wrapper  {
-  padding: 8px 78px 8px 16px ;
-  background: #EFF0F7;
+  padding: 8px 78px 8px 16px !important;
+  background: #EFF0F7 !important;
 }
 
 .ant-input-affix-wrapper > input.ant-input {
   border-radius: 0px;
-  background: #EFF0F7;
+  background: #EFF0F7 !important;
 }
 
  .nav-right {
