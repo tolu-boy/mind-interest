@@ -2,7 +2,9 @@ import React from 'react'
 
 const dashboard = () => {
   return (
-    <div>dashboard page here</div>
+    <div>
+        <h3 className='dash-heading'> Dashboard</h3>
+    </div>
   )
 }
 
