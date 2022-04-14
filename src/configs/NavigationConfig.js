@@ -1,5 +1,11 @@
 import { 
-  DashboardOutlined
+  DashboardOutlined,
+  DeploymentUnitOutlined,
+  UserOutlined,
+  BarChartOutlined,
+  PieChartOutlined,
+  MessageOutlined,
+  LogoutOutlined
 } from '@ant-design/icons';
 import { APP_PREFIX_PATH } from 'configs/AppConfig'
 // import diamond from '../assets/svg/Union.svg'
@@ -7,7 +13,7 @@ import { APP_PREFIX_PATH } from 'configs/AppConfig'
 const dashBoardNavTree = [
   {
   key: 'home',
-  path: `${APP_PREFIX_PATH}/home`,
+  path: `${APP_PREFIX_PATH}/dashboard`,
   title: 'home',
   icon: DashboardOutlined,
   breadcrumb: false,
@@ -26,14 +32,14 @@ const dashBoardNavTree = [
       key: 'Therapists',
       path: '',
       title: 'Therapists',
-      icon: DashboardOutlined,
+      icon: DeploymentUnitOutlined ,
       breadcrumb: true,
       submenu: [
         {
           key: 'Overview',
           path: '/app/new-component-path-1',
           title: 'Overview',
-          icon: DashboardOutlined,
+          icon: '',
           breadcrumb: true,
           submenu: []
         },
@@ -42,7 +48,7 @@ const dashBoardNavTree = [
           key: 'Waiting List',
           path: '/app/new-component-path-1',
           title: 'Waiting List',
-          icon: DashboardOutlined,
+          icon: '',
           breadcrumb: true,
           submenu: []
         },
@@ -51,7 +57,7 @@ const dashBoardNavTree = [
           key: 'Approved',
           path: '/app/new-component-path-1',
           title: 'Approved',
-          icon: DashboardOutlined,
+          icon: '',
           breadcrumb: true,
           submenu: []
         },
@@ -59,7 +65,7 @@ const dashBoardNavTree = [
           key: 'Suspended',
           path: '',
           title: 'Suspended',
-          icon: DashboardOutlined,
+          icon: '',
           breadcrumb: true,
           submenu: []
         }
@@ -82,14 +88,14 @@ const dashBoardNavTree = [
       key: 'Users',
       path: '',
       title: 'Users',
-      icon: DashboardOutlined,
+      icon: UserOutlined ,
       breadcrumb: true,
       submenu: [
         {
           key: 'Overview',
           path: '',
           title: 'Overview',
-          icon: DashboardOutlined,
+          icon: '',
           breadcrumb: true,
           submenu: []
         },
@@ -98,7 +104,7 @@ const dashBoardNavTree = [
           key: 'Active',
           path: '',
           title: 'Active',
-          icon: DashboardOutlined,
+          icon: '',
           breadcrumb: true,
           submenu: []
         },
@@ -108,7 +114,7 @@ const dashBoardNavTree = [
           key: 'Suspended',
           path: '',
           title: 'Suspended',
-          icon: DashboardOutlined,
+          icon: '',
           breadcrumb: true,
           submenu: []
         }
@@ -123,7 +129,7 @@ const dashBoardNavTree = [
   key: 'Statistics',
   path: `${APP_PREFIX_PATH}/Statistics`,
   title: 'Statistics',
-  icon: DashboardOutlined,
+  icon:BarChartOutlined ,
   breadcrumb: false,
   submenu: []
 },
@@ -140,14 +146,14 @@ const dashBoardNavTree = [
       key: 'Revenue',
       path: '',
       title: 'Revenue',
-      icon: DashboardOutlined,
+      icon: PieChartOutlined ,
       breadcrumb: true,
       submenu: [
         {
           key: 'Earning',
           path: '',
           title: 'Earning',
-          icon: DashboardOutlined,
+          icon: '',
           breadcrumb: true,
           submenu: []
         },
@@ -156,7 +162,7 @@ const dashBoardNavTree = [
           key: 'Payouts',
           path: '',
           title: 'Payouts',
-          icon: DashboardOutlined,
+          icon: '',
           breadcrumb: true,
           submenu: []
         },
@@ -166,7 +172,7 @@ const dashBoardNavTree = [
           key: 'Statements',
           path: '',
           title: 'Statements',
-          icon: DashboardOutlined,
+          icon: '',
           breadcrumb: true,
           submenu: []
         }
@@ -182,7 +188,7 @@ const dashBoardNavTree = [
   key: 'Messages',
   path: `${APP_PREFIX_PATH}/Messages`,
   title: 'Messages',
-  icon: DashboardOutlined,
+  icon: MessageOutlined ,
   breadcrumb: false,
   submenu: []
 },
@@ -193,11 +199,10 @@ const dashBoardNavTree = [
   key: 'Logout',
   path: `${APP_PREFIX_PATH}/Logout`,
   title: 'Logout',
-  icon: DashboardOutlined,
+  icon: LogoutOutlined,
   breadcrumb: false,
   submenu: []
 },
-
 
 
 
