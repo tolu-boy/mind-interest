@@ -23,6 +23,9 @@
   color: #3e79f7;
 }
 
+body{
+  font-family: 'Inter'
+}
 
 .ant-input-affix-wrapper  {
   padding: 8px 78px 8px 16px !important;
@@ -82,6 +85,7 @@ padding-top: 15px;
 
 .rev-normal{
 color: grey;
+font-size:13px;
 }
 
 
@@ -93,6 +97,40 @@ color: grey;
   padding-left: 5%;
 }
 
+.p-left2{
+  padding-left: 2%;
+
+}
+
 .rev-red{
   color:  #F2190D;
+}
+ 
+ .side-card .ant-card-head-title{
+font-size: 17px;
+border-bottom: 1px solid #F7F7FC;;
+} 
+
+
+.gold-color{
+color:  #FFDF00;
+}
+
+.top-rated-color1{
+  color: #14142B;
+}
+
+.top-rated-color2{
+  color: #084A9B;
+}
+
+.personal-message .ant-card-body{
+  padding-bottom: 7%;
+    padding-left: 10%;
+}
+
+.p-message{
+  color:#A0A3BD;
+  font-size: 13px;
+  font-family: 'Inter'
 }
