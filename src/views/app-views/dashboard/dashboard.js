@@ -7,13 +7,7 @@ import ChartWidget from "components/shared-components/ChartWidget";
 import refundImg from "../../../assets/img/refund-img.png";
 import avatar from "../../../assets/img/Avatar.svg";
 import dot from "../../../assets/img/Dot1.svg";
-
-import {
-  ArrowUpOutlined,
-  ArrowDownOutlined,
-  StarFilled,
-} from "@ant-design/icons";
-// const profileImg = "/img/avatars/thumb-1.jpg";
+import {ArrowUpOutlined,ArrowDownOutlined, StarFilled,} from "@ant-design/icons";
 import profileImg from "../../../assets/img/thumb-1.jpg";
 
 export const weeklyRevenueData = {
@@ -41,7 +35,7 @@ const FilterByNameInput = (
         <h3 className="product-name">Top Rated Therapist</h3>
       </Col>
 
-      <Col md={18} xs={12} sm={12} >
+      <Col md={18} xs={12} sm={12}>
         <p className="t-rev">Therapist</p>
       </Col>
 
@@ -199,7 +193,7 @@ const dashboard = () => {
                   <p className="top-rated-color2"> N56,648.60</p>
                 </Col>
 
-                <Col  md={6} xs={24}>
+                <Col md={6} xs={24}>
                   <Avatar src={profileImg} />
                 </Col>
 
@@ -212,15 +206,15 @@ const dashboard = () => {
                   <StarFilled className="gold-color" />
                 </Col>
 
-                <Col  md={8} xs={24} className="">
+                <Col md={8} xs={24} className="">
                   <p className="top-rated-color2"> N 56,648.60</p>
                 </Col>
 
-                <Col  md={6} xs={24}>
+                <Col md={6} xs={24}>
                   <Avatar src={profileImg} />
                 </Col>
 
-                <Col  md={10} xs={24}>
+                <Col md={10} xs={24}>
                   <p className="top-rated-color1">Dr. Festus King</p>
                   <StarFilled className="gold-color" />
                   <StarFilled className="gold-color" />
@@ -229,11 +223,11 @@ const dashboard = () => {
                   <StarFilled className="gold-color" />
                 </Col>
 
-                <Col  md={8} xs={24}className="mt-2">
+                <Col md={8} xs={24} className="mt-2">
                   <p className="top-rated-color2"> N 56,648.60</p>
                 </Col>
 
-                <Col  md={24} xs={24}className="mt-3">
+                <Col md={24} xs={24} className="mt-3">
                   <Button block> All Therapists</Button>
                 </Col>
               </Row>
@@ -392,7 +386,6 @@ const dashboard = () => {
                 <Col span={12} className="pb-3">
                   <Row>
                     <Col span={3}>
-                      {/* <Avatar src={avatar} /> */}
                       <img src={avatar} alt="" />
                     </Col>
 
@@ -416,7 +409,6 @@ const dashboard = () => {
                 <Col span={12} className="pb-3">
                   <Row>
                     <Col span={3}>
-                      {/* <Avatar src={avatar} /> */}
                       <img src={avatar} alt="" />
                     </Col>
 
@@ -440,7 +432,6 @@ const dashboard = () => {
                 <Col span={12} className="pb-3">
                   <Row>
                     <Col span={3}>
-                      {/* <Avatar src={avatar} /> */}
                       <img src={avatar} alt="" />
                     </Col>
 
@@ -464,7 +455,6 @@ const dashboard = () => {
                 <Col span={12} className="pb-3">
                   <Row>
                     <Col span={3}>
-                      {/* <Avatar src={avatar} /> */}
                       <img src={avatar} alt="" />
                     </Col>
 
@@ -484,7 +474,6 @@ const dashboard = () => {
                     </Col>
                   </Row>
                 </Col>
-
               </Row>
             </Card>
           </Col>

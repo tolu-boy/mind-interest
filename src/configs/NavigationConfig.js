@@ -37,7 +37,7 @@ const dashBoardNavTree = [
       submenu: [
         {
           key: 'Overview',
-          path: '/app/new-component-path-1',
+          path: `${APP_PREFIX_PATH}/therapists/Overview`,
           title: 'Overview',
           icon: '',
           breadcrumb: true,
