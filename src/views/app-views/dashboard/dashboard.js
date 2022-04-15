@@ -7,7 +7,11 @@ import ChartWidget from "components/shared-components/ChartWidget";
 import refundImg from "../../../assets/img/refund-img.png";
 import avatar from "../../../assets/img/Avatar.svg";
 import dot from "../../../assets/img/Dot1.svg";
-import {ArrowUpOutlined,ArrowDownOutlined, StarFilled,} from "@ant-design/icons";
+import {
+  ArrowUpOutlined,
+  ArrowDownOutlined,
+  StarFilled,
+} from "@ant-design/icons";
 import profileImg from "../../../assets/img/thumb-1.jpg";
 
 export const weeklyRevenueData = {
@@ -176,11 +180,11 @@ const dashboard = () => {
               className="side-card"
             >
               <Row>
-                <Col md={6} xs={6} >
+                <Col md={6} xs={6}>
                   <Avatar src={profileImg} />
                 </Col>
 
-                <Col md={10} xs={10} >
+                <Col md={10} xs={10}>
                   <p className="top-rated-color1">Dr. Festus King</p>
                   <StarFilled className="gold-color" />
                   <StarFilled className="gold-color" />

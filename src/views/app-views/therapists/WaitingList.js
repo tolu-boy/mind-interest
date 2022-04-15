@@ -147,7 +147,18 @@ const WaitingList = () => {
 
   return (
     <div>
-      <h3 className="dash-heading pb-5 pt-2"> Waiting List </h3>
+      {/* <h3 className="dash-heading pb-5 pt-2"> Waiting List </h3> */}
+
+      <Row>
+          <Col md={22}   className="pb-5 pt-2">
+          <h3 className="dash-heading"> Waiting List </h3>
+
+          </Col>
+
+          <Col md={2}  className="pb-5 pt-3" >
+            <Button type="primary" size="small"> Add New</Button>
+          </Col>
+      </Row>
 
       <Card title={cardHeader1}>
         <Table
