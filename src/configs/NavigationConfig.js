@@ -46,7 +46,7 @@ const dashBoardNavTree = [
 
         {
           key: 'Waiting List',
-          path: '/app/new-component-path-1',
+          path: `${APP_PREFIX_PATH}/therapists/WaitingList`,
           title: 'Waiting List',
           icon: '',
           breadcrumb: true,
@@ -55,7 +55,7 @@ const dashBoardNavTree = [
 
         {
           key: 'Approved',
-          path: '/app/new-component-path-1',
+          path: `${APP_PREFIX_PATH}/therapists/Approved`,
           title: 'Approved',
           icon: '',
           breadcrumb: true,
@@ -63,7 +63,7 @@ const dashBoardNavTree = [
         },
         {
           key: 'Suspended',
-          path: '',
+          path: `${APP_PREFIX_PATH}/therapists/Suspended`,
           title: 'Suspended',
           icon: '',
           breadcrumb: true,
