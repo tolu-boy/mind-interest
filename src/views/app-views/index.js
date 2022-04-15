@@ -12,6 +12,8 @@ export const AppViews = () => {
       <Route path={`${APP_PREFIX_PATH}/therapists/WaitingList`} component={lazy(() => import(`./therapists/WaitingList`))} />
       <Route path={`${APP_PREFIX_PATH}/therapists/Approved`} component={lazy(() => import(`./therapists/Approved`))} />
       <Route path={`${APP_PREFIX_PATH}/therapists/Suspended`} component={lazy(() => import(`./therapists/Suspended`))} />
+      <Route path={`${APP_PREFIX_PATH}/therapists/ProfileApproved`} component={lazy(() => import(`./therapists/ProfileApproved`))} />
+
 
 
 

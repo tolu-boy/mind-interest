@@ -24,7 +24,7 @@
 }
 
 body{
-  font-family: 'Inter'
+  font-family: 'Inter' !important;
 }
 
 .ant-input-affix-wrapper  {
@@ -161,9 +161,37 @@ color:  #FFDF00 !important;
 
 }
 
+.profile-heading{
+  color: #4E4B66;
+  font-size: 16px;
+  font-weight: 200;
+}
 
-@media only screen and (max-width: 400px) {
-  .d-none{
+.profileCard{
+  background: #084A9B;
+  position: relative;
+}
+
+.proileName{
+  font-weight: 600;
+  font-size: 20px;
+  color: #FEFEFE;
+}
+
+.proileWork{
+  font-weight: 400;
+  font-size: 14px;
+  color: #FEFEFE;
+}
+
+.profilePic{
+  position: absolute;
+  bottom: 15px;
+}
+
+@media (max-width:600px)  {
+  .d-none1{
     display: none;
   }
-}
+ }
+

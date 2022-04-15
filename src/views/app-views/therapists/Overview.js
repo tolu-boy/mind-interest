@@ -295,7 +295,7 @@ const Overview = () => {
                     <Col md={16} xs={24}>
                       <p className="rev-amount">₦1.28m</p>
                     </Col>
-                    <Col md={8} xs={24} className="d-none">
+                    <Col md={8} xs={24} className="d-none1">
                       <img src={snake1} alt="over1" />
                     </Col>
                   </Row>
@@ -327,7 +327,7 @@ const Overview = () => {
                     <Col md={16}>
                       <p className="rev-amount">₦1.28m</p>
                     </Col>
-                    <Col md={8} className="d-none">
+                    <Col md={8} className="d-none1">
                       <img src={snake2} alt="over1" />
                     </Col>
                   </Row>
@@ -359,7 +359,7 @@ const Overview = () => {
                     <Col md={16} xs={24}>
                       <p className="rev-amount">₦1.28m</p>
                     </Col>
-                    <Col md={8} className="d-none">
+                    <Col md={8} className="d-none1">
                       <img src={snake3} alt="over3" />
                     </Col>
                   </Row>
