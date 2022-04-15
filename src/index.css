@@ -136,7 +136,7 @@ color:  #FFDF00 !important;
 }
 
 .app-page-header{
-  display: none;
+  display: none !important;
 }
 
 .ant-card.ant-card-bordered.overview-card1{
