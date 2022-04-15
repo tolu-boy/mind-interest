@@ -135,6 +135,28 @@ color:  #FFDF00 !important;
   font-family: 'Inter'
 }
 
+.app-page-header{
+  display: none;
+}
+
+.overview-card1{
+  background: rgba(181, 228, 202, 0.25);
+}
+
+.overview-card2{
+  background: rgba(177, 229, 252, 0.25);
+}
+
+.overview-card3{
+  background: rgba(202, 189, 255, 0.25);
+}
 
 
+.minus5{
+  margin-bottom: -5%;
+}
 
+.minus13{
+  margin-bottom: -13%;
+
+}

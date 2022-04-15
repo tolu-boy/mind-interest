@@ -154,7 +154,7 @@ const dashboard = () => {
         </Card>
 
         <Row>
-          <Col span={16}>
+          <Col md={16} xs={24}>
             <Card title="Active therapists" bordered={false}>
               <ChartWidget
                 card={false}
@@ -169,18 +169,18 @@ const dashboard = () => {
             </Card>
           </Col>
 
-          <Col span={8} className="p-left2">
+          <Col md={8} xs={24} className="p-left2">
             <Card
               title={FilterByNameInput}
               bordered={true}
               className="side-card"
             >
               <Row>
-                <Col md={6} xs={24}>
+                <Col md={6} xs={6} >
                   <Avatar src={profileImg} />
                 </Col>
 
-                <Col md={10} xs={24}>
+                <Col md={10} xs={10} >
                   <p className="top-rated-color1">Dr. Festus King</p>
                   <StarFilled className="gold-color" />
                   <StarFilled className="gold-color" />
@@ -189,15 +189,15 @@ const dashboard = () => {
                   <StarFilled className="gold-color" />
                 </Col>
 
-                <Col span={8} className="">
+                <Col md={8} xs={8} className="">
                   <p className="top-rated-color2"> N56,648.60</p>
                 </Col>
 
-                <Col md={6} xs={24}>
+                <Col md={6} xs={6}>
                   <Avatar src={profileImg} />
                 </Col>
 
-                <Col md={10} xs={24}>
+                <Col md={10} xs={10}>
                   <p className="top-rated-color1">Dr. Festus King</p>
                   <StarFilled className="gold-color" />
                   <StarFilled className="gold-color" />
@@ -206,15 +206,15 @@ const dashboard = () => {
                   <StarFilled className="gold-color" />
                 </Col>
 
-                <Col md={8} xs={24} className="">
+                <Col md={8} xs={8} className="">
                   <p className="top-rated-color2"> N 56,648.60</p>
                 </Col>
 
-                <Col md={6} xs={24}>
+                <Col md={6} xs={6}>
                   <Avatar src={profileImg} />
                 </Col>
 
-                <Col md={10} xs={24}>
+                <Col md={10} xs={10}>
                   <p className="top-rated-color1">Dr. Festus King</p>
                   <StarFilled className="gold-color" />
                   <StarFilled className="gold-color" />
@@ -223,7 +223,7 @@ const dashboard = () => {
                   <StarFilled className="gold-color" />
                 </Col>
 
-                <Col md={8} xs={24} className="mt-2">
+                <Col md={8} xs={8} className="mt-2">
                   <p className="top-rated-color2"> N 56,648.60</p>
                 </Col>
 
@@ -234,7 +234,7 @@ const dashboard = () => {
             </Card>
           </Col>
 
-          <Col span={16}>
+          <Col md={16} xs={24}>
             <Card title={FilterByNameInput1} className="personal-message">
               <Row>
                 <Col span={6} className="">
@@ -263,7 +263,7 @@ const dashboard = () => {
             </Card>
           </Col>
 
-          <Col span={8} className="p-left2">
+          <Col md={8} xs={24} className="p-left2">
             <Card title="Refund requests">
               <Row>
                 <Col span={6}>
