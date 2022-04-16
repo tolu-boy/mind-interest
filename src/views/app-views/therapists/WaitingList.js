@@ -7,9 +7,6 @@ import { SearchOutlined } from "@ant-design/icons";
 import avatar2 from "../../../assets/img/Avatar.svg";
 import { useHistory } from "react-router-dom";
 
-
-
-
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
     console.log(
@@ -33,13 +30,13 @@ const WaitingList = () => {
               <Col md={10} xs={24}>
                 <img src={avatar2} alt="products" className="product-img" />
               </Col>
-  
+
               <Col md={14} xs={24}>
                 <Row>
                   <Col md={24} xs={24}>
                     <p className="top-rated-color1"> {record.name}</p>
                   </Col>
-  
+
                   <Col md={24} xs={24}>
                     {/* change it from api  */}
                     <p className="p-message"> {record.name}</p>
@@ -51,88 +48,89 @@ const WaitingList = () => {
         );
       },
     },
-  
+
     {
       title: "Qualification",
       dataIndex: "Qualification",
       key: "Qualification",
     },
-  
+
     {
       title: "NPA Registration Number",
       dataIndex: "NPA",
       key: "NPA",
     },
-  
+
     {
       title: "Action",
       key: "action",
       render: (text, record) => (
         <span>
-         <Button size="small" type="primary"  onClick={() => {
-                    history.push({
-                      pathname: "/app/therapists/ProfileWaiting",
-                    });
-                  }}>
-                View
-              </Button>
+          <Button
+            size="small"
+            type="primary"
+            onClick={() => {
+              history.push({
+                pathname: "/app/therapists/ProfileWaiting",
+              });
+            }}
+          >
+            View
+          </Button>
         </span>
       ),
     },
   ];
-  
+
   const data = [
     {
       key: "1",
       name: "John Brown",
-  
+
       Qualification: "Doctorate (PhD)",
       NPA: "N4PH12BA2334",
     },
     {
       key: "2",
       name: "Jim Green",
-  
+
       Qualification: "Doctorate (PhD)",
       NPA: "N4PH12BA2334",
     },
     {
       key: "3",
       name: "Joe Black",
-  
+
       Qualification: "Doctorate (PhD)",
       NPA: "N4PH12BA2334",
     },
-  
+
     {
       key: "4",
       name: "Joe Black",
       Qualification: "Doctorate (PhD)",
       NPA: "N4PH12BA2334",
     },
-  
+
     {
       key: "5",
       name: "Joe Black",
-  
+
       Qualification: "Doctorate (PhD)",
       NPA: "N4PH12BA2334",
     },
-  
+
     {
       key: "6",
       name: "Joe Black",
-  
+
       Qualification: "Doctorate (PhD)",
       NPA: "N4PH12BA2334",
     },
   ];
 
-
-
   const [selectionType] = useState("checkbox");
   const history = useHistory();
-
 
   const cardHeader1 = (
     <div>
@@ -162,14 +160,16 @@ const WaitingList = () => {
       {/* <h3 className="dash-heading pb-5 pt-2"> Waiting List </h3> */}
 
       <Row>
-          <Col md={22}  xs={24}  className="pb-5 pt-2">
+        <Col md={22} xs={24} className="pb-5 pt-2">
           <h3 className="dash-heading"> Waiting List </h3>
+        </Col>
 
-          </Col>
-
-          <Col md={2}  xs={24} className="pb-5 pt-3" >
-            <Button type="primary" size="small"> Add New</Button>
-          </Col>
+        <Col md={2} xs={24} className="pb-5 pt-3">
+          <Button type="primary" size="small">
+            {" "}
+            Add New
+          </Button>
+        </Col>
       </Row>
 
       <Card title={cardHeader1}>

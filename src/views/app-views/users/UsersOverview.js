@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, Row, Col, Select, Input, Table, Tag } from "antd";
-import { ArrowUpOutlined, SearchOutlined, StarFilled } from "@ant-design/icons";
+import { ArrowUpOutlined, SearchOutlined } from "@ant-design/icons";
 
 import over1 from "../../../assets/img/over1.svg";
 import over2 from "../../../assets/img/over2.svg";
@@ -15,7 +15,7 @@ import avatar2 from "../../../assets/img/Avatar.svg";
 
 const columns = [
   {
-    title: "Therapist",
+    title: "Users",
     dataIndex: "name",
     key: "name",
     render: (text, record) => {
@@ -28,13 +28,8 @@ const columns = [
 
             <Col md={14} xs={24}>
               <Row>
-                <Col md={24} xs={24}>
+                <Col md={24} xs={24} className="pt-3">
                   <p className="top-rated-color1"> {record.name}</p>
-                </Col>
-
-                <Col md={24} xs={24}>
-                  {/* change it from api  */}
-                  <p className="p-message"> {record.name}</p>
                 </Col>
               </Row>
             </Col>
@@ -73,71 +68,21 @@ const columns = [
   },
 
   {
-    title: "Price",
+    title: "Phone number",
     dataIndex: "age",
     key: "address",
   },
 
   {
-    title: "Earnings",
-    dataIndex: "Earnings",
-    key: "Earnings",
-    render: (Earnings, text) => (
-      <span>
-        {Earnings.map((tag) => {
-          let color = "#EFEFEF";
-          let textColor = "#1A1D1F";
-          return (
-            <div>
-              <Row gutter={16}>
-                <Col md={12} xs={24}>
-                  <Tag color={color} style={{ color: textColor }} key={tag}>
-                    {tag}
-                  </Tag>
-                </Col>
-
-                <Col md={12} xs={24}>
-                  <p className="rev-green">
-                    <ArrowUpOutlined /> 55.8%
-                  </p>
-                </Col>
-              </Row>
-            </div>
-          );
-        })}
-      </span>
-    ),
-  },
-
-  {
-    title: "Sessions",
-    dataIndex: "age",
+    title: "Date joined",
+    dataIndex: "dateJoined",
     key: "address",
   },
 
   {
-    title: "Ratings",
-    dataIndex: "Ratings",
+    title: "Last access",
+    dataIndex: "dateJoined",
     key: "Ratings",
-    render: (Ratings, text) => (
-      <span>
-        {Ratings.map((tag) => {
-          let color = "#00BA88";
-          let textColor = "#ffff";
-          return (
-            <div>
-              <Row>
-                <Col span={24}>
-                  <Tag color={color} style={{ color: textColor }} key={tag}>
-                    <StarFilled /> {tag}
-                  </Tag>
-                </Col>
-              </Row>
-            </div>
-          );
-        })}
-      </span>
-    ),
   },
 
   // {
@@ -157,59 +102,65 @@ const data = [
   {
     key: "1",
     name: "John Brown",
-    age: 32,
+    age: "080123456789",
     address: "New York No. 1 Lake Park",
     tags: ["Active"],
     Earnings: [89999],
     Ratings: [4.8],
+    dateJoined: "23 Jan 2022",
   },
   {
     key: "2",
     name: "Jim Green",
-    age: 42,
+    age: "080123456789",
     address: "London No. 1 Lake Park",
     tags: ["Active"],
     Earnings: [89999],
     Ratings: [4.5],
+    dateJoined: "23 Jan 2022",
   },
   {
     key: "3",
     name: "Joe Black",
-    age: 32,
+    age: "080123456789",
     address: "Sidney No. 1 Lake Park",
     tags: ["Suspended"],
     Earnings: [89999],
     Ratings: [4.7],
+    dateJoined: "23 Jan 2022",
   },
 
   {
     key: "4",
     name: "Joe Black",
-    age: 32,
+    age: "080123456789",
     address: "Sidney No. 1 Lake Park",
     tags: ["Suspended"],
     Earnings: [89999],
     Ratings: [4.7],
+    dateJoined: "23 Jan 2022",
   },
 
   {
     key: "5",
     name: "Joe Black",
-    age: 32,
+    age: "080123456789",
     address: "Sidney No. 1 Lake Park",
     tags: ["Suspended"],
     Earnings: [89999],
     Ratings: [4.7],
+    dateJoined: "23 Jan 2022",
   },
 
   {
     key: "6",
     name: "Joe Black",
-    age: 32,
+    age: "080123456789",
     address: "Sidney No. 1 Lake Park",
     tags: ["Suspended"],
     Earnings: [89999],
     Ratings: [4.7],
+    dateJoined: "23 Jan 2022",
   },
 ];
 
@@ -223,7 +174,7 @@ const rowSelection = {
   },
 };
 
-const Overview = () => {
+const UsersOverview = () => {
   const [selectionType] = useState("checkbox");
 
   const { Option } = Select;
@@ -236,7 +187,7 @@ const Overview = () => {
     <div>
       <Row>
         <Col md={20} xs={24}>
-          <p className="top-rated-color1">Overview</p>
+          <p className="top-rated-color1">Overview </p>
         </Col>
 
         <Col md={4} xs={24}>
@@ -254,7 +205,7 @@ const Overview = () => {
     <div>
       <Row>
         <Col md={3} xs={24}>
-          <p className="top-rated-color1">Overview</p>
+          <p className="top-rated-color1">Users</p>
         </Col>
 
         <Col md={19} xs={24}>
@@ -319,13 +270,13 @@ const Overview = () => {
                 </Col>
 
                 <Col md={24} xs={24} className="pt-2 minus5">
-                  <p className="top-rated-color1"> Therapists</p>
+                  <p className="top-rated-color1"> Users</p>
                 </Col>
 
                 <Col md={24} xs={24} className="minus13">
                   <Row>
                     <Col md={16}>
-                      <p className="rev-amount">65</p>
+                      <p className="rev-amount">4,000</p>
                     </Col>
                     <Col md={8} className="d-none1">
                       <img src={snake2} alt="over1" />
@@ -351,13 +302,13 @@ const Overview = () => {
                 </Col>
 
                 <Col md={24} xs={24} className="pt-2 minus5">
-                  <p className="top-rated-color1"> Payouts</p>
+                  <p className="top-rated-color1"> Therapy sessions</p>
                 </Col>
 
                 <Col md={24} xs={24} className="minus13">
                   <Row>
                     <Col md={16} xs={24}>
-                      <p className="rev-amount">644k</p>
+                      <p className="rev-amount">73</p>
                     </Col>
                     <Col md={8} className="d-none1">
                       <img src={snake3} alt="over3" />
@@ -365,7 +316,7 @@ const Overview = () => {
                   </Row>
                 </Col>
 
-                <Col span={10}>
+                <Col md={10} xs={24}>
                   <p className="rev-green usersTextBackground">
                     <ArrowUpOutlined /> 37.8%
                     <span className="rev-normal"> this week</span>
@@ -391,4 +342,4 @@ const Overview = () => {
   );
 };
 
-export default Overview;
+export default UsersOverview;

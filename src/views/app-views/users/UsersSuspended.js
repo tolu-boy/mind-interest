@@ -1,28 +1,17 @@
 import React, { useState } from "react";
-import { Card, Row, Col, Input, Table, Tag, Button } from "antd";
-import { ArrowUpOutlined, SearchOutlined, StarFilled } from "@ant-design/icons";
-import more from "../../../assets/img/mark.svg";
+import { Card, Row, Col, Select, Input, Table, Tag, Button } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
+import more from "../../../assets/img/More.svg";
 import comment from "../../../assets/img/Comment.svg";
 import avatar2 from "../../../assets/img/Avatar.svg";
 import { useHistory } from "react-router-dom";
 
-const rowSelection = {
-  onChange: (selectedRowKeys, selectedRows) => {
-    console.log(
-      `selectedRowKeys: ${selectedRowKeys}`,
-      "selectedRows: ",
-      selectedRows
-    );
-  },
-};
-
-const Suspended = () => {
-  const [selectionType] = useState("checkbox");
+const UsersSuspended = () => {
   const history = useHistory();
 
   const columns = [
     {
-      title: "Therapist",
+      title: "Users",
       dataIndex: "name",
       key: "name",
       render: (text, record) => {
@@ -35,13 +24,8 @@ const Suspended = () => {
 
               <Col md={14} xs={24}>
                 <Row>
-                  <Col md={24} xs={24}>
+                  <Col md={24} xs={24} className="pt-3">
                     <p className="top-rated-color1"> {record.name}</p>
-                  </Col>
-
-                  <Col md={24} xs={24}>
-                    {/* change it from api  */}
-                    <p className="p-message"> {record.name}</p>
                   </Col>
                 </Row>
               </Col>
@@ -80,90 +64,38 @@ const Suspended = () => {
     },
 
     {
-      title: "Price",
+      title: "Phone number",
       dataIndex: "age",
       key: "address",
     },
 
     {
-      title: "Earnings",
-      dataIndex: "Earnings",
-      key: "Earnings",
-      render: (Earnings, text) => (
-        <span>
-          {Earnings.map((tag) => {
-            let color = "#EFEFEF";
-            let textColor = "#1A1D1F";
-            return (
-              <div>
-                <Row gutter={16}>
-                  <Col md={12} xs={24}>
-                    <Tag color={color} style={{ color: textColor }} key={tag}>
-                      {tag}
-                    </Tag>
-                  </Col>
-
-                  <Col md={12} xs={24}>
-                    <p className="rev-green">
-                      <ArrowUpOutlined /> 55.8%
-                    </p>
-                  </Col>
-                </Row>
-              </div>
-            );
-          })}
-        </span>
-      ),
-    },
-
-    {
-      title: "Sessions",
-      dataIndex: "age",
+      title: "Date joined",
+      dataIndex: "dateJoined",
       key: "address",
     },
 
     {
-      title: "Ratings",
-      dataIndex: "Ratings",
+      title: "Last access",
+      dataIndex: "dateJoined",
       key: "Ratings",
-      render: (Ratings, text) => (
-        <span>
-          {Ratings.map((tag) => {
-            let color = "#00BA88";
-            let textColor = "#ffff";
-            return (
-              <div>
-                <Row>
-                  <Col span={24}>
-                    <Tag color={color} style={{ color: textColor }} key={tag}>
-                      <StarFilled /> {tag}
-                    </Tag>
-                  </Col>
-                </Row>
-              </div>
-            );
-          })}
-        </span>
-      ),
     },
 
     {
       title: "Action",
       key: "action",
       render: (text, record) => (
-        <span>
-          <Button
-            size="small"
-            type="primary"
-            onClick={() => {
-              history.push({
-                pathname: "/app/therapists/ProfileSuspended",
-              });
-            }}
-          >
-            View
-          </Button>
-        </span>
+        <Button
+          size="small"
+          type="primary"
+          onClick={() => {
+            history.push({
+              pathname: "/app/users/UserSuspendedProfile",
+            });
+          }}
+        >
+          View
+        </Button>
       ),
     },
   ];
@@ -172,67 +104,85 @@ const Suspended = () => {
     {
       key: "1",
       name: "John Brown",
-      age: 32,
+      age: "080123456789",
       address: "New York No. 1 Lake Park",
-      tags: ["Active"],
+      tags: ["Suspended"],
       Earnings: [89999],
       Ratings: [4.8],
+      dateJoined: "23 Jan 2022",
     },
     {
       key: "2",
       name: "Jim Green",
-      age: 42,
+      age: "080123456789",
       address: "London No. 1 Lake Park",
-      tags: ["Active"],
+      tags: ["Suspended"],
       Earnings: [89999],
       Ratings: [4.5],
+      dateJoined: "23 Jan 2022",
     },
     {
       key: "3",
       name: "Joe Black",
-      age: 32,
+      age: "080123456789",
       address: "Sidney No. 1 Lake Park",
       tags: ["Suspended"],
       Earnings: [89999],
       Ratings: [4.7],
+      dateJoined: "23 Jan 2022",
     },
 
     {
       key: "4",
       name: "Joe Black",
-      age: 32,
+      age: "080123456789",
       address: "Sidney No. 1 Lake Park",
       tags: ["Suspended"],
       Earnings: [89999],
       Ratings: [4.7],
+      dateJoined: "23 Jan 2022",
     },
 
     {
       key: "5",
       name: "Joe Black",
-      age: 32,
+      age: "080123456789",
       address: "Sidney No. 1 Lake Park",
       tags: ["Suspended"],
       Earnings: [89999],
       Ratings: [4.7],
+      dateJoined: "23 Jan 2022",
     },
 
     {
       key: "6",
       name: "Joe Black",
-      age: 32,
+      age: "080123456789",
       address: "Sidney No. 1 Lake Park",
       tags: ["Suspended"],
       Earnings: [89999],
       Ratings: [4.7],
+      dateJoined: "23 Jan 2022",
     },
   ];
+
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(
+        `selectedRowKeys: ${selectedRowKeys}`,
+        "selectedRows: ",
+        selectedRows
+      );
+    },
+  };
+
+  const [selectionType] = useState("checkbox");
 
   const cardHeader1 = (
     <div>
       <Row>
         <Col md={3} xs={24}>
-          <p className="top-rated-color1">Therapists</p>
+          <p className="top-rated-color1">Users</p>
         </Col>
 
         <Col md={19} xs={24}>
@@ -244,8 +194,8 @@ const Suspended = () => {
         </Col>
 
         <Col md={2} xs={24}>
-          <img src={comment} alt="more" />
-          <img src={more} alt="more" className="pl-2" />
+          <img src={more} alt="more" />
+          <img src={comment} alt="more" className="pl-2" />
         </Col>
       </Row>
     </div>
@@ -253,7 +203,7 @@ const Suspended = () => {
 
   return (
     <div>
-      <h3 className="dash-heading pb-5 pt-2"> Suspended</h3>
+      <h3 className="dash-heading pt-3  pb-4">Suspended</h3>
 
       <Card title={cardHeader1}>
         <Table
@@ -269,4 +219,4 @@ const Suspended = () => {
   );
 };
 
-export default Suspended;
+export default UsersSuspended;

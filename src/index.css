@@ -251,9 +251,16 @@ font-size: 12px;
    padding-bottom: 10%;
 }
 
+.usersTextBackground{
+  background: #FCFCFC;
+}
+
 @media (max-width:600px)  {
   .d-none1{
     display: none;
+  }
+  .textEnd{
+    text-align:center;
   }
  }
 

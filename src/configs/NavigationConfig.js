@@ -93,7 +93,7 @@ const dashBoardNavTree = [
       submenu: [
         {
           key: ' userOverview',
-          path: '',
+          path: `${APP_PREFIX_PATH}/users/UsersOverview`,
           title: 'Overview',
           icon: '',
           breadcrumb: true,
@@ -102,7 +102,7 @@ const dashBoardNavTree = [
 
         {
           key: 'userActive',
-          path: '',
+          path: `${APP_PREFIX_PATH}/users/UsersActive`,
           title: 'Active',
           icon: '',
           breadcrumb: true,
@@ -112,7 +112,7 @@ const dashBoardNavTree = [
        
         {
           key: 'userSuspended',
-          path: '',
+          path: `${APP_PREFIX_PATH}/users/UsersSuspended`,
           title: 'Suspended',
           icon: '',
           breadcrumb: true,

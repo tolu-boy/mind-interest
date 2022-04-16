@@ -1,54 +1,11 @@
 import React, { useState } from "react";
-import {
-  ArrowLeftOutlined,
-  ArrowUpOutlined,
-  ArrowRightOutlined,
-} from "@ant-design/icons";
+import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { Card, Row, Col, Button, Select } from "antd";
 import background from "../../../assets/img/background.svg";
 import profile from "../../../assets/img/profile.svg";
-import Chart from "react-apexcharts";
 import avatar2 from "../../../assets/img/Avatar.svg";
 
-const chartState = {
-  series: [
-    {
-      name: "Desktops",
-      data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
-    },
-  ],
-  options: {
-    chart: {
-      type: "line",
-      zoom: {
-        enabled: false,
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      curve: "smooth",
-      width: 3,
-    },
-    colors: ["#12B76A"],
-    xaxis: {
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-      ],
-    },
-  },
-};
-
-const ProfileWaiting = () => {
+const UserActiveProfile = () => {
   const { Option } = Select;
 
   function handleChange(value) {
@@ -72,34 +29,125 @@ const ProfileWaiting = () => {
 
   const contentList = {
     Booking: (
-      <div className="booking">
-        <p>No activity on this profile</p>
+      <div>
+        <Row>
+          <Col md={3}>
+            <img src={avatar2} alt="products" className="product-img" />
+          </Col>
 
-        <li> Accept the application, let’s get to saving the world</li>
+          <Col md={16} className="pt-2">
+            <p> Dr. Festus King</p>
+          </Col>
+
+          <Col md={5} className="pt-2 mb-3 textEnd">
+            <li className="sessionBooked"> Session booked</li>
+            <li className="sessionTime pt-2"> 30 minutes ago</li>
+          </Col>
+
+          <Col md={3}>
+            <img src={avatar2} alt="products" className="product-img" />
+          </Col>
+
+          <Col md={16} className="pt-2">
+            <p> Dr. Festus King</p>
+          </Col>
+
+          <Col md={5} className="pt-2 mb-3 textEnd">
+            <li className="sessionBooked rev-red"> Session cancelled</li>
+            <li className="sessionTime pt-2"> 12:56 pm</li>
+          </Col>
+
+          <Col md={3}>
+            <img src={avatar2} alt="products" className="product-img" />
+          </Col>
+
+          <Col md={16} className="pt-2">
+            <p> Dr. Festus King</p>
+          </Col>
+
+          <Col md={5} className="pt-2 mb-3 textEnd">
+            <li className="sessionBooked"> Session booked</li>
+            <li className="sessionTime pt-2"> 30 minutes ago</li>
+          </Col>
+
+          <Col md={3}>
+            <img src={avatar2} alt="products" className="product-img" />
+          </Col>
+
+          <Col md={16} className="pt-2">
+            <p> Dr. Festus King</p>
+          </Col>
+
+          <Col md={5} className="pt-2 mb-3 textEnd">
+            <li className="sessionBooked gold-color ">Session Postponed</li>
+            <li className="sessionTime pt-2"> 12 Feb 2022</li>
+          </Col>
+        </Row>
       </div>
     ),
-    Activity: <p>content2</p>,
+    Activity: (
+      <div>
+        <Row>
+          <Col md={20}>
+            <li>
+              <span className="sessionTime top-rated-color1"> Emeka</span>{" "}
+              failed login attempt, verification code incorrect
+            </li>
+          </Col>
+
+          <Col md={4} className=" mb-5">
+            <li className="sessionTime  "> 30 minutes ago</li>
+          </Col>
+
+          <Col md={20}>
+            <li>
+              <span className="sessionTime top-rated-color1"> Emeka</span>{" "}
+              failed login attempt, verification code incorrect
+            </li>
+          </Col>
+
+          <Col md={4} className=" mb-5">
+            <li className="sessionTime  "> 30 minutes ago</li>
+          </Col>
+
+          <Col md={20}>
+            <li>
+              <span className="sessionTime top-rated-color1"> Emeka</span>{" "}
+              failed card payment
+            </li>
+          </Col>
+
+          <Col md={4} className=" mb-5">
+            <li className="sessionTime  "> 30 minutes ago</li>
+          </Col>
+
+          <Col md={20}>
+            <li>
+              <span className="sessionTime top-rated-color1"> Emeka</span>{" "}
+              received a notification
+            </li>
+          </Col>
+
+          <Col md={4} className=" mb-5">
+            <li className="sessionTime  "> 13 Feb 2022</li>
+          </Col>
+
+          <Col md={20}>
+            <li>
+              <span className="sessionTime top-rated-color1"> Emeka</span>{" "}
+              received a notification
+            </li>
+          </Col>
+
+          <Col md={4} className=" mb-5">
+            <li className="sessionTime  "> 13 Feb 2022</li>
+          </Col>
+        </Row>
+      </div>
+    ),
   };
 
   const [activeTabKey1, setActiveTabKey1] = useState("Booking");
-
-  const cardHeader = (
-    <div>
-      <Row>
-        <Col md={14} xs={24}>
-          <p className="top-rated-color1">Sessions</p>
-        </Col>
-
-        <Col md={10} xs={24}>
-          <Select defaultValue="30 days" onChange={handleChange}>
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="Yiminghe">yiminghe</Option>
-          </Select>
-        </Col>
-      </Row>
-    </div>
-  );
 
   const cardHeader1 = (
     <div>
@@ -121,7 +169,7 @@ const ProfileWaiting = () => {
         <span className="pr-2">
           <ArrowLeftOutlined />
         </span>
-        Therapists / Profile details
+        User / Profile details
       </p>
 
       <Row className="pt-4" gutter={24}>
@@ -139,55 +187,13 @@ const ProfileWaiting = () => {
                   </Col>
 
                   <Col md={15}>
-                    <li className="proileName"> Dr. Festus King</li>
-                    <li className="proileWork pt-2 "> Family counselor</li>
+                    <li className="proileName"> Emeka Chuks</li>
                   </Col>
 
                   <Col md={3}>
                     <Button type="primary"> Message</Button>
                   </Col>
                 </Row>
-              </Card>
-            </Col>
-
-            <Col md={12}>
-              <Card title="Overview">
-                <Row>
-                  <Col md={12}>
-                    <p className="PostponedSessions">Postponed sessions</p>
-                    <p className="profileOverviewText">0</p>
-                  </Col>
-
-                  <Col md={12}>
-                    <p className="PostponedSessions">Postponed sessions</p>
-                    <p className="profileOverviewText1">0</p>
-                  </Col>
-
-                  <Col md={12}>
-                    <p className="PostponedSessions">Cancelled sessions</p>
-                    <p className="profileOverviewText rev-red">0</p>
-                  </Col>
-
-                  <Col md={6} className="mb-4 pb-4">
-                    <p className="PostponedSessions">Income</p>
-                    <li className="IncomeText">0</li>
-                    <li className="incomePercent mt-2">
-                      <ArrowUpOutlined /> 37.8%
-                    </li>
-                  </Col>
-                </Row>
-              </Card>
-            </Col>
-
-            <Col md={12}>
-              <Card title={cardHeader}>
-                <li className="rev-green">
-                  <ArrowUpOutlined /> 100%
-                </li>
-                <Chart
-                  options={chartState.options}
-                  series={chartState.series}
-                />
               </Card>
             </Col>
 
@@ -208,30 +214,17 @@ const ProfileWaiting = () => {
         </Col>
 
         <Col md={10}>
-          <Row gutter={16}>
-            <Col md={12}>
-              <Button block className="buttonReject">
-                Reject
-              </Button>
-            </Col>
-
-            <Col md={12}>
-              <Button block className="buttonAccept">
-                Accept
+          <Row>
+            <Col md={24}>
+              <Button type="danger" block>
+                Suspend
               </Button>
             </Col>
 
             <Col md={24} className="pt-4">
               <Card title="Profile details">
                 <Row>
-                  <Col md={20}>
-                    <li>Rate:</li>
-                  </Col>
-
-                  <Col md={4} className="pb-4">
-                    <li className="textEnd"> N20,000</li>
-                  </Col>
-
+            
                   <Col md={20}>
                     <li>Gender:</li>
                   </Col>
@@ -240,13 +233,7 @@ const ProfileWaiting = () => {
                     <li className="textEnd"> Male</li>
                   </Col>
 
-                  <Col md={14}>
-                    <li>Email:</li>
-                  </Col>
-
-                  <Col md={10} className="pb-4">
-                    <li className="textEnd"> festuskingdr@email.com</li>
-                  </Col>
+                
 
                   <Col md={14}>
                     <li>Phone number:</li>
@@ -257,46 +244,38 @@ const ProfileWaiting = () => {
                   </Col>
 
                   <Col md={14}>
-                    <li>Educational qualification:</li>
+                    <li>Relationship status:</li>
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">Doctorate (PhD)</li>
+                    <li className="textEnd">Single</li>
                   </Col>
 
                   <Col md={14}>
-                    <li>Date of registration:</li>
+                    <li>Parenthood:</li>
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">18/03/2004</li>
+                    <li className="textEnd">None</li>
                   </Col>
 
                   <Col md={14}>
-                    <li>Category of membership</li>
+                    <li>Age group:</li>
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">Psychology</li>
+                    <li className="textEnd">24 - 34</li>
                   </Col>
 
                   <Col md={14}>
-                    <li>NPA registration number:</li>
+                    <li>How often I need to talk:</li>
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">H78NA12MP009</li>
+                    <li className="textEnd">Pretty often</li>
                   </Col>
 
-                  <Col md={12}>
-                    <li>Full address:</li>
-                  </Col>
-
-                  <Col md={12} className="pb-4">
-                    <li className="textEnd">
-                      23, Lanre Balon Drive, Lekki phase 1. Lagos state. Nigeria
-                    </li>
-                  </Col>
+                 
 
                   <Col md={24} className="pb-4">
                     <hr className="border1" />
@@ -371,4 +350,4 @@ const ProfileWaiting = () => {
   );
 };
 
-export default ProfileWaiting;
+export default UserActiveProfile;
