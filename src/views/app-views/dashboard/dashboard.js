@@ -92,7 +92,7 @@ const dashboard = () => {
 
                   <Col span={24}>
                     <p className="rev-green">
-                      <ArrowUpOutlined /> 37.8%{" "}
+                      <ArrowUpOutlined /> 37.8%
                       <span className="rev-normal"> this week</span>
                     </p>
                   </Col>

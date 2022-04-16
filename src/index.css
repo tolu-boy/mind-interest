@@ -103,7 +103,7 @@ font-size:13px;
 }
 
 .rev-red{
-  color:  #F2190D;
+  color:  #F2190D !important;
 }
  
  .side-card .ant-card-head-title{
@@ -187,6 +187,53 @@ color:  #FFDF00 !important;
 .profilePic{
   position: absolute;
   bottom: 15px;
+}
+
+.profileOverviewText{
+  color: #3F91F5;
+  font-size: 25px;
+}
+
+.profileOverviewText1{
+  color: #F4BF6F;  
+  font-size: 25px;
+}
+
+.PostponedSessions{
+  font-weight: 600;
+font-size: 10px;
+color: #6E7191;
+}
+
+.IncomeText{
+color: #14142B;
+font-weight: 600;
+font-size: 20px;
+}
+
+.incomePercent{
+  color: #00BA88;
+  background: #EAFAE5;
+  border-radius: 4px;
+}
+
+.sessionBooked{
+  color: #3F91F5;
+  font-size: 12px;
+}
+
+.sessionTime{
+  font-weight: 400;
+font-size: 12px;
+}
+
+.textEnd{
+  text-align: end;
+}
+
+.border1{
+  border: 1px solid #D9DBE9;
+
 }
 
 @media (max-width:600px)  {
