@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Row, Col, Select, Input, Table, Tag, Button } from "antd";
+import { Card, Row, Col, Select, Input, Table, Tag } from "antd";
 import { ArrowUpOutlined, SearchOutlined, StarFilled } from "@ant-design/icons";
 
 import over1 from "../../../assets/img/over1.svg";
