@@ -168,7 +168,7 @@ color:  #FFDF00 !important;
 }
 
 .profileCard{
-  background: #084A9B;
+  background: #084A9B !important;
   position: relative;
 }
 
@@ -233,7 +233,22 @@ font-size: 12px;
 
 .border1{
   border: 1px solid #D9DBE9;
+}
 
+.buttonReject{
+  border-color: #F2190D !important;
+   color: #F2190D !important;
+}
+
+.buttonAccept{
+  background: #00BA88 !important;
+  color: #ffff !important;
+}
+
+.booking{
+  text-align: center;
+  padding-top: 10%;
+   padding-bottom: 10%;
 }
 
 @media (max-width:600px)  {

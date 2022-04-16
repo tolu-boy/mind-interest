@@ -140,17 +140,17 @@ const columns = [
     ),
   },
 
-  {
-    title: "Action",
-    key: "action",
-    render: (text, record) => (
-      <span>
-        <Button size="small" type="primary">
-          View
-        </Button>
-      </span>
-    ),
-  },
+  // {
+  //   title: "Action",
+  //   key: "action",
+  //   render: (text, record) => (
+  //     <span>
+  //       <Button size="small" type="primary">
+  //         View
+  //       </Button>
+  //     </span>
+  //   ),
+  // },
 ];
 
 const data = [

@@ -13,8 +13,8 @@ export const AppViews = () => {
       <Route path={`${APP_PREFIX_PATH}/therapists/Approved`} component={lazy(() => import(`./therapists/Approved`))} />
       <Route path={`${APP_PREFIX_PATH}/therapists/Suspended`} component={lazy(() => import(`./therapists/Suspended`))} />
       <Route path={`${APP_PREFIX_PATH}/therapists/ProfileApproved`} component={lazy(() => import(`./therapists/ProfileApproved`))} />
-
-
+      <Route path={`${APP_PREFIX_PATH}/therapists/ProfileWaiting`} component={lazy(() => import(`./therapists/ProfileWaiting`))} />
+      <Route path={`${APP_PREFIX_PATH}/therapists/ProfileSuspended`} component={lazy(() => import(`./therapists/ProfileSuspended`))} />
 
 
         <Route path={`${APP_PREFIX_PATH}/home`} component={lazy(() => import(`./home`))} />
