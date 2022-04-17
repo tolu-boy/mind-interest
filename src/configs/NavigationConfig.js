@@ -151,7 +151,7 @@ const dashBoardNavTree = [
       submenu: [
         {
           key: 'Earning',
-          path: '',
+          path:`${APP_PREFIX_PATH}/revenue/Earning`,
           title: 'Earning',
           icon: '',
           breadcrumb: true,
@@ -160,7 +160,7 @@ const dashBoardNavTree = [
 
         {
           key: 'Payouts',
-          path: '',
+          path: `${APP_PREFIX_PATH}/revenue/Payouts`,
           title: 'Payouts',
           icon: '',
           breadcrumb: true,
@@ -170,7 +170,7 @@ const dashBoardNavTree = [
        
         {
           key: 'Statements',
-          path: '',
+          path: `${APP_PREFIX_PATH}/revenue/Statements`,
           title: 'Statements',
           icon: '',
           breadcrumb: true,

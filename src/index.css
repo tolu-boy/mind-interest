@@ -255,6 +255,10 @@ font-size: 12px;
   background: #FCFCFC;
 }
 
+.earning-green{
+  color: #83BF6E;
+}
+
 @media (max-width:600px)  {
   .d-none1{
     display: none;
