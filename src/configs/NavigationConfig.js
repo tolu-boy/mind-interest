@@ -127,7 +127,7 @@ const dashBoardNavTree = [
 
 {
   key: 'Statistics',
-  path: `${APP_PREFIX_PATH}/Statistics`,
+  path: `${APP_PREFIX_PATH}/statistics` ,
   title: 'Statistics',
   icon:BarChartOutlined ,
   breadcrumb: false,

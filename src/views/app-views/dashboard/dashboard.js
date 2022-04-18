@@ -57,7 +57,7 @@ const FilterByNameInput1 = (
         <p className="p-message">
           Welcome <span className="top-rated-color1"> 87 users</span> with a
           <br />
-          personal message{" "}
+          personal message
         </p>
       </Col>
 
