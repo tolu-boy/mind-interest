@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Row, Col, Select, Avatar, Button, Table, Tag } from "antd";
+import { Card, Row, Col, Select,  Table, Tag } from "antd";
 import earning from "../../../assets/img/earning.svg";
 import payout from "../../../assets/img/payout.svg";
 

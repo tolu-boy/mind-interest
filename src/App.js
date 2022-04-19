@@ -20,6 +20,7 @@ function App() {
           <Router>
             <Switch>
               <Route path="/" component={Views}/>
+           
             </Switch>
           </Router>
         </ThemeSwitcherProvider>

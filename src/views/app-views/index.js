@@ -24,13 +24,8 @@ export const AppViews = () => {
       <Route path={`${APP_PREFIX_PATH}/revenue/Payouts`} component={lazy(() => import(`./revenue/Payouts`))} />
       <Route path={`${APP_PREFIX_PATH}/revenue/Statements`} component={lazy(() => import(`./revenue/Statements`))} />
       <Route path={`${APP_PREFIX_PATH}/statistics`} component={lazy(() => import(`./statistics/Statistics`))} />
-
-
-
-
-
-
-        <Route path={`${APP_PREFIX_PATH}/home`} component={lazy(() => import(`./home`))} />
+      <Route path={`${APP_PREFIX_PATH}/message`} component={lazy(() => import(`./message/message`))} />
+      <Route path={`${APP_PREFIX_PATH}/home`} component={lazy(() => import(`./home`))} />
         <Redirect from={`${APP_PREFIX_PATH}`} to={`${APP_PREFIX_PATH}/dashboard`} />
       </Switch>
     </Suspense>

@@ -1,11 +1,11 @@
 import React from "react";
-import { Card, Row, Col, Select, Avatar, Button, Table, Tag } from "antd";
+import { Card, Row, Col, Select, Avatar, Button } from "antd";
 import {
   COLOR_1,
   COLOR_TEXT,
   COLOR_2,
   COLOR_4,
-  COLORS,
+
   COLOR_4_LIGHT,
 } from "constants/ChartConstant";
 import Chart from "react-apexcharts";
@@ -157,10 +157,7 @@ const Statistics = () => {
           "Other",
         ],
       },
-      legend: {
-        show: true,
-        position: "bottom",
-      },
+      
       fill: {
         opacity: 1,
       },

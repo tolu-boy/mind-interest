@@ -1,17 +1,10 @@
 import React, { useState } from "react";
-import { Card, Row, Col, Select, Avatar, Button, Table, Tag } from "antd";
+import { Card, Row, Col, Select,  Button, Table, Tag } from "antd";
 import earning from "../../../assets/img/earning.svg";
 import payout from "../../../assets/img/payout.svg";
-import totalrevenue1 from "../../../assets/img/totalrevenue1.svg";
-import ChartWidget from "components/shared-components/ChartWidget";
-import profileImg from "../../../assets/img/thumb-1.jpg";
+
 import fees from "../../../assets/img/fees.svg";
 
-import {
-  ArrowUpOutlined,
-  ArrowDownOutlined,
-  StarFilled,
-} from "@ant-design/icons";
 
 const Statements = () => {
   const columns = [

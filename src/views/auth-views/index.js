@@ -7,12 +7,16 @@ export const AppViews = () => {
   return (
     <Suspense fallback={<Loading cover="page"/>}>
       <Switch>
-        <Route path={`${AUTH_PREFIX_PATH}/login`} component={lazy(() => import(`./authentication/login`))} />
+        <Route path={`${AUTH_PREFIX_PATH}/login`} component={lazy(() => import(`./authentication/login/index.js`))} />
         <Route path={`${AUTH_PREFIX_PATH}/login-1`} component={lazy(() => import(`./authentication/login-1`))} />
         <Route path={`${AUTH_PREFIX_PATH}/login-2`} component={lazy(() => import(`./authentication/login-2`))} />
         <Route path={`${AUTH_PREFIX_PATH}/register-1`} component={lazy(() => import(`./authentication/register-1`))} />
         <Route path={`${AUTH_PREFIX_PATH}/register-2`} component={lazy(() => import(`./authentication/register-2`))} />
-        <Route path={`${AUTH_PREFIX_PATH}/forgot-password`} component={lazy(() => import(`./authentication/forgot-password`))} />
+        <Route path={`${AUTH_PREFIX_PATH}/forgot-password`} component={lazy(() => import(`./authentication/forgot-password/Password`))} />
+        <Route path={`${AUTH_PREFIX_PATH}/NewPassword`} component={lazy(() => import(`./authentication/forgot-password/NewPassword`))} />
+        <Route path={`${AUTH_PREFIX_PATH}/Mail`} component={lazy(() => import(`./authentication/forgot-password/Mail`))} />
+        <Route path={`${AUTH_PREFIX_PATH}/Reset`} component={lazy(() => import(`./authentication/forgot-password/Reset`))} />
+
         <Route path={`${AUTH_PREFIX_PATH}/error-1`} component={lazy(() => import(`./errors/error-page-1`))} />
         <Route path={`${AUTH_PREFIX_PATH}/error-2`} component={lazy(() => import(`./errors/error-page-2`))} />
         <Redirect from={`${AUTH_PREFIX_PATH}`} to={`${AUTH_PREFIX_PATH}/login`} />

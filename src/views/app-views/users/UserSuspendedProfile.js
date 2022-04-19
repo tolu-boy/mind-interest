@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   ArrowLeftOutlined,
-  ArrowUpOutlined,
   ArrowRightOutlined,
 } from "@ant-design/icons";
 import { Card, Row, Col, Button, Select } from "antd";

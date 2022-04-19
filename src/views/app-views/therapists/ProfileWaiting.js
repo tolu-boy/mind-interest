@@ -8,7 +8,6 @@ import { Card, Row, Col, Button, Select } from "antd";
 import background from "../../../assets/img/background.svg";
 import profile from "../../../assets/img/profile.svg";
 import Chart from "react-apexcharts";
-import avatar2 from "../../../assets/img/Avatar.svg";
 
 const chartState = {
   series: [

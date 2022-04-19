@@ -14,8 +14,13 @@ import {
 import JwtAuthService from 'services/JwtAuthService'
 import { useHistory } from "react-router-dom";
 import { motion } from "framer-motion"
+import { useStore } from '../../../zustand';
 
 export const LoginForm = (props) => {
+
+	const setAuth = useStore((store)=>{
+ return store.setAuth
+	})
 	let history = useHistory();
 
 	const { 
@@ -40,6 +45,7 @@ export const LoginForm = (props) => {
 		const fakeToken = 'fakeToken'
 		JwtAuthService.login(values).then(resp => {
 			authenticated(fakeToken)
+			setAuth(true)
 		}).then(e => {
 			showAuthMessage(e)
 		})

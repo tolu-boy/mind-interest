@@ -186,7 +186,7 @@ const dashBoardNavTree = [
 
 {
   key: 'Messages',
-  path: `${APP_PREFIX_PATH}/Messages`,
+  path: `${APP_PREFIX_PATH}/message`,
   title: 'Messages',
   icon: MessageOutlined ,
   breadcrumb: false,
