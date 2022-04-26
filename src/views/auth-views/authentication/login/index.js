@@ -1,31 +1,58 @@
 import React, { useState } from "react";
 import logo from "../../../../assets/img/logo-login.svg";
-import { Row, Col, Button, Form, Input, Checkbox } from "antd";
+import { Row, Col, Button, Form, Input, Checkbox, notification } from "antd";
 import { useStore } from '../../../../zustand';
 import { useHistory } from "react-router-dom";
-import { APP_PREFIX_PATH } from 'configs/AppConfig'
 import { AUTH_PREFIX_PATH } from 'configs/AppConfig'
+import { APP_PREFIX_PATH } from 'configs/AppConfig'
+import axios from 'axios'
 
+const openNotificationWithIcon = (type) => {
+  notification[type]({
+    message: "Looks like something went wrong",
+    description: `invalid email or password`,
+  });
+};
 
 const Index1 = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-
+  
   const setAuth = useStore((store)=>{
     return store.setAuth
      })
 
-  const onFinish = (values) => {
-    setLoading(true)
-    console.log("Success:", values);
-    setAuth(true)
 
-    setTimeout(() => {
-      history.push(`${APP_PREFIX_PATH}/dashboard`);
-      setLoading(false);
-    }, 2000);
- 
+     const setToken= useStore((store)=>{
+      return store.setToken
+       })
+
+  const onFinish = (values) => {
+    // setLoading(true)
+    console.log("Success:", values);
+    axios.post('https://stormy-castle-63253.herokuapp.com/admin/login',{
+      email:values.email,
+      password:values.password
+    }).then((res)=>{
+      if (res.status === 200) {
+        setAuth(true)
+        setLoading(false)
+        localStorage.setItem("token",  res.data.data.token );
+        localStorage.setItem("auth",  true );
+        setToken( res.data.data.token)
+        history.push(`${APP_PREFIX_PATH}/dashboard`);
+
+      }else{
+        openNotificationWithIcon("error");
+
+      }
+         
+    }).catch((e)=>{
+      console.log(e,'pppp');
+      openNotificationWithIcon("error");
+
+    })
 
 
   };
@@ -69,7 +96,7 @@ const Index1 = () => {
               autoComplete="off"
             >
               <Form.Item
-                name="Email"
+                name="email"
                 rules={[
                   {
                     type: "email",

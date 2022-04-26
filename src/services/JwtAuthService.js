@@ -24,4 +24,14 @@ JwtAuthService.signUp = function (data) {
 	})
 }
 
+
+JwtAuthService.signIn = function (data) {
+	return fetch({
+	  url: '/login',
+	  method: 'post',
+	  data: data
+	})
+  }
+
+
 export default JwtAuthService

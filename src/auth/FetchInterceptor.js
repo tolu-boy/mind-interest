@@ -1,11 +1,11 @@
 import axios from 'axios'
-import { API_BASE_URL } from 'configs/AppConfig'
+import { API_BASE_URL1 } from 'configs/AppConfig'
 import history from '../history'
 import { AUTH_TOKEN } from 'redux/constants/Auth'
 import { notification } from 'antd';
 
 const service = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: API_BASE_URL1,
   timeout: 60000
 })
 

@@ -3,6 +3,8 @@ import { env } from './EnvironmentConfig'
 
 export const APP_NAME = 'The Mind interest';
 export const API_BASE_URL = env.API_ENDPOINT_URL
+export const API_BASE_URL1 = 'https://stormy-castle-63253.herokuapp.com/admin'
+
 export const APP_PREFIX_PATH = '/app';
 export const AUTH_PREFIX_PATH = '/auth';
 
