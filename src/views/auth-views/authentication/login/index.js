@@ -29,7 +29,7 @@ const Index1 = () => {
        })
 
   const onFinish = (values) => {
-    // setLoading(true)
+    setLoading(true)
     console.log("Success:", values);
     axios.post('https://stormy-castle-63253.herokuapp.com/admin/login',{
       email:values.email,
@@ -45,12 +45,16 @@ const Index1 = () => {
 
       }else{
         openNotificationWithIcon("error");
+        setLoading(false)
+
 
       }
          
     }).catch((e)=>{
       console.log(e,'pppp');
       openNotificationWithIcon("error");
+      setLoading(false)
+
 
     })
 
