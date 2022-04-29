@@ -54,7 +54,7 @@ const NewPassword = () => {
     };
 
   return (
-    <Fragment> 
+    <div> 
     {validUrl ? (
 			 <div>
     <div className="pt-3 pl-4">
@@ -154,7 +154,7 @@ const NewPassword = () => {
 			) : (
 				<h1>404 Not Found</h1>
 			)}
-    </Fragment>
+    </div>
 
    
   )
