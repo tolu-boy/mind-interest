@@ -10,6 +10,10 @@ import {
 } from '@ant-design/icons';
 import Icon from 'components/util-components/Icon';
 import { signOut } from 'redux/actions/Auth';
+import { useStore } from '../../zustand';
+import { useHistory } from "react-router-dom";
+
+
 
 const menuItem = [
 	{
@@ -36,6 +40,16 @@ const menuItem = [
 ]
 
 export const NavProfile = ({signOut}) => {
+
+  const clearToken= useStore((store)=>{
+    return store.clearToken
+     })
+
+     const setAuth = useStore((store)=>{
+      return store.setAuth
+       })
+
+  
   const profileImg = "/img/avatars/thumb-1.jpg";
   const profileMenu = (
     <div className="nav-profile nav-dropdown">
@@ -60,10 +74,17 @@ export const NavProfile = ({signOut}) => {
               </Menu.Item>
             );
           })}
-          <Menu.Item key={menuItem.length + 1} onClick={e => signOut()}>
+          <Menu.Item key={menuItem.length + 1} onClick={()=>{
+            console.log('signout')
+            clearToken()
+            setAuth(false)
+            localStorage.setItem("auth",  false );
+            localStorage.setItem("token",  null );
+          
+          }}>
             <span>
               <LogoutOutlined />
-              <span className="font-weight-normal">Sign Out</span>
+              <span className="font-weight-normal">Signs Out</span>
             </span>
           </Menu.Item>
         </Menu>

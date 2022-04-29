@@ -1,5 +1,5 @@
-import React from "react";
-import logo from "../../../../assets/img/logo-login.svg";
+import { useEffect, useState, Fragment } from "react";
+  import logo from "../../../../assets/img/logo-login.svg";
 import Mailimage from "../../../../assets/img/tick2.svg";
 import { Row, Col, Button} from "antd";
 import { useHistory } from "react-router-dom";

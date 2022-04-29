@@ -4,13 +4,29 @@
 import React, { useState } from "react";
 import logo from "../../../../assets/img/logo-login.svg";
 import key from "../../../../assets/img/key.svg";
-import { Row, Col, Button, Form, Input} from "antd";
+import { Row, Col, Button, Form, Input,notification } from "antd";
 import { useHistory } from "react-router-dom";
 import { AUTH_PREFIX_PATH } from 'configs/AppConfig'
 import { ArrowLeftOutlined } from "@ant-design/icons";
+import axios from 'axios'
 
 
 const Password = () => {
+
+  const openNotificationWithIcon = (type) => {
+    notification[type]({
+      message: "Looks like something went wrong",
+      description: `Email is not registered`,
+    });
+  };
+
+  const successNotificationWithIcon = (type) => {
+    notification[type]({
+      message: "Email has been sent",
+      description: `A reset link has been sent to the registered Email `,
+    });
+  };
+
 
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
@@ -19,8 +35,30 @@ const Password = () => {
   
     const onFinish = (values) => {
         console.log("Success:", values);
-    setLoading(false)
-        
+        setLoading(true)
+        axios.post('https://stormy-castle-63253.herokuapp.com/admin/forgot-password',{
+          email:values.Email,
+       
+        }).then((res)=>{
+          if (res.status === 200) {
+            setLoading(false)
+            successNotificationWithIcon('success')
+          
+          }else{
+            openNotificationWithIcon("error");
+            setLoading(false)
+    
+    
+          }
+             
+        }).catch((e)=>{
+          console.log(e,'pppp');
+          openNotificationWithIcon("error");
+          setLoading(false)
+    
+    
+        })
+          
   
     };
   

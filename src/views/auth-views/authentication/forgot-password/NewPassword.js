@@ -1,24 +1,50 @@
 
-
-
-import React, { useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import logo from "../../../../assets/img/logo-login.svg";
 import key from "../../../../assets/img/key.svg";
 import { Row, Col, Button, Form, Input} from "antd";
 import { useHistory } from "react-router-dom";
 import { AUTH_PREFIX_PATH } from 'configs/AppConfig'
 import { ArrowLeftOutlined } from "@ant-design/icons";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 
 const NewPassword = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const history = useHistory();
-  
+    const param = useParams();
+    const url = `https://stormy-castle-63253.herokuapp.com/admin/reset-password/${param.token}`;
+
+  	const [validUrl, setValidUrl] = useState(false);
+
+    useEffect(() => {
+      const verifyUrl = async () => {
+        try {
+          await axios.get(url).then((item)=>{
+             console.log(item,'lll');
+             setValidUrl(true)
+
+          })
+          setValidUrl(true);
+        } catch (error) {
+          setValidUrl(false);
+          console.log(error);
+        }
+      };
+      verifyUrl();
+    }, [param, url]);
+
+    
   
     const onFinish = (values) => {
         console.log("Success:", values);
     setLoading(false)
+
+    axios.post(url,{
+      password:values.password
+    })
         
   
     };
@@ -28,7 +54,9 @@ const NewPassword = () => {
     };
 
   return (
-    <div>
+    <Fragment> 
+    {validUrl ? (
+			 <div>
     <div className="pt-3 pl-4">
       <img src={logo} alt="" />
     </div>
@@ -123,6 +151,12 @@ const NewPassword = () => {
       </Row>
     </section>
   </div>
+			) : (
+				<h1>404 Not Found</h1>
+			)}
+    </Fragment>
+
+   
   )
 }
 
