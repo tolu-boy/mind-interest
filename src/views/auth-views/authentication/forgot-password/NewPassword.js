@@ -1,8 +1,8 @@
 
-import { useEffect, useState, Fragment } from "react";
+import { useEffect, useState } from "react";
 import logo from "../../../../assets/img/logo-login.svg";
 import key from "../../../../assets/img/key.svg";
-import { Row, Col, Button, Form, Input} from "antd";
+import { Row, Col, Button, Form, Input,notification} from "antd";
 import { useHistory } from "react-router-dom";
 import { AUTH_PREFIX_PATH } from 'configs/AppConfig'
 import { ArrowLeftOutlined } from "@ant-design/icons";
@@ -15,35 +15,58 @@ const NewPassword = () => {
     const [loading, setLoading] = useState(false);
     const history = useHistory();
     const param = useParams();
-    const url = `https://stormy-castle-63253.herokuapp.com/admin/reset-password/${param.token}`;
-
   	const [validUrl, setValidUrl] = useState(false);
 
-    useEffect(() => {
-      const verifyUrl = async () => {
-        try {
-          await axios.get(url).then((item)=>{
-             console.log(item,'lll');
-             setValidUrl(true)
+    const openNotificationWithIcon = (type) => {
+      notification[type]({
+        message: "Looks like something went wrong",
+        description: `password reset failed`,
+      });
+    };
+    
+    const successNotificationWithIcon = (type) => {
+      notification[type]({
+        message: "Password Reset ",
+        description: `Password reset success`,
+      });
+    };
 
-          })
-          setValidUrl(true);
-        } catch (error) {
-          setValidUrl(false);
-          console.log(error);
+    const verifyUrl =  () => {
+        if (param.token){
+          setValidUrl(true)
         }
-      };
+    }
+
+    useEffect(() => {
+      
       verifyUrl();
-    }, [param, url]);
+    }, );
 
     
   
     const onFinish = (values) => {
         console.log("Success:", values);
-    setLoading(false)
+    setLoading(true)
 
-    axios.post(url,{
+    axios.put(`https://stormy-castle-63253.herokuapp.com/admin/reset-password`,{
+      token:param.token,
       password:values.password
+    }).then((res)=>{
+      if (res.status === 200) {
+        setLoading(false)
+        successNotificationWithIcon('success')
+      
+      }else{
+        openNotificationWithIcon("error");
+        setLoading(false)
+
+
+      }
+    }).catch(()=>{
+      setLoading(false)
+      openNotificationWithIcon('error')
+
+
     })
         
   
