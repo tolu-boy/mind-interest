@@ -28,14 +28,22 @@ const Mail = () => {
 
           <Col md={24}>
             <p className="emailPassword">
-              We sent a password reset link to <br /> {location.state.detail}
+              We sent a password reset link to <br /> 
+              {location.state.detail}
             </p>
           </Col>
 
           <Col md={10} className="centered1">
-            <Button type="primary" htmlType="submit" block>
+          <a
+                href="https://gmail.com"
+                className="youtube social"
+              >
+
+<Button type="primary" htmlType="submit" block>
               Open email app
             </Button>
+              </a>
+           
           </Col>
 
           <Col md={24} className="centered1 t-center">
