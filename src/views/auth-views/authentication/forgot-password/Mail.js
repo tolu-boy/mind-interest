@@ -5,10 +5,12 @@ import { Row, Col, Button } from "antd";
 import { useHistory } from "react-router-dom";
 import { AUTH_PREFIX_PATH } from "configs/AppConfig";
 import { ArrowLeftOutlined } from "@ant-design/icons";
+import { useLocation } from "react-router-dom";
+
 const Mail = () => {
   
   const history = useHistory();
-
+  const location = useLocation();
 
   return (
     <div>
@@ -26,7 +28,7 @@ const Mail = () => {
 
           <Col md={24}>
             <p className="emailPassword">
-              We sent a password reset link to <br /> olivia@untitledui.com
+              We sent a password reset link to <br /> {location.state.detail}
             </p>
           </Col>
 

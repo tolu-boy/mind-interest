@@ -11,6 +11,7 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 import axios from 'axios'
 
 
+
 const Password = () => {
 
   const openNotificationWithIcon = (type) => {
@@ -20,18 +21,14 @@ const Password = () => {
     });
   };
 
-  const successNotificationWithIcon = (type) => {
-    notification[type]({
-      message: "Email has been sent",
-      description: `A reset link has been sent to the registered Email `,
-    });
-  };
+ 
 
 
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const history = useHistory();
   
+    
   
     const onFinish = (values) => {
         console.log("Success:", values);
@@ -42,7 +39,12 @@ const Password = () => {
         }).then((res)=>{
           if (res.status === 200) {
             setLoading(false)
-            successNotificationWithIcon('success')
+            history.push({
+              pathname: `${AUTH_PREFIX_PATH}/Mail`,
+              state: { detail: values.Email},
+            });
+        
+
           
           }else{
             openNotificationWithIcon("error");

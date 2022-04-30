@@ -23,13 +23,7 @@ const NewPassword = () => {
         description: `password reset failed`,
       });
     };
-    
-    const successNotificationWithIcon = (type) => {
-      notification[type]({
-        message: "Password Reset ",
-        description: `Password reset success`,
-      });
-    };
+  
 
     const verifyUrl =  () => {
         if (param.token){
@@ -54,7 +48,10 @@ const NewPassword = () => {
     }).then((res)=>{
       if (res.status === 200) {
         setLoading(false)
-        successNotificationWithIcon('success')
+        history.push({
+          pathname: `${AUTH_PREFIX_PATH}/Reset`,
+    
+        });
       
       }else{
         openNotificationWithIcon("error");

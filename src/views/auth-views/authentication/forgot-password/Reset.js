@@ -1,4 +1,4 @@
-import { useEffect, useState, Fragment } from "react";
+import React from "react";
   import logo from "../../../../assets/img/logo-login.svg";
 import Mailimage from "../../../../assets/img/tick2.svg";
 import { Row, Col, Button} from "antd";
@@ -31,7 +31,9 @@ const Reset = () => {
           </Col>
 
           <Col md={10} className="centered1">
-            <Button type="primary" htmlType="submit" block>
+            <Button type="primary" htmlType="submit" block onClick={()=>{
+                 history.push(`${AUTH_PREFIX_PATH}/login` );
+                }}>
             Continue
             </Button>
           </Col>

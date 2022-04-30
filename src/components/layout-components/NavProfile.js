@@ -11,7 +11,6 @@ import {
 import Icon from 'components/util-components/Icon';
 import { signOut } from 'redux/actions/Auth';
 import { useStore } from '../../zustand';
-import { useHistory } from "react-router-dom";
 
 
 
