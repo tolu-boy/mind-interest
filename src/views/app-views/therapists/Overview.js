@@ -225,6 +225,7 @@ const rowSelection = {
 
 const Overview = () => {
   const [selectionType] = useState("checkbox");
+  const [search, setSearch] = useState()
 
   const { Option } = Select;
 
@@ -262,6 +263,10 @@ const Overview = () => {
             placeholder="Search..."
             prefix={<SearchOutlined className="search-navs" />}
             style={{ width: 300 }}
+            value= {search}
+            onChange= {(e)=>{
+              setSearch(e.target.value)
+            }}
           />
         </Col>
 

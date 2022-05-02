@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 import logo from "../../../../assets/img/logo-login.svg";
 import { Row, Col, Button, Form, Input, Checkbox, notification } from "antd";
 import { useStore } from '../../../../zustand';
@@ -18,7 +18,22 @@ const Index1 = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+  const [ip, setIP] = useState(false);
+
+
+  const location = ()=>{
+    axios.get(`https://geolocation-db.com/json/d802faa0-10bd-11ec-b2fe-47a0872c6708`).then((item)=>{
+      console.log(item.data.IPv4);
+      setIP(item.data.IPv4)
+        })
+   }
+  useEffect(() => {
+    location()
+  }, []);
+
+ 
   
+
   const setAuth = useStore((store)=>{
     return store.setAuth
      })
@@ -30,10 +45,12 @@ const Index1 = () => {
 
   const onFinish = (values) => {
     setLoading(true)
+   
     console.log("Success:", values);
     axios.post('https://stormy-castle-63253.herokuapp.com/admin/login',{
       email:values.email,
-      password:values.password
+      password:values.password,
+      ip_address: ip
     }).then((res)=>{
       if (res.status === 200) {
         setAuth(true)
