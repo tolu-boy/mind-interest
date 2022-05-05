@@ -41,7 +41,7 @@ const FilterByNameInput = (
   <div>
     <Row>
       <Col md={24} xs={24} sm={24}>
-        <h3 className="product-name">Top Rated Therapist</h3>
+        <h3 className="product-name">Most Recent Therapists</h3>
       </Col>
 
       <Col md={18} xs={12} sm={12}>
