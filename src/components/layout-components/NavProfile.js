@@ -79,6 +79,7 @@ export const NavProfile = ({signOut}) => {
             setAuth(false)
             localStorage.setItem("auth",  false );
             localStorage.setItem("token",  null );
+            localStorage.setItem("ip",  null );
           
           }}>
             <span>

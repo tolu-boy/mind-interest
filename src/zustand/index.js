@@ -8,6 +8,8 @@ export const useStore = create(set => ({
     setAuth: (auth) => set({ auth }),
     setToken: (token) => set({ token }),
     clearToken: () => set({ token:null}),
+    setIp: (ip) => set({ ip }),
+
 
 
   }))

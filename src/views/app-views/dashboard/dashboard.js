@@ -10,10 +10,13 @@ import dot from "../../../assets/img/Dot1.svg";
 import {
   ArrowUpOutlined,
   ArrowDownOutlined,
-  StarFilled,
+
 } from "@ant-design/icons";
 import profileImg from "../../../assets/img/thumb-1.jpg";
-
+import useTransactions from "queries/useTransactions";
+import useSessions from "queries/useSessions";
+import useRefunds from "queries/useRefunds";
+import useTherapists from "queries/useTherapists";
 export const weeklyRevenueData = {
   series: [
     {
@@ -31,6 +34,8 @@ export const weeklyRevenueData = {
     "14 Jul",
   ],
 };
+
+
 
 const FilterByNameInput = (
   <div>
@@ -50,25 +55,22 @@ const FilterByNameInput = (
   </div>
 );
 
-const FilterByNameInput1 = (
-  <div>
-    <Row>
-      <Col span={18}>
-        <p className="p-message">
-          Welcome <span className="top-rated-color1"> 87 users</span> with a
-          <br />
-          personal message
-        </p>
-      </Col>
 
-      <Col span={6}>
-        <Button> Send Message </Button>
-      </Col>
-    </Row>
-  </div>
-);
 
-const dashboard = () => {
+const Dashboard = () => {
+  const { data: transactions } = useTransactions();
+  const { data: sessions } = useSessions();
+  const { data: refunds } = useRefunds();
+  const { data: therapists } = useTherapists();
+  // const maprefunds = refunds.data.refunds.map()
+
+  const totalAmount = transactions ? transactions.data.totalAmount : 1200000;
+  const totalSessions = sessions ? sessions.data.total : 25;
+  const totalRefunds = refunds ? refunds.data.total : 25;
+  // let re = therapists.data.therapists
+  //  console.log(re,'lll');
+
+
   return (
     <div className="dashboard">
       <h3 className="dash-heading"> Dashboard</h3>
@@ -87,7 +89,7 @@ const dashboard = () => {
                     <p className="t-rev">Total Revenue</p>
                   </Col>
                   <Col span={24}>
-                    <h6 className="rev-amount">₦1.28m</h6>
+                    <h6 className="rev-amount">₦ {totalAmount}</h6>
                   </Col>
 
                   <Col span={24}>
@@ -118,12 +120,12 @@ const dashboard = () => {
                     <p className="t-rev">Therapy sessions</p>
                   </Col>
                   <Col span={24}>
-                    <h6 className="rev-amount">73</h6>
+                    <h6 className="rev-amount"> {totalSessions}</h6>
                   </Col>
 
                   <Col span={24}>
                     <p className="rev-red">
-                      <ArrowDownOutlined /> 37.8%{" "}
+                      <ArrowDownOutlined /> 37.8%
                       <span className="rev-normal"> this week</span>
                     </p>
                   </Col>
@@ -180,56 +182,28 @@ const dashboard = () => {
               className="side-card"
             >
               <Row>
+              {(therapists) ? <>
+               {therapists.data.therapists.slice(0,3).map((item)=>(
+                 < >
                 <Col md={6} xs={6}>
                   <Avatar src={profileImg} />
                 </Col>
 
                 <Col md={10} xs={10}>
-                  <p className="top-rated-color1">Dr. Festus King</p>
-                  <StarFilled className="gold-color" />
-                  <StarFilled className="gold-color" />
-                  <StarFilled className="gold-color" />
-                  <StarFilled className="gold-color" />
-                  <StarFilled className="gold-color" />
+                  <p className="top-rated-color1">{item.name}</p>
+                 
                 </Col>
 
-                <Col md={8} xs={8} className="">
-                  <p className="top-rated-color2"> N56,648.60</p>
+                <Col md={8} xs={8} className="pb-2">
+                  <p className="top-rated-color2"> N{item.last_dues}</p>
                 </Col>
+                </>
 
-                <Col md={6} xs={6}>
-                  <Avatar src={profileImg} />
-                </Col>
+               ))}
+               </> : <div> No therapist avaliable </div>}
 
-                <Col md={10} xs={10}>
-                  <p className="top-rated-color1">Dr. Festus King</p>
-                  <StarFilled className="gold-color" />
-                  <StarFilled className="gold-color" />
-                  <StarFilled className="gold-color" />
-                  <StarFilled className="gold-color" />
-                  <StarFilled className="gold-color" />
-                </Col>
-
-                <Col md={8} xs={8} className="">
-                  <p className="top-rated-color2"> N 56,648.60</p>
-                </Col>
-
-                <Col md={6} xs={6}>
-                  <Avatar src={profileImg} />
-                </Col>
-
-                <Col md={10} xs={10}>
-                  <p className="top-rated-color1">Dr. Festus King</p>
-                  <StarFilled className="gold-color" />
-                  <StarFilled className="gold-color" />
-                  <StarFilled className="gold-color" />
-                  <StarFilled className="gold-color" />
-                  <StarFilled className="gold-color" />
-                </Col>
-
-                <Col md={8} xs={8} className="mt-2">
-                  <p className="top-rated-color2"> N 56,648.60</p>
-                </Col>
+              
+               
 
                 <Col md={24} xs={24} className="mt-3">
                   <Button block> All Therapists</Button>
@@ -238,34 +212,42 @@ const dashboard = () => {
             </Card>
           </Col>
 
-          <Col md={16} xs={24}>
-            <Card title={FilterByNameInput1} className="personal-message">
+          <Col span={16}>
+            <Card title="Recent activities">
               <Row>
-                <Col span={6} className="">
-                  <Avatar src={profileImg} />
+              {(sessions) ? <>
+                { sessions?.data.sessions.map(() => (
+                  <Col span={12} className="pb-3">
+                    <Row>
+                      <Col span={4}>
+                        <img src={avatar} alt="" />
+                      </Col>
 
-                  <br />
-                  <p className="top-rated-color1 pt-2"> Gladys</p>
-                </Col>
+                      <Col span={17}>
+                        <p className="top-rated-color1">
+                          Demi Wikinson
+                          <span className="p-message"> 2 mins ago</span>
+                        </p>
+                        <p>
+                          Is in session with
+                          <span className="gold-color"> Dr. Festus King</span>
+                        </p>
+                      </Col>
 
-                <Col span={6}>
-                  <Avatar src={profileImg} />
-                  <p className="top-rated-color1 pt-2"> Gladys</p>
-                </Col>
-
-                <Col span={6}>
-                  <Avatar src={profileImg} />
-                  <p className="top-rated-color1 pt-2"> Gladys</p>
-                </Col>
-
-                <Col span={6} className="p-left2">
-                  <Avatar src={profileImg} />
-
-                  <p className="top-rated-color1 pt-2"> Gladys</p>
-                </Col>
+                      <Col span={3}>
+                        <img src={dot} alt="" />
+                      </Col>
+                    </Row>
+                  </Col>
+                ))}
+              </> :
+               <div> No Recent activity </div>}
+             
               </Row>
             </Card>
-          </Col>
+          </Col> 
+
+
 
           <Col md={8} xs={24} className="p-left2">
             <Card title="Refund requests">
@@ -276,7 +258,7 @@ const dashboard = () => {
 
                 <Col span={18}>
                   <p>
-                    You have 52 open refund requests to action. This includes 8
+                    You have {totalRefunds} open refund requests to action. This includes 8
                     new requests. 👀
                   </p>
                 </Col>
@@ -287,204 +269,10 @@ const dashboard = () => {
               </Row>
             </Card>
           </Col>
-
-          <Col span={24}>
-            <Card title="Recent activities">
-              <Row>
-                <Col span={12} className="pb-3">
-                  <Row>
-                    <Col span={3}>
-                      {/* <Avatar src={avatar} /> */}
-                      <img src={avatar} alt="" />
-                    </Col>
-
-                    <Col span={17}>
-                      <p className="top-rated-color1">
-                        Demi Wikinson
-                        <span className="p-message"> 2 mins ago</span>
-                      </p>
-                      <p>
-                        Is in session with
-                        <span className="gold-color"> Dr. Festus King</span>
-                      </p>
-                    </Col>
-
-                    <Col span={3}>
-                      <img src={dot} alt="" />
-                    </Col>
-                  </Row>
-                </Col>
-
-                <Col span={12} className="pb-3">
-                  <Row>
-                    <Col span={3}>
-                      {/* <Avatar src={avatar} /> */}
-                      <img src={avatar} alt="" />
-                    </Col>
-
-                    <Col span={17}>
-                      <p className="top-rated-color1">
-                        Demi Wikinson
-                        <span className="p-message"> 2 mins ago</span>
-                      </p>
-                      <p>
-                        Is in session with
-                        <span className="gold-color"> Dr. Festus King</span>
-                      </p>
-                    </Col>
-
-                    <Col span={3}>
-                      <img src={dot} alt="" />
-                    </Col>
-                  </Row>
-                </Col>
-
-                <Col span={12} className="pb-3">
-                  <Row>
-                    <Col span={3}>
-                      {/* <Avatar src={avatar} /> */}
-                      <img src={avatar} alt="" />
-                    </Col>
-
-                    <Col span={17}>
-                      <p className="top-rated-color1">
-                        Demi Wikinson
-                        <span className="p-message"> 2 mins ago</span>
-                      </p>
-                      <p>
-                        Is in session with
-                        <span className="gold-color"> Dr. Festus King</span>
-                      </p>
-                    </Col>
-
-                    <Col span={3}>
-                      <img src={dot} alt="" />
-                    </Col>
-                  </Row>
-                </Col>
-
-                <Col span={12} className="pb-3">
-                  <Row>
-                    <Col span={3}>
-                      {/* <Avatar src={avatar} /> */}
-                      <img src={avatar} alt="" />
-                    </Col>
-
-                    <Col span={17}>
-                      <p className="top-rated-color1">
-                        Demi Wikinson
-                        <span className="p-message"> 2 mins ago</span>
-                      </p>
-                      <p>
-                        Is in session with
-                        <span className="gold-color"> Dr. Festus King</span>
-                      </p>
-                    </Col>
-
-                    <Col span={3}>
-                      <img src={dot} alt="" />
-                    </Col>
-                  </Row>
-                </Col>
-
-                <Col span={12} className="pb-3">
-                  <Row>
-                    <Col span={3}>
-                      <img src={avatar} alt="" />
-                    </Col>
-
-                    <Col span={17}>
-                      <p className="top-rated-color1">
-                        Demi Wikinson
-                        <span className="p-message"> 2 mins ago</span>
-                      </p>
-                      <p>
-                        Is in session with
-                        <span className="gold-color"> Dr. Festus King</span>
-                      </p>
-                    </Col>
-
-                    <Col span={3}>
-                      <img src={dot} alt="" />
-                    </Col>
-                  </Row>
-                </Col>
-
-                <Col span={12} className="pb-3">
-                  <Row>
-                    <Col span={3}>
-                      <img src={avatar} alt="" />
-                    </Col>
-
-                    <Col span={17}>
-                      <p className="top-rated-color1">
-                        Demi Wikinson
-                        <span className="p-message"> 2 mins ago</span>
-                      </p>
-                      <p>
-                        Is in session with
-                        <span className="gold-color"> Dr. Festus King</span>
-                      </p>
-                    </Col>
-
-                    <Col span={3}>
-                      <img src={dot} alt="" />
-                    </Col>
-                  </Row>
-                </Col>
-
-                <Col span={12} className="pb-3">
-                  <Row>
-                    <Col span={3}>
-                      <img src={avatar} alt="" />
-                    </Col>
-
-                    <Col span={17}>
-                      <p className="top-rated-color1">
-                        Demi Wikinson
-                        <span className="p-message"> 2 mins ago</span>
-                      </p>
-                      <p>
-                        Is in session with
-                        <span className="gold-color"> Dr. Festus King</span>
-                      </p>
-                    </Col>
-
-                    <Col span={3}>
-                      <img src={dot} alt="" />
-                    </Col>
-                  </Row>
-                </Col>
-
-                <Col span={12} className="pb-3">
-                  <Row>
-                    <Col span={3}>
-                      <img src={avatar} alt="" />
-                    </Col>
-
-                    <Col span={17}>
-                      <p className="top-rated-color1">
-                        Demi Wikinson
-                        <span className="p-message"> 2 mins ago</span>
-                      </p>
-                      <p>
-                        Is in session with
-                        <span className="gold-color"> Dr. Festus King</span>
-                      </p>
-                    </Col>
-
-                    <Col span={3}>
-                      <img src={dot} alt="" />
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
-            </Card>
-          </Col>
         </Row>
       </div>
     </div>
   );
 };
 
-export default dashboard;
+export default Dashboard;

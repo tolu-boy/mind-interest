@@ -43,6 +43,10 @@ const Index1 = () => {
       return store.setToken
        })
 
+       const setIp= useStore((store)=>{
+        return store.setIp
+         })
+
   const onFinish = (values) => {
     setLoading(true)
    
@@ -50,14 +54,17 @@ const Index1 = () => {
     axios.post('https://stormy-castle-63253.herokuapp.com/admin/login',{
       email:values.email,
       password:values.password,
-      ip_address: ip
+      ip: ip
     }).then((res)=>{
       if (res.status === 200) {
         setAuth(true)
         setLoading(false)
         localStorage.setItem("token",  res.data.data.token );
         localStorage.setItem("auth",  true );
+        localStorage.setItem("ip",  ip );
+
         setToken( res.data.data.token)
+        setIp(ip)
         history.push(`${APP_PREFIX_PATH}/dashboard`);
 
       }else{

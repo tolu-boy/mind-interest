@@ -4,7 +4,6 @@ import {
   UserOutlined,
   BarChartOutlined,
   PieChartOutlined,
-  MessageOutlined,
   LogoutOutlined
 } from '@ant-design/icons';
 import { APP_PREFIX_PATH } from 'configs/AppConfig'
@@ -184,14 +183,14 @@ const dashBoardNavTree = [
 
 
 
-{
-  key: 'Messages',
-  path: `${APP_PREFIX_PATH}/message`,
-  title: 'Messages',
-  icon: MessageOutlined ,
-  breadcrumb: false,
-  submenu: []
-},
+// {
+//   key: 'Messages',
+//   path: `${APP_PREFIX_PATH}/message`,
+//   title: 'Messages',
+//   icon: MessageOutlined ,
+//   breadcrumb: false,
+//   submenu: []
+// },
 
 
 
