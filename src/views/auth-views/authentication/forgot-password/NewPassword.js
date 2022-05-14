@@ -42,7 +42,7 @@ const NewPassword = () => {
         console.log("Success:", values);
     setLoading(true)
 
-    axios.put(`https://stormy-castle-63253.herokuapp.com/admin/reset-password`,{
+    axios.put(`https://app.themindinterest.com/admin/reset-password`,{
       token:param.token,
       password:values.password
     }).then((res)=>{

@@ -7,7 +7,7 @@ import { Route, Switch } from 'react-router-dom';
 import { ThemeSwitcherProvider } from "react-css-theme-switcher";
 import { THEME_CONFIG } from './configs/AppConfig';
 import {QueryClientProvider,QueryClient} from 'react-query'
-// import { ReactQueryDevtools } from 'react-query/devtools'
+import { ReactQueryDevtools } from 'react-query/devtools'
 
 
 const themes = {
@@ -36,7 +36,7 @@ function App() {
               <Route path="/" component={Views}/>
             </Switch>
           </Router>
-          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+          <ReactQueryDevtools initialIsOpen={false} />
           </QueryClientProvider>
         </ThemeSwitcherProvider>
       </Provider>

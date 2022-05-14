@@ -4,12 +4,11 @@ const ApiService = {}
 
 
 export const axios = globalAxios.create({
-    baseURL: 'https://stormy-castle-63253.herokuapp.com/admin', 
+    baseURL: 'https://app.themindinterest.com/admin', 
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')} :: ${localStorage.getItem('ip')}`
       }
     }
-  
   )
 
 

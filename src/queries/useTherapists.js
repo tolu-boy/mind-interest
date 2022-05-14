@@ -9,3 +9,5 @@ const getTherapists= async () => {
 export default function useTherapists() {
   return useQuery("therapists",  getTherapists);
 }
+
+

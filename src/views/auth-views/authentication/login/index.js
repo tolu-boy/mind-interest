@@ -51,7 +51,7 @@ const Index1 = () => {
     setLoading(true)
    
     console.log("Success:", values);
-    axios.post('https://stormy-castle-63253.herokuapp.com/admin/login',{
+    axios.post('https://app.themindinterest.com/admin/login',{
       email:values.email,
       password:values.password,
       ip: ip
@@ -61,7 +61,7 @@ const Index1 = () => {
         setLoading(false)
         localStorage.setItem("token",  res.data.data.token );
         localStorage.setItem("auth",  true );
-        localStorage.setItem("ip",  ip );
+        localStorage.setItem("ip",  ip  );
 
         setToken( res.data.data.token)
         setIp(ip)

@@ -217,7 +217,7 @@ const Dashboard = () => {
               <Row>
               {(sessions) ? <>
                 { sessions?.data.sessions.map(() => (
-                  <Col span={12} className="pb-3">
+                  <Col span={12}  className="pb-3">
                     <Row>
                       <Col span={4}>
                         <img src={avatar} alt="" />

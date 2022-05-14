@@ -33,7 +33,7 @@ const Password = () => {
     const onFinish = (values) => {
         console.log("Success:", values);
         setLoading(true)
-        axios.post('https://stormy-castle-63253.herokuapp.com/admin/forgot-password',{
+        axios.post('https://app.themindinterest.com/admin/forgot-password',{
           email:values.Email,
        
         }).then((res)=>{

@@ -12,146 +12,11 @@ import snake1 from "../../../assets/img/snake1.svg";
 import snake2 from "../../../assets/img/snake2.svg";
 import snake3 from "../../../assets/img/snake3.svg";
 import avatar2 from "../../../assets/img/Avatar.svg";
+import useTherapists from "queries/useTherapists";
+import useTransactions from "queries/useTransactions";
 
-const columns = [
-  {
-    title: "Therapist",
-    dataIndex: "name",
-    key: "name",
-    render: (text, record) => {
-      return (
-        <div>
-          <Row>
-            <Col md={10} xs={24}>
-              <img src={avatar2} alt="products" className="product-img" />
-            </Col>
 
-            <Col md={14} xs={24}>
-              <Row>
-                <Col md={24} xs={24}>
-                  <p className="top-rated-color1"> {record.name}</p>
-                </Col>
 
-                <Col md={24} xs={24}>
-                  {/* change it from api  */}
-                  <p className="p-message"> {record.name}</p>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </div>
-      );
-    },
-  },
-
-  {
-    title: "Status",
-    key: "tags",
-    dataIndex: "tags",
-    render: (tags, text) => (
-      <span>
-        {tags.map((tag) => {
-          let color;
-          let textColor;
-          if (tag === "Active") {
-            color = "#DFFFF6";
-            textColor = "#00966D";
-          }
-
-          if (tag === "Suspended") {
-            color = "#FFED8A";
-            textColor = "#AB6C0D";
-          }
-          return (
-            <Tag color={color} style={{ color: textColor }} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </span>
-    ),
-  },
-
-  {
-    title: "Price",
-    dataIndex: "age",
-    key: "address",
-  },
-
-  {
-    title: "Earnings",
-    dataIndex: "Earnings",
-    key: "Earnings",
-    render: (Earnings, text) => (
-      <span>
-        {Earnings.map((tag) => {
-          let color = "#EFEFEF";
-          let textColor = "#1A1D1F";
-          return (
-            <div>
-              <Row gutter={16}>
-                <Col md={12} xs={24}>
-                  <Tag color={color} style={{ color: textColor }} key={tag}>
-                    {tag}
-                  </Tag>
-                </Col>
-
-                <Col md={12} xs={24}>
-                  <p className="rev-green">
-                    <ArrowUpOutlined /> 55.8%
-                  </p>
-                </Col>
-              </Row>
-            </div>
-          );
-        })}
-      </span>
-    ),
-  },
-
-  {
-    title: "Sessions",
-    dataIndex: "age",
-    key: "address",
-  },
-
-  {
-    title: "Ratings",
-    dataIndex: "Ratings",
-    key: "Ratings",
-    render: (Ratings, text) => (
-      <span>
-        {Ratings.map((tag) => {
-          let color = "#00BA88";
-          let textColor = "#ffff";
-          return (
-            <div>
-              <Row>
-                <Col span={24}>
-                  <Tag color={color} style={{ color: textColor }} key={tag}>
-                    <StarFilled /> {tag}
-                  </Tag>
-                </Col>
-              </Row>
-            </div>
-          );
-        })}
-      </span>
-    ),
-  },
-
-  // {
-  //   title: "Action",
-  //   key: "action",
-  //   render: (text, record) => (
-  //     <span>
-  //       <Button size="small" type="primary">
-  //         View
-  //       </Button>
-  //     </span>
-  //   ),
-  // },
-];
 
 const data = [
   {
@@ -223,7 +88,10 @@ const rowSelection = {
   },
 };
 
-const Overview = () => {
+const Overview =  () => {
+  
+
+
   const [selectionType] = useState("checkbox");
   const [search, setSearch] = useState()
 
@@ -232,6 +100,170 @@ const Overview = () => {
   function handleChange(value) {
     console.log(`selected ${value}`);
   }
+
+  const { data: therapists } = useTherapists();
+  const { data: transactions } = useTransactions();
+  const totalAmount = transactions ? transactions.data.totalAmount : 1200000;
+  const mapTherapist = therapists? therapists.data.therapists.map((row,i)=>({
+    key: i,
+    name: row.name,
+    specialty: row.specialty,
+    price: row.hourly_rate,
+    Earnings: [row.balance],
+    tags: [row.approval_status],
+    // schedule: row.schedule.lenght,
+
+  })) : []; 
+  
+  const columns = [
+    {
+      title: "Therapist",
+      dataIndex: "name",
+      key: "name",
+      render: (text, record) => {
+        return (
+          <div>
+            <Row>
+              <Col md={10} xs={24}>
+                <img src={avatar2} alt="products" className="product-img" />
+              </Col>
+  
+              <Col md={14} xs={24}>
+                <Row>
+                  <Col md={24} xs={24}>
+                    <p className="top-rated-color1"> {record.name}</p>
+                  </Col>
+  
+                  <Col md={24} xs={24}>
+                    {/* change it from api  */}
+                    <p className="p-message"> {record.specialty}</p>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </div>
+        );
+      },
+    },
+  
+    {
+      title: "Status",
+      key: "tags",
+      dataIndex: "tags",
+      render: (tags, text) => (
+        <span>
+          {tags.map((tag) => {
+            let color;
+            let textColor;
+            if (tag === 0) {
+              color = "#DFFFF6";
+              textColor = "#00966D";
+              tag = "Waiting"
+            }
+  
+            if (tag === 1) {
+              color = "#DFFFF6";
+              textColor = "#00966D";
+              tag = "Approved"
+            }
+
+            if (tag === 2) {
+              color = "#FFED8A";
+              textColor = "#AB6C0D";
+              tag = "Suspended"
+
+            }
+            return (
+              <Tag color={color} style={{ color: textColor }} key={tag}>
+                {tag  } 
+
+              </Tag>
+            );
+          })}
+        </span>
+      ),
+    },
+  
+    {
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
+    },
+  
+    {
+      title: "Earnings",
+      dataIndex: "Earnings",
+      key: "Earnings",
+      render: (Earnings, text) => (
+        <span>
+          {Earnings.map((tag) => {
+            let color = "#EFEFEF";
+            let textColor = "#1A1D1F";
+            return (
+              <div>
+                <Row gutter={16}>
+                  <Col md={12} xs={24}>
+                    <Tag color={color} style={{ color: textColor }} key={tag}>
+                      {tag}
+                    </Tag>
+                  </Col>
+  
+                  {/* <Col md={12} xs={24}>
+                    <p className="rev-green">
+                      <ArrowUpOutlined /> 55.8%
+                    </p>
+                  </Col> */}
+                </Row>
+              </div>
+            );
+          })}
+        </span>
+      ),
+    },
+  
+    // {
+    //   title: "Sessions",
+    //   dataIndex: "schedule",
+    //   key: "schedule",
+    // },
+  
+    // {
+    //   title: "Ratings",
+    //   dataIndex: "Ratings",
+    //   key: "Ratings",
+    //   render: (Ratings, text) => (
+    //     <span>
+    //       {Ratings.map((tag) => {
+    //         let color = "#00BA88";
+    //         let textColor = "#ffff";
+    //         return (
+    //           <div>
+    //             <Row>
+    //               <Col span={24}>
+    //                 <Tag color={color} style={{ color: textColor }} key={tag}>
+    //                   <StarFilled /> {tag}
+    //                 </Tag>
+    //               </Col>
+    //             </Row>
+    //           </div>
+    //         );
+    //       })}
+    //     </span>
+    //   ),
+    // },
+  
+    // {
+    //   title: "Action",
+    //   key: "action",
+    //   render: (text, record) => (
+    //     <span>
+    //       <Button size="small" type="primary">
+    //         View
+    //       </Button>
+    //     </span>
+    //   ),
+    // },
+  ];
 
   const cardHeader = (
     <div>
@@ -298,7 +330,7 @@ const Overview = () => {
                 <Col md={24} xs={24} className="minus13">
                   <Row>
                     <Col md={16} xs={24}>
-                      <p className="rev-amount">₦1.28m</p>
+                      <p className="rev-amount">₦{totalAmount}</p>
                     </Col>
                     <Col md={8} xs={24} className="d-none1">
                       <img src={snake1} alt="over1" />
@@ -389,7 +421,7 @@ const Overview = () => {
             ...rowSelection,
           }}
           columns={columns}
-          dataSource={data}
+          dataSource={mapTherapist}
         />
       </Card>
     </div>
