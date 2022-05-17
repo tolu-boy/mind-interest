@@ -66,6 +66,8 @@ const Index1 = () => {
         setToken( res.data.data.token)
         setIp(ip)
         history.push(`${APP_PREFIX_PATH}/dashboard`);
+        window.location.reload();
+
 
       }else{
         openNotificationWithIcon("error");
