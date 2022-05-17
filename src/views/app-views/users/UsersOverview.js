@@ -108,8 +108,8 @@ const UsersOverview = () => {
     key: i,
     name: row.name,
     phone: row.phone,
-    dateJoined: row.createdAt,
-    LatestAcess : row.updatedAt,
+    dateJoined: new Date(row.createdAt).toDateString(),
+    LatestAcess : new Date(row.updatedAt).toDateString(),
     tags: [row.status]
 
   })) : []; 
