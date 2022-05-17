@@ -3,13 +3,15 @@ import {
   ArrowLeftOutlined,
   ArrowUpOutlined,
   ArrowRightOutlined,
+  ExclamationCircleTwoTone
 } from "@ant-design/icons";
-import { Card, Row, Col, Button, Select } from "antd";
+import { Card, Row, Col, Button, Select,Modal,notification} from "antd";
 import background from "../../../assets/img/background.svg";
 import profile from "../../../assets/img/profile.svg";
 import Chart from "react-apexcharts";
 import useSingleTherapist from "queries/useSingleTherapist";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory} from "react-router-dom";
+import ApiService from "services/ApiService";
 
 const chartState = {
   series: [
@@ -53,9 +55,62 @@ const chartState = {
 const ProfileWaiting = () => {
   const { Option } = Select;
   const param = useParams();
+  const history = useHistory();
+
 
   const { data: SingleTherapist } = useSingleTherapist(param.id);
   let Therapist = SingleTherapist?.data.therapist ?? "";
+  const [visible, setVisible] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [visible1, setVisible1] = useState(false);
+  const [confirmLoading1, setConfirmLoading1] = useState(false);
+
+  const openNotificationWithIcon = (type) => {
+    notification[type]({
+      message: "Suspend Therapist",
+      description: `The Therapist has been Rejected`,
+    });
+  };
+
+  const openNotificationWithIcon1 = (type) => {
+    notification[type]({
+      message: "Accept Therapist",
+      description: `The Therapist has been Accepted`,
+    });
+  };
+
+  const handleOk = async () => {
+  setConfirmLoading(true);
+  await ApiService.rejectTherapist(param.id)
+  setConfirmLoading(false);
+  setVisible(false)
+  openNotificationWithIcon("success");
+  history.push(`/app/therapists/ProfileSuspended/${param.id}`);
+
+
+  };
+
+
+  const handleOk1 = async () => {
+    setConfirmLoading1(true);
+    await ApiService.acceptTherapist(param.id)
+    setConfirmLoading1(false);
+    setVisible1(false)
+    openNotificationWithIcon1("success");
+    history.push(`/app/therapists/ProfileApproved/${param.id}`);
+  
+  
+    };
+
+  const handleCancel = () => {
+    console.log("Clicked cancel button");
+    setVisible(false);
+  };
+
+  const handleCancel1 = () => {
+    console.log("Clicked cancel button");
+    setVisible1(false);
+  };
 
   function handleChange(value) {
     console.log(`selected ${value}`);
@@ -121,8 +176,60 @@ const ProfileWaiting = () => {
     </div>
   );
 
+
+  const deleteTitle = (
+    <div>
+      <Row>
+        <Col span={2}>
+          <ExclamationCircleTwoTone twoToneColor="#ffc53d" />
+        </Col>
+        <Col span={12}>
+          <p>Reject Therapist</p>
+        </Col>
+      </Row>
+    </div>
+  );
+
+
+  const deleteTitle1 = (
+    <div>
+      <Row>
+        <Col span={2}>
+          <ExclamationCircleTwoTone twoToneColor="#ffc53d" />
+        </Col>
+        <Col span={12}>
+          <p>Accept Therapist</p>
+        </Col>
+      </Row>
+    </div>
+  );
+
+
   return (
     <div>
+
+<Modal
+        title={deleteTitle}
+        visible={visible}
+        onOk={handleOk}
+        confirmLoading={confirmLoading}
+        onCancel={handleCancel}
+      >
+        <p> Are you sure you want to Reject this Therapist ?</p>
+      </Modal>
+
+
+      <Modal
+        title={deleteTitle1}
+        visible={visible1}
+        onOk={handleOk1}
+        confirmLoading={confirmLoading1}
+        onCancel={handleCancel1}
+      >
+        <p> Are you sure you want to Accept this Therapist ?</p>
+      </Modal>
+
+
       <p className="profile-heading">
         <span className="pr-2">
           <ArrowLeftOutlined />
@@ -130,12 +237,13 @@ const ProfileWaiting = () => {
         Therapists / Profile details
       </p>
 
+
+
       <Row className="pt-4" gutter={24}>
         <Col md={14}>
           <Row gutter={16}>
             <Col md={24}>
               <Card
-                // style={{ width: 600 }}
                 cover={<img alt="example" src={background} />}
                 className="profileCard"
               >
@@ -223,13 +331,19 @@ const ProfileWaiting = () => {
         <Col md={10}>
           <Row gutter={16}>
             <Col md={12}>
-              <Button block className="buttonReject">
+              <Button block className="buttonReject" onClick={()=>{
+                               setVisible(true)
+
+              }} >
                 Reject
               </Button>
             </Col>
 
             <Col md={12}>
-              <Button block className="buttonAccept">
+              <Button block className="buttonAccept" onClick={()=>{
+                               setVisible1(true)
+
+              }}>
                 Accept
               </Button>
             </Col>
