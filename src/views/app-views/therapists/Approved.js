@@ -1,13 +1,25 @@
 import React, { useState } from "react";
 import { Card, Row, Col, Input, Table, Tag, Button } from "antd";
-import { ArrowUpOutlined, SearchOutlined, StarFilled } from "@ant-design/icons";
+import {  SearchOutlined } from "@ant-design/icons";
 import more from "../../../assets/img/More.svg";
 import comment from "../../../assets/img/Comment.svg";
 import avatar2 from "../../../assets/img/Avatar.svg";
 import { useHistory } from "react-router-dom";
+import useApprovedTherapists from "queries/useApprovedTherapits";
 
 const Approved = () => {
   const history = useHistory();
+  const { data: ApprovedTherapists } = useApprovedTherapists();
+   
+  const mapApprovedTherapists = ApprovedTherapists? ApprovedTherapists.data.therapists.map((row,i)=>({
+    key: i,
+    name: row.name,
+    price: row.hourly_rate,
+    Earnings: [row.balance],
+    tags: [row.approval_status],
+    id:row.id
+
+  })) : []; 
 
   const columns = [
     {
@@ -49,29 +61,40 @@ const Approved = () => {
           {tags.map((tag) => {
             let color;
             let textColor;
-            if (tag === "Active") {
+            if (tag === 0) {
               color = "#DFFFF6";
               textColor = "#00966D";
+              tag = "Waiting"
+            }
+  
+            if (tag === 1) {
+              color = "#DFFFF6";
+              textColor = "#00966D";
+              tag = "Active"
             }
 
-            if (tag === "Suspended") {
+            if (tag === 2) {
               color = "#FFED8A";
               textColor = "#AB6C0D";
+              tag = "Suspended"
+
             }
             return (
               <Tag color={color} style={{ color: textColor }} key={tag}>
-                {tag.toUpperCase()}
+                {tag  } 
+
               </Tag>
             );
           })}
         </span>
       ),
     },
+  
 
     {
       title: "Price",
-      dataIndex: "age",
-      key: "address",
+      dataIndex: "price",
+      key: "price",
     },
 
     {
@@ -90,13 +113,7 @@ const Approved = () => {
                     <Tag color={color} style={{ color: textColor }} key={tag}>
                       {tag}
                     </Tag>
-                  </Col>
-
-                  <Col md={12} xs={24}>
-                    <p className="rev-green">
-                      <ArrowUpOutlined /> 55.8%
-                    </p>
-                  </Col>
+                  </Col>                  
                 </Row>
               </div>
             );
@@ -105,36 +122,36 @@ const Approved = () => {
       ),
     },
 
-    {
-      title: "Sessions",
-      dataIndex: "age",
-      key: "address",
-    },
+    // {
+    //   title: "Sessions",
+    //   dataIndex: "age",
+    //   key: "address",
+    // },
 
-    {
-      title: "Ratings",
-      dataIndex: "Ratings",
-      key: "Ratings",
-      render: (Ratings, text) => (
-        <span>
-          {Ratings.map((tag) => {
-            let color = "#00BA88";
-            let textColor = "#ffff";
-            return (
-              <div>
-                <Row>
-                  <Col span={24}>
-                    <Tag color={color} style={{ color: textColor }} key={tag}>
-                      <StarFilled /> {tag}
-                    </Tag>
-                  </Col>
-                </Row>
-              </div>
-            );
-          })}
-        </span>
-      ),
-    },
+    // {
+    //   title: "Ratings",
+    //   dataIndex: "Ratings",
+    //   key: "Ratings",
+    //   render: (Ratings, text) => (
+    //     <span>
+    //       {Ratings.map((tag) => {
+    //         let color = "#00BA88";
+    //         let textColor = "#ffff";
+    //         return (
+    //           <div>
+    //             <Row>
+    //               <Col span={24}>
+    //                 <Tag color={color} style={{ color: textColor }} key={tag}>
+    //                   <StarFilled /> {tag}
+    //                 </Tag>
+    //               </Col>
+    //             </Row>
+    //           </div>
+    //         );
+    //       })}
+    //     </span>
+    //   ),
+    // },
 
     {
       title: "Action",
@@ -146,7 +163,7 @@ const Approved = () => {
             type="primary"
             onClick={() => {
               history.push({
-                pathname: "/app/therapists/ProfileApproved",
+                pathname: `/app/therapists/ProfileApproved/${record.id}`,
               });
             }}
           >
@@ -157,65 +174,65 @@ const Approved = () => {
     },
   ];
 
-  const data = [
-    {
-      key: "1",
-      name: "John Brown",
-      age: 32,
-      address: "New York No. 1 Lake Park",
-      tags: ["Active"],
-      Earnings: [89999],
-      Ratings: [4.8],
-    },
-    {
-      key: "2",
-      name: "Jim Green",
-      age: 42,
-      address: "London No. 1 Lake Park",
-      tags: ["Active"],
-      Earnings: [89999],
-      Ratings: [4.5],
-    },
-    {
-      key: "3",
-      name: "Joe Black",
-      age: 32,
-      address: "Sidney No. 1 Lake Park",
-      tags: ["Suspended"],
-      Earnings: [89999],
-      Ratings: [4.7],
-    },
+  // const data = [
+  //   {
+  //     key: "1",
+  //     name: "John Brown",
+  //     age: 32,
+  //     address: "New York No. 1 Lake Park",
+  //     tags: ["Active"],
+  //     Earnings: [89999],
+  //     Ratings: [4.8],
+  //   },
+  //   {
+  //     key: "2",
+  //     name: "Jim Green",
+  //     age: 42,
+  //     address: "London No. 1 Lake Park",
+  //     tags: ["Active"],
+  //     Earnings: [89999],
+  //     Ratings: [4.5],
+  //   },
+  //   {
+  //     key: "3",
+  //     name: "Joe Black",
+  //     age: 32,
+  //     address: "Sidney No. 1 Lake Park",
+  //     tags: ["Suspended"],
+  //     Earnings: [89999],
+  //     Ratings: [4.7],
+  //   },
 
-    {
-      key: "4",
-      name: "Joe Black",
-      age: 32,
-      address: "Sidney No. 1 Lake Park",
-      tags: ["Suspended"],
-      Earnings: [89999],
-      Ratings: [4.7],
-    },
+  //   {
+  //     key: "4",
+  //     name: "Joe Black",
+  //     age: 32,
+  //     address: "Sidney No. 1 Lake Park",
+  //     tags: ["Suspended"],
+  //     Earnings: [89999],
+  //     Ratings: [4.7],
+  //   },
 
-    {
-      key: "5",
-      name: "Joe Black",
-      age: 32,
-      address: "Sidney No. 1 Lake Park",
-      tags: ["Suspended"],
-      Earnings: [89999],
-      Ratings: [4.7],
-    },
+  //   {
+  //     key: "5",
+  //     name: "Joe Black",
+  //     age: 32,
+  //     address: "Sidney No. 1 Lake Park",
+  //     tags: ["Suspended"],
+  //     Earnings: [89999],
+  //     Ratings: [4.7],
+  //   },
 
-    {
-      key: "6",
-      name: "Joe Black",
-      age: 32,
-      address: "Sidney No. 1 Lake Park",
-      tags: ["Suspended"],
-      Earnings: [89999],
-      Ratings: [4.7],
-    },
-  ];
+  //   {
+  //     key: "6",
+  //     name: "Joe Black",
+  //     age: 32,
+  //     address: "Sidney No. 1 Lake Park",
+  //     tags: ["Suspended"],
+  //     Earnings: [89999],
+  //     Ratings: [4.7],
+  //   },
+  // ];
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -262,7 +279,7 @@ const Approved = () => {
             ...rowSelection,
           }}
           columns={columns}
-          dataSource={data}
+          dataSource={mapApprovedTherapists}
         />
       </Card>
     </div>

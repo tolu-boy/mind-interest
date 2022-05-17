@@ -1,13 +1,20 @@
 import { useQuery} from "react-query";
 import { axios } from "../services/ApiService";
 
-const getTherapists= async () => {
-  const { data } = await axios.get("/therapists", );
+const getTherapists= async (q) => {
+  const { data } = await axios.get(`/therapists?query=${q}`, );
   return data;
 };
 
-export default function useTherapists() {
-  return useQuery("therapists",  getTherapists);
+export default function useTherapists(value) {
+//  return  useQuery(
+//     ['therapists', value], 
+//     () => getTherapists(value),
+//     { enabled: Boolean(value) }
+//   )
+  // return useQuery("therapists",  getTherapists(value));
+  return useQuery(['therapists', value], () => getTherapists(value))
+
 }
 
 

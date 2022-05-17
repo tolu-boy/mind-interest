@@ -12,22 +12,17 @@ export const axios = globalAxios.create({
   )
 
 
-  ApiService.getTransactions = async () => {
-    const response = await axios.get( `/transactions`,);
-    return response;
-  };
-
-
-  ApiService.getSessions = async () => {
-    const response = await axios.get( `/sessions`,);
-    return response;
-  };
-
-  ApiService.getRefunds = async () => {
-    const response = await axios.get( `/refunds`,);
-    return response;
-  };
   
+  ApiService.rejectTherapist = async (id) => {
+    const response = await axios.patch( `/suspend-therapist/${id}`);
+    return response
+  };
+
+
+  ApiService.acceptTherapist = async (id) => {
+    const response = await axios.patch( `/activate-therapist/${id}`);
+    return response
+  };
 
   
 export default ApiService

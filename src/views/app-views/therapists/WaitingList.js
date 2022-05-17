@@ -6,6 +6,7 @@ import comment from "../../../assets/img/Comment.svg";
 import { SearchOutlined } from "@ant-design/icons";
 import avatar2 from "../../../assets/img/Avatar.svg";
 import { useHistory } from "react-router-dom";
+import  useWaitingTherapists from 'queries/useWaitingTherapists'
 
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
@@ -18,6 +19,23 @@ const rowSelection = {
 };
 
 const WaitingList = () => {
+
+
+  const [selectionType] = useState("checkbox");
+  const history = useHistory();
+  const { data: WaitingTherapits } = useWaitingTherapists();
+
+  const mapWaitingTherapits = WaitingTherapits? WaitingTherapits.data.therapists.map((row,i)=>({
+    key: i,
+    name: row.name,
+    Qualification: row.educational_qualification,
+    NPA: row.NPA_reg_num,
+    id:row.id
+
+  })) : []; 
+
+
+
   const columns = [
     {
       title: "Therapist",
@@ -71,7 +89,7 @@ const WaitingList = () => {
             type="primary"
             onClick={() => {
               history.push({
-                pathname: "/app/therapists/ProfileWaiting",
+                pathname: `/app/therapists/ProfileWaiting/${record.id}`,
               });
             }}
           >
@@ -81,57 +99,6 @@ const WaitingList = () => {
       ),
     },
   ];
-
-  const data = [
-    {
-      key: "1",
-      name: "John Brown",
-
-      Qualification: "Doctorate (PhD)",
-      NPA: "N4PH12BA2334",
-    },
-    {
-      key: "2",
-      name: "Jim Green",
-
-      Qualification: "Doctorate (PhD)",
-      NPA: "N4PH12BA2334",
-    },
-    {
-      key: "3",
-      name: "Joe Black",
-
-      Qualification: "Doctorate (PhD)",
-      NPA: "N4PH12BA2334",
-    },
-
-    {
-      key: "4",
-      name: "Joe Black",
-      Qualification: "Doctorate (PhD)",
-      NPA: "N4PH12BA2334",
-    },
-
-    {
-      key: "5",
-      name: "Joe Black",
-
-      Qualification: "Doctorate (PhD)",
-      NPA: "N4PH12BA2334",
-    },
-
-    {
-      key: "6",
-      name: "Joe Black",
-
-      Qualification: "Doctorate (PhD)",
-      NPA: "N4PH12BA2334",
-    },
-  ];
-
-  const [selectionType] = useState("checkbox");
-  const history = useHistory();
-
   const cardHeader1 = (
     <div>
       <Row>
@@ -166,7 +133,6 @@ const WaitingList = () => {
 
         <Col md={2} xs={24} className="pb-5 pt-3">
           <Button type="primary" size="small">
-            {" "}
             Add New
           </Button>
         </Col>
@@ -179,7 +145,7 @@ const WaitingList = () => {
             ...rowSelection,
           }}
           columns={columns}
-          dataSource={data}
+          dataSource={mapWaitingTherapits}
         />
       </Card>
     </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, Row, Col, Select, Input, Table, Tag } from "antd";
-import { ArrowUpOutlined, SearchOutlined, StarFilled } from "@ant-design/icons";
+import { ArrowUpOutlined, SearchOutlined} from "@ant-design/icons";
 
 import over1 from "../../../assets/img/over1.svg";
 import over2 from "../../../assets/img/over2.svg";
@@ -17,66 +17,6 @@ import useTransactions from "queries/useTransactions";
 
 
 
-
-const data = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-    tags: ["Active"],
-    Earnings: [89999],
-    Ratings: [4.8],
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-    tags: ["Active"],
-    Earnings: [89999],
-    Ratings: [4.5],
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["Suspended"],
-    Earnings: [89999],
-    Ratings: [4.7],
-  },
-
-  {
-    key: "4",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["Suspended"],
-    Earnings: [89999],
-    Ratings: [4.7],
-  },
-
-  {
-    key: "5",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["Suspended"],
-    Earnings: [89999],
-    Ratings: [4.7],
-  },
-
-  {
-    key: "6",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["Suspended"],
-    Earnings: [89999],
-    Ratings: [4.7],
-  },
-];
 
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
@@ -101,7 +41,7 @@ const Overview =  () => {
     console.log(`selected ${value}`);
   }
 
-  const { data: therapists } = useTherapists();
+  const { data: therapists } = useTherapists(search);
   const { data: transactions } = useTransactions();
   const totalAmount = transactions ? transactions.data.totalAmount : 1200000;
   const mapTherapist = therapists? therapists.data.therapists.map((row,i)=>({
@@ -111,7 +51,7 @@ const Overview =  () => {
     price: row.hourly_rate,
     Earnings: [row.balance],
     tags: [row.approval_status],
-    // schedule: row.schedule.lenght,
+    // schedule: row.updatedAt
 
   })) : []; 
   
@@ -164,7 +104,7 @@ const Overview =  () => {
             if (tag === 1) {
               color = "#DFFFF6";
               textColor = "#00966D";
-              tag = "Approved"
+              tag = "Active"
             }
 
             if (tag === 2) {
@@ -176,7 +116,6 @@ const Overview =  () => {
             return (
               <Tag color={color} style={{ color: textColor }} key={tag}>
                 {tag  } 
-
               </Tag>
             );
           })}

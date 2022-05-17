@@ -12,9 +12,9 @@ export const AppViews = () => {
       <Route path={`${APP_PREFIX_PATH}/therapists/WaitingList`} component={lazy(() => import(`./therapists/WaitingList`))} />
       <Route path={`${APP_PREFIX_PATH}/therapists/Approved`} component={lazy(() => import(`./therapists/Approved`))} />
       <Route path={`${APP_PREFIX_PATH}/therapists/Suspended`} component={lazy(() => import(`./therapists/Suspended`))} />
-      <Route path={`${APP_PREFIX_PATH}/therapists/ProfileApproved`} component={lazy(() => import(`./therapists/ProfileApproved`))} />
-      <Route path={`${APP_PREFIX_PATH}/therapists/ProfileWaiting`} component={lazy(() => import(`./therapists/ProfileWaiting`))} />
-      <Route path={`${APP_PREFIX_PATH}/therapists/ProfileSuspended`} component={lazy(() => import(`./therapists/ProfileSuspended`))} />
+      <Route path={`${APP_PREFIX_PATH}/therapists/ProfileApproved/:id`} component={lazy(() => import(`./therapists/ProfileApproved`))} />
+      <Route path={`${APP_PREFIX_PATH}/therapists/ProfileWaiting/:id`} component={lazy(() => import(`./therapists/ProfileWaiting`))} />
+      <Route path={`${APP_PREFIX_PATH}/therapists/ProfileSuspended/:id`} component={lazy(() => import(`./therapists/ProfileSuspended`))} />
       <Route path={`${APP_PREFIX_PATH}/users/UsersOverview`} component={lazy(() => import(`./users/UsersOverview`))} />
       <Route path={`${APP_PREFIX_PATH}/users/UsersActive`} component={lazy(() => import(`./users/UsersActive`))} />
       <Route path={`${APP_PREFIX_PATH}/users/UsersSuspended`} component={lazy(() => import(`./users/UsersSuspended`))} />

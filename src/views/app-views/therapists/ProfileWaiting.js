@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   ArrowLeftOutlined,
   ArrowUpOutlined,
@@ -8,6 +8,8 @@ import { Card, Row, Col, Button, Select } from "antd";
 import background from "../../../assets/img/background.svg";
 import profile from "../../../assets/img/profile.svg";
 import Chart from "react-apexcharts";
+import useSingleTherapist from "queries/useSingleTherapist";
+import { useParams } from "react-router-dom";
 
 const chartState = {
   series: [
@@ -15,8 +17,6 @@ const chartState = {
       name: "Desktops",
       data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
     },
-
-
   ],
   options: {
     chart: {
@@ -31,10 +31,8 @@ const chartState = {
     stroke: {
       curve: "smooth",
       width: 3,
-      
     },
 
-    
     colors: ["#12B76A"],
     xaxis: {
       categories: [
@@ -54,6 +52,10 @@ const chartState = {
 
 const ProfileWaiting = () => {
   const { Option } = Select;
+  const param = useParams();
+
+  const { data: SingleTherapist } = useSingleTherapist(param.id);
+  let Therapist = SingleTherapist?.data.therapist ?? "";
 
   function handleChange(value) {
     console.log(`selected ${value}`);
@@ -143,8 +145,15 @@ const ProfileWaiting = () => {
                   </Col>
 
                   <Col md={15}>
-                    <li className="proileName"> Dr. Festus King</li>
-                    <li className="proileWork pt-2 "> Family counselor</li>
+                    <li className="proileName">
+                      {/* {SingleTherapist ? t.name : "Dr. Festus King"} */}
+                      {Therapist.name}
+                    </li>
+                    <li className="proileWork pt-2 ">
+                      {SingleTherapist
+                        ? SingleTherapist.data.therapist.specialty
+                        : "Family counselor "}
+                    </li>
                   </Col>
 
                   <Col md={3}>
@@ -233,7 +242,12 @@ const ProfileWaiting = () => {
                   </Col>
 
                   <Col md={4} className="pb-4">
-                    <li className="textEnd"> N20,000</li>
+                    <li className="textEnd">
+                      N
+                      {SingleTherapist
+                        ? SingleTherapist.data.therapist.hourly_rate
+                        : "20000"}
+                    </li>
                   </Col>
 
                   <Col md={20}>
@@ -241,7 +255,11 @@ const ProfileWaiting = () => {
                   </Col>
 
                   <Col md={4} className="pb-4">
-                    <li className="textEnd"> Male</li>
+                    <li className="textEnd">
+                      {SingleTherapist
+                        ? SingleTherapist.data.therapist.gender
+                        : "Male"}
+                    </li>
                   </Col>
 
                   <Col md={14}>
@@ -249,7 +267,11 @@ const ProfileWaiting = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd"> festuskingdr@email.com</li>
+                    <li className="textEnd">
+                      {SingleTherapist
+                        ? SingleTherapist.data.therapist.email
+                        : "festuskingdr@email.com"}
+                    </li>
                   </Col>
 
                   <Col md={14}>
@@ -257,7 +279,11 @@ const ProfileWaiting = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd"> 080123456789</li>
+                    <li className="textEnd">
+                      {SingleTherapist
+                        ? SingleTherapist.data.therapist.phone
+                        : "080123456789"}
+                    </li>
                   </Col>
 
                   <Col md={14}>
@@ -265,7 +291,9 @@ const ProfileWaiting = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">Doctorate (PhD)</li>
+                    <li className="textEnd">
+                      {Therapist.educational_qualification}
+                    </li>
                   </Col>
 
                   <Col md={14}>
@@ -273,7 +301,9 @@ const ProfileWaiting = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">18/03/2004</li>
+                    <li className="textEnd">
+                      {Therapist.date_of_first_registration}
+                    </li>
                   </Col>
 
                   <Col md={14}>
@@ -281,7 +311,9 @@ const ProfileWaiting = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">Psychology</li>
+                    <li className="textEnd">
+                      {Therapist.category_of_membership}
+                    </li>
                   </Col>
 
                   <Col md={14}>
@@ -289,7 +321,7 @@ const ProfileWaiting = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">H78NA12MP009</li>
+                    <li className="textEnd">{Therapist.NPA_reg_num}</li>
                   </Col>
 
                   <Col md={12}>
@@ -297,9 +329,7 @@ const ProfileWaiting = () => {
                   </Col>
 
                   <Col md={12} className="pb-4">
-                    <li className="textEnd">
-                      23, Lanre Balon Drive, Lekki phase 1. Lagos state. Nigeria
-                    </li>
+                    <li className="textEnd">{Therapist.address}</li>
                   </Col>
 
                   <Col md={24} className="pb-4">
@@ -323,7 +353,7 @@ const ProfileWaiting = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd rev-green">Active</li>
+                    <li className="textEnd rev-green">Waiting</li>
                   </Col>
 
                   <Col md={14}>

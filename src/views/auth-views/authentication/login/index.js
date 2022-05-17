@@ -18,7 +18,7 @@ const Index1 = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-  const [ip, setIP] = useState(false);
+  const [ip, setIP] = useState("102.89.32.6");
 
 
   const location = ()=>{

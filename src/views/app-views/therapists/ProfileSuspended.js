@@ -3,13 +3,16 @@ import {
   ArrowLeftOutlined,
   ArrowUpOutlined,
   ArrowRightOutlined,
+  ExclamationCircleTwoTone
 } from "@ant-design/icons";
-import { Card, Row, Col, Button, Select } from "antd";
+import { Card, Row, Col, Button, Select,notification,Modal } from "antd";
 import background from "../../../assets/img/background.svg";
 import profile from "../../../assets/img/profile.svg";
 import Chart from "react-apexcharts";
 import avatar2 from "../../../assets/img/Avatar.svg";
-
+import useSingleTherapist from "queries/useSingleTherapist";
+import { useParams ,useHistory} from "react-router-dom";
+import ApiService from "services/ApiService";
 const chartState = {
   series: [
     {
@@ -50,6 +53,38 @@ const chartState = {
 
 const ProfileSuspended = () => {
   const { Option } = Select;
+  const param = useParams();
+  const history = useHistory();
+
+
+  const { data: SingleTherapist } = useSingleTherapist(param.id);
+  let Therapist = SingleTherapist?.data.therapist ?? "";
+
+  const [visible, setVisible] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+
+  
+
+  const handleOk = async () => {
+  setConfirmLoading(true);
+  await ApiService.acceptTherapist(param.id)
+  setConfirmLoading(false);
+  setVisible(false)
+  openNotificationWithIcon("success");
+  history.push(`/app/therapists/ProfileApproved/${param.id}`);
+
+  };
+
+  const handleCancel = () => {
+    console.log("Clicked cancel button");
+    setVisible(false);
+  };
+  const openNotificationWithIcon = (type) => {
+    notification[type]({
+      message: "Restore Therapist",
+      description: `The Therapist has been Restored`,
+    });
+  };
 
   function handleChange(value) {
     console.log(`selected ${value}`);
@@ -165,8 +200,32 @@ const ProfileSuspended = () => {
     </div>
   );
 
+  const deleteTitle = (
+    <div>
+      <Row>
+        <Col span={2}>
+          <ExclamationCircleTwoTone twoToneColor="#ffc53d" />
+        </Col>
+        <Col span={12}>
+          <p>Restore Therapist</p>
+        </Col>
+      </Row>
+    </div>
+  );
+
+
   return (
     <div>
+
+<Modal
+        title={deleteTitle}
+        visible={visible}
+        onOk={handleOk}
+        confirmLoading={confirmLoading}
+        onCancel={handleCancel}
+      >
+        <p> Are you sure you want to Restore this Therapist ?</p>
+      </Modal>
       <p className="profile-heading">
         <span className="pr-2">
           <ArrowLeftOutlined />
@@ -260,10 +319,15 @@ const ProfileSuspended = () => {
         <Col md={10}>
           <Row>
             <Col md={24}>
-              <Button className="buttonAccept" block>
+              <Button className="buttonAccept" block onClick={()=>{
+               setVisible(true)
+
+              }}>
                 Restore
               </Button>
             </Col>
+
+
 
             <Col md={24} className="pt-4">
               <Card title="Profile details">
@@ -273,7 +337,7 @@ const ProfileSuspended = () => {
                   </Col>
 
                   <Col md={4} className="pb-4">
-                    <li className="textEnd"> N20,000</li>
+                    <li className="textEnd"> N{Therapist.hourly_rate}</li>
                   </Col>
 
                   <Col md={20}>
@@ -281,7 +345,7 @@ const ProfileSuspended = () => {
                   </Col>
 
                   <Col md={4} className="pb-4">
-                    <li className="textEnd"> Male</li>
+                    <li className="textEnd"> {Therapist.gender}</li>
                   </Col>
 
                   <Col md={14}>
@@ -289,7 +353,7 @@ const ProfileSuspended = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd"> festuskingdr@email.com</li>
+                    <li className="textEnd"> {Therapist.email}</li>
                   </Col>
 
                   <Col md={14}>
@@ -297,7 +361,7 @@ const ProfileSuspended = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd"> 080123456789</li>
+                    <li className="textEnd"> {Therapist.phone}</li>
                   </Col>
 
                   <Col md={14}>
@@ -305,7 +369,7 @@ const ProfileSuspended = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">Doctorate (PhD)</li>
+                    <li className="textEnd">{Therapist.educational_qualification}</li>
                   </Col>
 
                   <Col md={14}>
@@ -313,7 +377,7 @@ const ProfileSuspended = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">18/03/2004</li>
+                    <li className="textEnd">{Therapist.date_of_first_registration}</li>
                   </Col>
 
                   <Col md={14}>
@@ -321,7 +385,7 @@ const ProfileSuspended = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">Psychology</li>
+                    <li className="textEnd">{Therapist.date_of_first_registration}</li>
                   </Col>
 
                   <Col md={14}>
@@ -329,7 +393,7 @@ const ProfileSuspended = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">H78NA12MP009</li>
+                    <li className="textEnd">{Therapist.NPA_reg_num}</li>
                   </Col>
 
                   <Col md={12}>
@@ -338,7 +402,7 @@ const ProfileSuspended = () => {
 
                   <Col md={12} className="pb-4">
                     <li className="textEnd">
-                      23, Lanre Balon Drive, Lekki phase 1. Lagos state. Nigeria
+                    {Therapist.address}
                     </li>
                   </Col>
 
