@@ -2,7 +2,7 @@ import { useQuery} from "react-query";
 import { axios } from "../services/ApiService";
 
 const getUsers = async () => {
-  const { data } = await axios.get("/users", );
+  const { data } = await axios.get("/users" );
   return data;
 };
 

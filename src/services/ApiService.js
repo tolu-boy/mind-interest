@@ -16,6 +16,7 @@ export const axios = globalAxios.create({
   ApiService.rejectTherapist = async (id) => {
     const response = await axios.patch( `/suspend-therapist/${id}`);
     return response
+    
   };
 
 

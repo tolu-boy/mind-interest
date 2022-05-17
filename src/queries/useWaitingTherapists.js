@@ -7,7 +7,7 @@ const getWaitingTherapits = async () => {
   return data;
 };
 
-export default function useTransactions() {    
+export default function useWaitingTherapits() {    
   return useQuery("waitingTherapists",  getWaitingTherapits);
 }
 

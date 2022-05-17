@@ -17,6 +17,7 @@ import useTransactions from "queries/useTransactions";
 import useSessions from "queries/useSessions";
 import useRefunds from "queries/useRefunds";
 import useTherapists from "queries/useTherapists";
+import useApprovedTherapists from "queries/useApprovedTherapits";
 export const weeklyRevenueData = {
   series: [
     {
@@ -62,11 +63,15 @@ const Dashboard = () => {
   const { data: sessions } = useSessions();
   const { data: refunds } = useRefunds();
   const { data: therapists } = useTherapists();
+  const { data: ApprovedTherapists } = useApprovedTherapists();
+
   // const maprefunds = refunds.data.refunds.map()
 
   const totalAmount = transactions ? transactions.data.totalAmount : 1200000;
   const totalSessions = sessions ? sessions.data.total : 25;
   const totalRefunds = refunds ? refunds.data.total : 25;
+  const totalActiveUsers = ApprovedTherapists ? ApprovedTherapists.data.total : 25;
+
   // let re = therapists.data.therapists
   //  console.log(re,'lll');
 
@@ -144,7 +149,7 @@ const Dashboard = () => {
                     <p className="t-rev">Active users</p>
                   </Col>
                   <Col span={24}>
-                    <h6 className="rev-amount">645</h6>
+                    <h6 className="rev-amount">{totalActiveUsers}</h6>
                   </Col>
 
                   <Col span={24}>
