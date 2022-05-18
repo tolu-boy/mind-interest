@@ -25,5 +25,18 @@ export const axios = globalAxios.create({
     return response
   };
 
+
+  ApiService.SuspendUsers = async (id) => {
+    const response = await axios.patch( `/suspend-user/${id}`);
+    return response
+    
+  };
+
+  ApiService.ActivateUsers = async (id) => {
+    const response = await axios.patch( `/activate-user/${id}`);
+    return response
+    
+  };
+
   
 export default ApiService

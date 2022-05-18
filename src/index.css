@@ -283,10 +283,10 @@ border-radius: 12px;
   text-align: center;
 }
 
-.ant-tabs-nav{
+/* .ant-tabs-nav{
 
   display: none !important;
-}
+} */
 
 .switchTabs{
   padding-top: 4px;

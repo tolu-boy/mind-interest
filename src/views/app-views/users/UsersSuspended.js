@@ -5,9 +5,22 @@ import more from "../../../assets/img/More.svg";
 import comment from "../../../assets/img/Comment.svg";
 import avatar2 from "../../../assets/img/Avatar.svg";
 import { useHistory } from "react-router-dom";
+import useSuspendedUsers from "queries/useSuspendedUsers";
 
 const UsersSuspended = () => {
   const history = useHistory();
+  const { data: SuspendedUsers } = useSuspendedUsers();
+
+  const mapSuspendedUsers = SuspendedUsers? SuspendedUsers.data.users.map((row,i)=>({
+    key: i,
+    name: row.name,
+    phone: row.phone,
+    dateJoined: new Date(row.createdAt).toDateString(),
+    LatestAcess : new Date(row.updatedAt).toDateString(),
+    tags: [row.status],
+    id : row.id
+
+  })) : []; 
 
   const columns = [
     {
@@ -34,7 +47,6 @@ const UsersSuspended = () => {
         );
       },
     },
-
     {
       title: "Status",
       key: "tags",
@@ -44,29 +56,33 @@ const UsersSuspended = () => {
           {tags.map((tag) => {
             let color;
             let textColor;
-            if (tag === "Active") {
+            if (tag === 0) {
               color = "#DFFFF6";
               textColor = "#00966D";
+              tag = "Active"
             }
+  
+           
 
-            if (tag === "Suspended") {
+            if (tag === 1) {
               color = "#FFED8A";
               textColor = "#AB6C0D";
+              tag = "Suspended"
+
             }
             return (
               <Tag color={color} style={{ color: textColor }} key={tag}>
-                {tag.toUpperCase()}
+                {tag  } 
               </Tag>
             );
           })}
         </span>
       ),
     },
-
     {
       title: "Phone number",
-      dataIndex: "age",
-      key: "address",
+      dataIndex: "phone",
+      key: "phone",
     },
 
     {
@@ -77,8 +93,8 @@ const UsersSuspended = () => {
 
     {
       title: "Last access",
-      dataIndex: "dateJoined",
-      key: "Ratings",
+      dataIndex: "LatestAcess",
+      key: "LatestAcess",
     },
 
     {
@@ -90,7 +106,8 @@ const UsersSuspended = () => {
           type="primary"
           onClick={() => {
             history.push({
-              pathname: "/app/users/UserSuspendedProfile",
+              pathname: `/app/users/UserProfile/${record.id}`,
+              state: { page: "Suspended" },
             });
           }}
         >
@@ -100,71 +117,7 @@ const UsersSuspended = () => {
     },
   ];
 
-  const data = [
-    {
-      key: "1",
-      name: "John Brown",
-      age: "080123456789",
-      address: "New York No. 1 Lake Park",
-      tags: ["Suspended"],
-      Earnings: [89999],
-      Ratings: [4.8],
-      dateJoined: "23 Jan 2022",
-    },
-    {
-      key: "2",
-      name: "Jim Green",
-      age: "080123456789",
-      address: "London No. 1 Lake Park",
-      tags: ["Suspended"],
-      Earnings: [89999],
-      Ratings: [4.5],
-      dateJoined: "23 Jan 2022",
-    },
-    {
-      key: "3",
-      name: "Joe Black",
-      age: "080123456789",
-      address: "Sidney No. 1 Lake Park",
-      tags: ["Suspended"],
-      Earnings: [89999],
-      Ratings: [4.7],
-      dateJoined: "23 Jan 2022",
-    },
-
-    {
-      key: "4",
-      name: "Joe Black",
-      age: "080123456789",
-      address: "Sidney No. 1 Lake Park",
-      tags: ["Suspended"],
-      Earnings: [89999],
-      Ratings: [4.7],
-      dateJoined: "23 Jan 2022",
-    },
-
-    {
-      key: "5",
-      name: "Joe Black",
-      age: "080123456789",
-      address: "Sidney No. 1 Lake Park",
-      tags: ["Suspended"],
-      Earnings: [89999],
-      Ratings: [4.7],
-      dateJoined: "23 Jan 2022",
-    },
-
-    {
-      key: "6",
-      name: "Joe Black",
-      age: "080123456789",
-      address: "Sidney No. 1 Lake Park",
-      tags: ["Suspended"],
-      Earnings: [89999],
-      Ratings: [4.7],
-      dateJoined: "23 Jan 2022",
-    },
-  ];
+ 
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -212,7 +165,7 @@ const UsersSuspended = () => {
             ...rowSelection,
           }}
           columns={columns}
-          dataSource={data}
+          dataSource={mapSuspendedUsers}
         />
       </Card>
     </div>

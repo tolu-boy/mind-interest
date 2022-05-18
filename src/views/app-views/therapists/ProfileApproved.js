@@ -64,7 +64,6 @@ const ProfileApproved = () => {
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
 
-  
 
   const handleOk = async () => {
   setConfirmLoading(true);
@@ -73,8 +72,6 @@ const ProfileApproved = () => {
   setVisible(false)
   openNotificationWithIcon("success");
   history.push(`/app/therapists/ProfileSuspended/${param.id}`);
-
-
   };
 
   const handleCancel = () => {

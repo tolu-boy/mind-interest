@@ -18,7 +18,8 @@ export const AppViews = () => {
       <Route path={`${APP_PREFIX_PATH}/users/UsersOverview`} component={lazy(() => import(`./users/UsersOverview`))} />
       <Route path={`${APP_PREFIX_PATH}/users/UsersActive`} component={lazy(() => import(`./users/UsersActive`))} />
       <Route path={`${APP_PREFIX_PATH}/users/UsersSuspended`} component={lazy(() => import(`./users/UsersSuspended`))} />
-      <Route path={`${APP_PREFIX_PATH}/users/UserActiveProfile`} component={lazy(() => import(`./users/UserActiveProfile`))} />
+      <Route path={`${APP_PREFIX_PATH}/users/UserProfile/:id`} component={lazy(() => import(`./users/UserProfile`))} />
+      <Route path={`${APP_PREFIX_PATH}/users/UserActiveProfile/:id`} component={lazy(() => import(`./users/UserActiveProfile`))} />
       <Route path={`${APP_PREFIX_PATH}/users/UserSuspendedProfile`} component={lazy(() => import(`./users/UserSuspendedProfile`))} />
       <Route path={`${APP_PREFIX_PATH}/revenue/Earning`} component={lazy(() => import(`./revenue/Earning`))} />
       <Route path={`${APP_PREFIX_PATH}/revenue/Payouts`} component={lazy(() => import(`./revenue/Payouts`))} />

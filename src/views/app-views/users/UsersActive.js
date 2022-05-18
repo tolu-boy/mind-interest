@@ -7,9 +7,25 @@ import comment from "../../../assets/img/Comment.svg";
 
 import avatar2 from "../../../assets/img/Avatar.svg";
 import { useHistory } from "react-router-dom";
+import useActiveUsers from "queries/useActiveUsers";
+import { APP_PREFIX_PATH } from 'configs/AppConfig'
 
 const UsersActive = () => {
   const history = useHistory();
+
+  const { data: activeUsers } = useActiveUsers();
+
+  const mapActiveUsers = activeUsers ? activeUsers.data.users.map((row,i)=>({
+    key: i,
+    name: row.name,
+    phone: row.phone,
+    dateJoined: new Date(row.createdAt).toDateString(),
+    LatestAcess : new Date(row.updatedAt).toDateString(),
+    tags: [row.status],
+    id : row.id
+
+  })) : []; 
+
 
   const columns = [
     {
@@ -46,18 +62,22 @@ const UsersActive = () => {
           {tags.map((tag) => {
             let color;
             let textColor;
-            if (tag === "Active") {
+            if (tag === 0) {
               color = "#DFFFF6";
               textColor = "#00966D";
+              tag = "Active"
             }
-
-            if (tag === "Suspended") {
+  
+      
+            if (tag === 1) {
               color = "#FFED8A";
               textColor = "#AB6C0D";
+              tag = "Suspended"
+
             }
             return (
               <Tag color={color} style={{ color: textColor }} key={tag}>
-                {tag.toUpperCase()}
+                {tag  } 
               </Tag>
             );
           })}
@@ -67,20 +87,20 @@ const UsersActive = () => {
 
     {
       title: "Phone number",
-      dataIndex: "age",
-      key: "address",
+      dataIndex: "phone",
+      key: "phone",
     },
 
     {
       title: "Date joined",
       dataIndex: "dateJoined",
-      key: "address",
+      key: "dateJoined",
     },
 
     {
       title: "Last access",
-      dataIndex: "dateJoined",
-      key: "Ratings",
+      dataIndex: "LatestAcess",
+      key: "LatestAcess",
     },
 
     {
@@ -93,7 +113,8 @@ const UsersActive = () => {
             type="primary"
             onClick={() => {
               history.push({
-                pathname: "/app/users/UserActiveProfile",
+                pathname: `${APP_PREFIX_PATH }/users/UserProfile/${record.id}`,
+                state: { page: "Active" },
               });
             }}
           >
@@ -104,72 +125,7 @@ const UsersActive = () => {
     },
   ];
 
-  const data = [
-    {
-      key: "1",
-      name: "John Brown",
-      age: "080123456789",
-      address: "New York No. 1 Lake Park",
-      tags: ["Active"],
-      Earnings: [89999],
-      Ratings: [4.8],
-      dateJoined: "23 Jan 2022",
-    },
-    {
-      key: "2",
-      name: "Jim Green",
-      age: "080123456789",
-      address: "London No. 1 Lake Park",
-      tags: ["Active"],
-      Earnings: [89999],
-      Ratings: [4.5],
-      dateJoined: "23 Jan 2022",
-    },
-    {
-      key: "3",
-      name: "Joe Black",
-      age: "080123456789",
-      address: "Sidney No. 1 Lake Park",
-      tags: ["Active"],
-      Earnings: [89999],
-      Ratings: [4.7],
-      dateJoined: "23 Jan 2022",
-    },
-
-    {
-      key: "4",
-      name: "Joe Black",
-      age: "080123456789",
-      address: "Sidney No. 1 Lake Park",
-      tags: ["Active"],
-      Earnings: [89999],
-      Ratings: [4.7],
-      dateJoined: "23 Jan 2022",
-    },
-
-    {
-      key: "5",
-      name: "Joe Black",
-      age: "080123456789",
-      address: "Sidney No. 1 Lake Park",
-      tags: ["Active"],
-      Earnings: [89999],
-      Ratings: [4.7],
-      dateJoined: "23 Jan 2022",
-    },
-
-    {
-      key: "6",
-      name: "Joe Black",
-      age: "080123456789",
-      address: "Sidney No. 1 Lake Park",
-      tags: ["Active"],
-      Earnings: [89999],
-      Ratings: [4.7],
-      dateJoined: "23 Jan 2022",
-    },
-  ];
-
+ 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       console.log(
@@ -216,7 +172,7 @@ const UsersActive = () => {
             ...rowSelection,
           }}
           columns={columns}
-          dataSource={data}
+          dataSource={mapActiveUsers}
         />
       </Card>
     </div>

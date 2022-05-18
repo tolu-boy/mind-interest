@@ -1,15 +1,29 @@
+
 import React, { useState } from "react";
-import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
-import { Card, Row, Col, Button, Select } from "antd";
+import { ArrowLeftOutlined, ArrowRightOutlined ,ExclamationCircleTwoTone } from "@ant-design/icons";
+import { Card, Row, Col, Button, Select,notification,Modal } from "antd";
 import background from "../../../assets/img/background.svg";
 import profile from "../../../assets/img/profile.svg";
 import avatar2 from "../../../assets/img/Avatar.svg";
+import { useLocation  ,useParams} from "react-router-dom";
+import useSingleUser from "queries/useSingleUser";
+import ApiService from "services/ApiService";
 
 
 
-const UserActiveProfile = () => {
+const UserProfile = () => {
   const { Option } = Select;
+  const location = useLocation();
+  const param = useParams();
+  const [visible, setVisible] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [visible1, setVisible1] = useState(false);
+  const [confirmLoading1, setConfirmLoading1] = useState(false);
+  const [userProfile, setUserProfile] = useState(location.state.page)
 
+  const { data: SingleUser } = useSingleUser(param.id);
+  let user = SingleUser?.data.user ?? "";
+ 
   function handleChange(value) {
     console.log(`selected ${value}`);
   }
@@ -18,7 +32,7 @@ const UserActiveProfile = () => {
     setActiveTabKey1(key);
   };
 
-  const tabList = [
+  const tabListe = [
     {
       key: "Booking",
       tab: "Booking",
@@ -151,6 +165,48 @@ const UserActiveProfile = () => {
 
   const [activeTabKey1, setActiveTabKey1] = useState("Booking");
 
+  const handleOk = async () => {
+    setConfirmLoading(true);
+    await ApiService.SuspendUsers(param.id)
+    setConfirmLoading(false);
+    setVisible(false)
+    openNotificationWithIcon("success");
+    setUserProfile('Suspended')
+    };
+  
+    const handleCancel = () => {
+      console.log("Clicked cancel button");
+      setVisible(false);
+    };
+    const openNotificationWithIcon = (type) => {
+      notification[type]({
+        message: "Suspend User",
+        description: `The user has been suspended`,
+      });
+    };
+
+
+    const handleOk1 = async () => {
+        setConfirmLoading1(true);
+        await ApiService.ActivateUsers(param.id)
+        setConfirmLoading1(false);
+        setVisible1(false)
+        openNotificationWithIcon1("success");
+        setUserProfile('Active')
+        };
+      
+        const handleCancel1 = () => {
+          console.log("Clicked cancel button");
+          setVisible1(false);
+        };
+        const openNotificationWithIcon1 = (type) => {
+          notification[type]({
+            message: "Activate User",
+            description: `The user has been activated`,
+          });
+        };
+
+
   const cardHeader1 = (
     <div>
       <Row>
@@ -161,12 +217,61 @@ const UserActiveProfile = () => {
             <Option value="Yiminghe">yiminghe</Option>
           </Select>
         </Col>
+        
       </Row>
     </div>
   );
 
+  const deleteTitle = (
+    <div>
+      <Row>
+        <Col span={2}>
+          <ExclamationCircleTwoTone twoToneColor="#ffc53d" />
+        </Col>
+        <Col span={12}>
+          <p>Suspend user</p>
+        </Col>
+      </Row>
+    </div>
+  );
+
+  const deleteTitle1 = (
+    <div>
+      <Row>
+        <Col span={2}>
+          <ExclamationCircleTwoTone twoToneColor="#ffc53d" />
+        </Col>
+        <Col span={12}>
+          <p>Activate user</p>
+        </Col>
+      </Row>
+    </div>
+  );
+
+
+  
+
   return (
     <div>
+    <Modal
+        title={deleteTitle}
+        visible={visible}
+        onOk={handleOk}
+        confirmLoading={confirmLoading}
+        onCancel={handleCancel}
+      >
+        <p> Are you sure you want to suspend this user ?</p>
+      </Modal>
+
+      <Modal
+        title={deleteTitle1}
+        visible={visible1}
+        onOk={handleOk1}
+        confirmLoading={confirmLoading1}
+        onCancel={handleCancel1}
+      >
+        <p> Are you sure you want to suspend this user ?</p>
+      </Modal>
       <p className="profile-heading">
         <span className="pr-2">
           <ArrowLeftOutlined />
@@ -189,7 +294,7 @@ const UserActiveProfile = () => {
                   </Col>
 
                   <Col md={15}>
-                    <li className="proileName"> Emeka Chuks</li>
+                    <li className="proileName">{user.name}</li>
                   </Col>
 
                   <Col md={3}>
@@ -202,7 +307,7 @@ const UserActiveProfile = () => {
             <Col md={24}>
               <Card
                 tabBarExtraContent={cardHeader1}
-                tabList={tabList}
+                tabList={tabListe}
                 activeTabKey={activeTabKey1}
                 onTabChange={(key) => {
                   onTab1Change(key);
@@ -217,11 +322,27 @@ const UserActiveProfile = () => {
 
         <Col md={10}>
           <Row>
+          {userProfile === 'Active' && (
             <Col md={24}>
-              <Button type="danger" block>
+              <Button type="danger" block onClick={()=>{
+               setVisible(true)
+
+              }}>
                 Suspend
               </Button>
             </Col>
+          )}
+
+          {userProfile === 'Suspended' && (
+            <Col md={24}>
+              <Button className="buttonAccept" block onClick={()=>{
+                setVisible1(true)
+              }}>
+                Restore
+              </Button>
+            </Col>
+          )}
+            
 
             <Col md={24} className="pt-4">
               <Card title="Profile details">
@@ -232,7 +353,7 @@ const UserActiveProfile = () => {
                   </Col>
 
                   <Col md={4} className="pb-4">
-                    <li className="textEnd"> Male</li>
+                    <li className="textEnd"> {user.gender ? user.gender : 'Male'}</li>
                   </Col>
 
                 
@@ -242,7 +363,7 @@ const UserActiveProfile = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd"> 080123456789</li>
+                    <li className="textEnd"> {user.phone ? user.phone : '09088656567'}</li>
                   </Col>
 
                   <Col md={14}>
@@ -250,7 +371,9 @@ const UserActiveProfile = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">Single</li>
+                    <li className="textEnd">
+                    {user.relationship_status ? user.relationship_status : 'Single'}
+                    </li>
                   </Col>
 
                   <Col md={14}>
@@ -258,7 +381,7 @@ const UserActiveProfile = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">None</li>
+                    <li className="textEnd"> {user.parental_status ? user.parental_status : 'None'} </li>
                   </Col>
 
                   <Col md={14}>
@@ -266,7 +389,7 @@ const UserActiveProfile = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">24 - 34</li>
+                    <li className="textEnd"> {user.age_range ? user.age_range : '24 - 34'}</li>
                   </Col>
 
                   <Col md={14}>
@@ -274,7 +397,7 @@ const UserActiveProfile = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">Pretty often</li>
+                    <li className="textEnd"> {user.need_to_talk? user.need_to_talk : 'Pretty often'}</li>
                   </Col>
 
                  
@@ -292,23 +415,33 @@ const UserActiveProfile = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">Therapist</li>
+                    <li className="textEnd">User</li>
                   </Col>
 
                   <Col md={14}>
                     <li>Status:</li>
                   </Col>
-
-                  <Col md={10} className="pb-4">
-                    <li className="textEnd rev-green">Active</li>
+                  
+                  {userProfile === 'Active' && (
+                    <Col md={10} className="pb-4">
+                    <li className="textEnd rev-green">{userProfile}</li>
                   </Col>
+                  )}
+                 
+
+                  {userProfile === 'Suspended' && (
+                    <Col md={10} className="pb-4">
+                    <li className="textEnd rev-red">{userProfile}</li>
+                  </Col>
+                  
+                  )}
 
                   <Col md={14}>
                     <li>Approved date:</li>
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">13 Jan 2022</li>
+                    <li className="textEnd">{new Date(user.createdAt).toDateString()}</li>
                   </Col>
 
                   <Col md={24} className="pb-4">
@@ -324,7 +457,7 @@ const UserActiveProfile = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">2 hours ago</li>
+                    <li className="textEnd">{new Date(user.updatedAt).toDateString()}</li>
                   </Col>
 
                   <Col md={14}>
@@ -352,4 +485,4 @@ const UserActiveProfile = () => {
   );
 };
 
-export default UserActiveProfile;
+export default UserProfile;
