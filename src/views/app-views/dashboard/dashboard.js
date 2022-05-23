@@ -3,7 +3,6 @@ import { Card, Row, Col, Avatar, Button } from "antd";
 import toatalrev from "../../../assets/img/totalrev.png";
 import therapypic from "../../../assets/img/therapypic.png";
 import activeuserspic from "../../../assets/img/activeuserspic.png";
-import ChartWidget from "components/shared-components/ChartWidget";
 import refundImg from "../../../assets/img/refund-img.png";
 import avatar from "../../../assets/img/Avatar.svg";
 import dot from "../../../assets/img/Dot1.svg";
@@ -18,23 +17,8 @@ import useSessions from "queries/useSessions";
 import useRefunds from "queries/useRefunds";
 import useTherapists from "queries/useTherapists";
 import useApprovedTherapists from "queries/useApprovedTherapits";
-export const weeklyRevenueData = {
-  series: [
-    {
-      name: "Earning",
-      data: [45, 52, 38, 24, 33, 26, 21],
-    },
-  ],
-  categories: [
-    "08 Jul",
-    "09 Jul",
-    "10 Jul",
-    "11 Jul",
-    "12 Jul",
-    "13 Jul",
-    "14 Jul",
-  ],
-};
+import Chart from "react-apexcharts";
+
 
 
 
@@ -64,17 +48,55 @@ const Dashboard = () => {
   const { data: refunds } = useRefunds();
   const { data: therapists } = useTherapists();
   const { data: ApprovedTherapists } = useApprovedTherapists();
-
-  // const maprefunds = refunds.data.refunds.map()
-
+ 
   const totalAmount = transactions ? transactions.data.totalAmount : 1200000;
   const totalSessions = sessions ? sessions.data.total : 25;
   const totalRefunds = refunds ? refunds.data.total : 25;
-  const totalActiveUsers = ApprovedTherapists ? ApprovedTherapists.data.total : 25;
+  const totalActiveUsers = ApprovedTherapists ? ApprovedTherapists.data.total : 25;  
+  var  months = ["Jan", "Feb", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-  // let re = therapists.data.therapists
-  //  console.log(re,'lll');
 
+
+  const Chartstate = {
+    series: [
+      {
+        name: "Active Therapists",
+        data: therapists ? therapists.data.therapists.map(x=> new Date(x.createdAt).getMonth()) :[],
+      },
+  
+    ],
+
+   
+    options :{
+      colors:["#F6CC8D"],
+      xaxis:{
+        tickPlacement: 'on',
+        categories:therapists ? therapists.data.therapists.map(x=>x.name) :[]
+      },
+      yaxis: {
+        labels: {
+          formatter: function(value) {
+            return months[value]
+          
+          }
+        }
+      },
+      
+      
+      dataLabels: {
+        formatter:(val)=>{
+          return ''
+        }
+      },
+      chart: {
+        toolbar: {
+          show: true,
+        },
+      
+      },
+    }
+  
+  };
 
   return (
     <div className="dashboard">
@@ -154,7 +176,7 @@ const Dashboard = () => {
 
                   <Col span={24}>
                     <p className="rev-green">
-                      <ArrowUpOutlined /> 37.8%{" "}
+                      <ArrowUpOutlined /> 37.8%
                       <span className="rev-normal"> this week</span>
                     </p>
                   </Col>
@@ -166,18 +188,17 @@ const Dashboard = () => {
 
         <Row>
           <Col md={16} xs={24}>
-            <Card title="Active therapists" bordered={false}>
-              <ChartWidget
-                card={false}
-                series={weeklyRevenueData.series}
-                xAxis={weeklyRevenueData.categories}
-                title="Unique Visitors"
-                height={250}
-                type="bar"
-                customOptions={{ colors: "#F6CC8D" }}
-                // direction={direction}
-              />
-            </Card>
+       
+
+            <Card title='Active therapists'>
+            <Chart
+              options={Chartstate.options}
+              series={Chartstate.series}
+              type="bar"
+              height={300}
+              // width= {500}
+            />
+          </Card>
           </Col>
 
           <Col md={8} xs={24} className="p-left2">
@@ -274,6 +295,9 @@ const Dashboard = () => {
               </Row>
             </Card>
           </Col>
+
+
+          
         </Row>
       </div>
     </div>

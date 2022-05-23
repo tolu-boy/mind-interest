@@ -3,6 +3,7 @@ import { axios } from "../services/ApiService";
 
 const getTherapists= async (q) => {
   const { data } = await axios.get(`/therapists?query=${q}`, );
+
   return data;
 };
 

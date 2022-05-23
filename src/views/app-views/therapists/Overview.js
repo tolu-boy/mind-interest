@@ -12,8 +12,8 @@ import snake1 from "../../../assets/img/snake1.svg";
 import snake2 from "../../../assets/img/snake2.svg";
 import snake3 from "../../../assets/img/snake3.svg";
 import avatar2 from "../../../assets/img/Avatar.svg";
-import useTherapists from "queries/useTherapists";
 import useTransactions from "queries/useTransactions";
+import useSearch from   "queries/useSearch";
 
 
 
@@ -33,18 +33,17 @@ const Overview =  () => {
 
 
   const [selectionType] = useState("checkbox");
-  const [search, setSearch] = useState()
+  const [search, setSearch] = useState("")
 
   const { Option } = Select;
 
   function handleChange(value) {
     console.log(`selected ${value}`);
   }
-
-  const { data: therapists } = useTherapists(search);
+  const { data: therapists } = useSearch(search);
   const { data: transactions } = useTransactions();
   const totalAmount = transactions ? transactions.data.totalAmount : 1200000;
-  const mapTherapist = therapists? therapists.data.therapists.map((row,i)=>({
+  let mapTherapist = therapists? therapists.data.therapists.map((row,i)=>({
     key: i,
     name: row.name,
     specialty: row.specialty,
@@ -54,6 +53,8 @@ const Overview =  () => {
     // schedule: row.updatedAt
 
   })) : []; 
+
+
   
   const columns = [
     {

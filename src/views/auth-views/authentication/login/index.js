@@ -1,6 +1,6 @@
 import React, { useState ,useEffect } from "react";
 import logo from "../../../../assets/img/logo-login.svg";
-import { Row, Col, Button, Form, Input, Checkbox, notification } from "antd";
+  import { Row, Col, Button, Form, Input, Checkbox, notification } from "antd";
 import { useStore } from '../../../../zustand';
 import { useHistory } from "react-router-dom";
 import { AUTH_PREFIX_PATH } from 'configs/AppConfig'
@@ -49,39 +49,29 @@ const Index1 = () => {
 
   const onFinish = (values) => {
     setLoading(true)
-   
-    console.log("Success:", values);
-    axios.post('https://app.themindinterest.com/admin/login',{
+       axios.post('https://app.themindinterest.com/admin/login',{
       email:values.email,
       password:values.password,
-      ip: ip
     }).then((res)=>{
       if (res.status === 200) {
         setAuth(true)
         setLoading(false)
         localStorage.setItem("token",  res.data.data.token );
         localStorage.setItem("auth",  true );
-        localStorage.setItem("ip",  ip  );
+        localStorage.setItem("ip",  res.data.data.key);
 
         setToken( res.data.data.token)
         setIp(ip)
         history.push(`${APP_PREFIX_PATH}/dashboard`);
-        window.location.reload();
-
-
       }else{
         openNotificationWithIcon("error");
         setLoading(false)
-
-
       }
          
     }).catch((e)=>{
       console.log(e,'pppp');
       openNotificationWithIcon("error");
       setLoading(false)
-
-
     })
 
 
