@@ -1,4 +1,4 @@
-import React, { useState ,useEffect } from "react";
+import React, { useState } from "react";
 import logo from "../../../../assets/img/logo-login.svg";
   import { Row, Col, Button, Form, Input, Checkbox, notification } from "antd";
 import { useStore } from '../../../../zustand';
@@ -18,20 +18,7 @@ const Index1 = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-  const [ip, setIP] = useState("102.89.32.6");
 
-
-  const location = ()=>{
-    axios.get(`https://geolocation-db.com/json/d802faa0-10bd-11ec-b2fe-47a0872c6708`).then((item)=>{
-      console.log(item.data.IPv4);
-      setIP(item.data.IPv4)
-        })
-   }
-  useEffect(() => {
-    location()
-  }, []);
-
- 
   
 
   const setAuth = useStore((store)=>{
@@ -56,12 +43,12 @@ const Index1 = () => {
       if (res.status === 200) {
         setAuth(true)
         setLoading(false)
-        localStorage.setItem("token",  res.data.data.token );
+        localStorage.setItem("token",  res.data.data.token);
         localStorage.setItem("auth",  true );
         localStorage.setItem("ip",  res.data.data.key);
 
         setToken( res.data.data.token)
-        setIp(ip)
+        setIp(res.data.data.key)
         history.push(`${APP_PREFIX_PATH}/dashboard`);
       }else{
         openNotificationWithIcon("error");

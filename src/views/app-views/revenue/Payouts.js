@@ -1,29 +1,27 @@
 import React, { useState } from "react";
-import { Card, Row, Col, Select,  Table, Tag } from "antd";
+import { Card, Row, Col, Select, Table, Tag } from "antd";
 import earning from "../../../assets/img/earning.svg";
 import payout from "../../../assets/img/payout.svg";
+import usePayouts from "queries/usePayouts";
 
 const Payouts = () => {
+  const { data: payouts } = usePayouts();
+  const mapPayouts = payouts
+    ? payouts.data.payoutsHistory.map((row, i) => ({
+        key: i,
+        date: new Date(row.createdAt).toDateString(),
+        tags: ["Debit"],
+        method: ["Paystack"],
+        amount: row.amount,
+        id: row.id,
+      }))
+    : [];
+
   const columns = [
     {
       title: "Month",
-      dataIndex: "dateJoined",
-      key: "name",
-      render: (text, record) => {
-        return (
-          <div>
-            <Row>
-              <Col md={14} xs={24}>
-                <Row>
-                  <Col md={24} xs={24} className="pt-3">
-                    <p className="top-rated-color1"> {record.dateJoined}</p>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-          </div>
-        );
-      },
+      dataIndex: "date",
+      key: "date",
     },
 
     {
@@ -35,10 +33,6 @@ const Payouts = () => {
           {tags.map((tag) => {
             let color;
             let textColor;
-            if (tag === "Paid") {
-              color = "#00BA88";
-              textColor = "#fff";
-            }
 
             if (tag === "Debit") {
               color = "#F2190D";
@@ -56,7 +50,7 @@ const Payouts = () => {
 
     {
       title: "Method",
-      dataIndex: "Method",
+      dataIndex: "method",
       render: (tags, text) => (
         <span>
           {tags.map((tag) => {
@@ -67,10 +61,6 @@ const Payouts = () => {
               textColor = "#14142B";
             }
 
-            if (tag === "Debit") {
-              color = "#F2190D";
-              textColor = "#fff";
-            }
             return (
               <Tag color={color} style={{ color: textColor }} key={tag}>
                 {tag.toUpperCase()}
@@ -82,87 +72,9 @@ const Payouts = () => {
     },
 
     {
-      title: "Earnings",
-      dataIndex: "Earnings",
-      key: "Ratings",
-    },
-
-    {
       title: "Amount withdrawn",
-      dataIndex: "age",
-      key: "Ratings",
-    },
-  ];
-
-  const data = [
-    {
-      key: "1",
-      name: "John Brown",
-      age: "080123456789",
-      address: "New York No. 1 Lake Park",
-      tags: ["Paid"],
-      Earnings: [89999],
-      Ratings: [4.8],
-      dateJoined: "23 Jan 2022",
-      Method: ["Paystack"],
-    },
-    {
-      key: "2",
-      name: "Jim Green",
-      age: "080123456789",
-      address: "London No. 1 Lake Park",
-      tags: ["Paid"],
-      Earnings: [89999],
-      Ratings: [4.5],
-      dateJoined: "23 Jan 2022",
-      Method: ["Paystack"],
-    },
-    {
-      key: "3",
-      name: "Joe Black",
-      age: "080123456789",
-      address: "Sidney No. 1 Lake Park",
-      tags: ["Paid"],
-      Earnings: [89999],
-      Ratings: [4.7],
-      dateJoined: "23 Jan 2022",
-      Method: ["Paystack"],
-    },
-
-    {
-      key: "4",
-      name: "Joe Black",
-      age: "080123456789",
-      address: "Sidney No. 1 Lake Park",
-      tags: ["Paid"],
-      Earnings: [89999],
-      Ratings: [4.7],
-      dateJoined: "23 Jan 2022",
-      Method: ["Paystack"],
-    },
-
-    {
-      key: "5",
-      name: "Joe Black",
-      age: "080123456789",
-      address: "Sidney No. 1 Lake Park",
-      tags: ["Paid"],
-      Earnings: [89999],
-      Ratings: [4.7],
-      dateJoined: "23 Jan 2022",
-      Method: ["Paystack"],
-    },
-
-    {
-      key: "6",
-      name: "Joe Black",
-      age: "080123456789",
-      address: "Sidney No. 1 Lake Park",
-      tags: ["Paid"],
-      Earnings: [89999],
-      Ratings: [4.7],
-      dateJoined: "23 Jan 2022",
-      Method: ["Paystack"],
+      dataIndex: "amount",
+      key: "amount",
     },
   ];
 
@@ -221,7 +133,9 @@ const Payouts = () => {
                   </Col>
 
                   <Col md={24}>
-                    <h6 className="rev-amount">₦246k</h6>
+                    <h6 className="rev-amount">
+                      ₦{payouts ? payouts.data.currentBal : "246k"}
+                    </h6>
                   </Col>
                 </Row>
               </Col>
@@ -241,7 +155,9 @@ const Payouts = () => {
                   </Col>
 
                   <Col md={24}>
-                    <h6 className="rev-amount">₦0.00</h6>
+                    <h6 className="rev-amount">
+                      ₦{payouts ? payouts.data.available : "100k"}
+                    </h6>
                   </Col>
                 </Row>
               </Col>
@@ -259,7 +175,7 @@ const Payouts = () => {
                 ...rowSelection,
               }}
               columns={columns}
-              dataSource={data}
+              dataSource={mapPayouts}
             />
           </Card>
         </Col>

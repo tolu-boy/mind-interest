@@ -8,7 +8,7 @@ const getSearch= async (q) => {
   return data;
 };
 
-export default function useTherapists(value) {
+export default function useSearch(value) {
 
   return useQuery(['search', value], () => getSearch(value))
 
