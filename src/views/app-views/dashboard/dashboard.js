@@ -16,7 +16,7 @@ import useTransactions from "queries/useTransactions";
 import useSessions from "queries/useSessions";
 import useRefunds from "queries/useRefunds";
 import useTherapists from "queries/useTherapists";
-import useApprovedTherapists from "queries/useApprovedTherapits";
+import useActiveTherapists from "queries/useActiveTherapists";
 import Chart from "react-apexcharts";
 
 
@@ -47,8 +47,8 @@ const Dashboard = () => {
   const { data: sessions } = useSessions();
   const { data: refunds } = useRefunds();
   const { data: therapists } = useTherapists();
-  const { data: ApprovedTherapists } = useApprovedTherapists();
- 
+   const { data: ApprovedTherapists } = useActiveTherapists();
+
   const totalAmount = transactions ? transactions.data.totalAmount : 1200000;
   const totalSessions = sessions ? sessions.data.total : 25;
   const totalRefunds = refunds ? refunds.data.total : 25;
@@ -61,7 +61,7 @@ const Dashboard = () => {
     series: [
       {
         name: "Active Therapists",
-        data: therapists ? therapists.data.therapists.map(x=> new Date(x.createdAt).getMonth()) :[],
+        data: therapists ? therapists.data.therapists.slice(0,5).map(x=> new Date(x.createdAt).getMonth()) :[],
       },
   
     ],
@@ -71,7 +71,7 @@ const Dashboard = () => {
       colors:["#F6CC8D"],
       xaxis:{
         tickPlacement: 'on',
-        categories:therapists ? therapists.data.therapists.map(x=>x.name) :[]
+        categories:therapists ? therapists.data.therapists.slice(0,5).map(x=>x.name) :[]
       },
       yaxis: {
         labels: {
@@ -242,21 +242,21 @@ const Dashboard = () => {
             <Card title="Recent activities">
               <Row>
               {(sessions) ? <>
-                { sessions?.data.sessions.map(() => (
+                { sessions?.data.sessions.slice(0,10).map((item) => (
                   <Col span={12}  className="pb-3">
                     <Row>
                       <Col span={4}>
-                        <img src={avatar} alt="" />
+                        <img src={item.user_profile_img === ''?avatar : item.user_profile_img } alt="" />
                       </Col>
 
                       <Col span={17}>
                         <p className="top-rated-color1">
                           Demi Wikinson
-                          <span className="p-message"> 2 mins ago</span>
+                          <span className="p-message"> {new Date(item.createdAt ).toDateString()}</span>
                         </p>
                         <p>
                           Is in session with
-                          <span className="gold-color"> Dr. Festus King</span>
+                          <span className="gold-color"> Dr. {item.therapist}</span>
                         </p>
                       </Col>
 

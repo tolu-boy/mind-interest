@@ -20,11 +20,10 @@ const rowSelection = {
 
 const WaitingList = () => {
 
-
+  const [search, setSearch] = useState("")
   const [selectionType] = useState("checkbox");
   const history = useHistory();
-  const { data: WaitingTherapits } = useWaitingTherapists();
-
+  const { data: WaitingTherapits } = useWaitingTherapists(search);
   const mapWaitingTherapits = WaitingTherapits? WaitingTherapits.data.therapists.map((row,i)=>({
     key: i,
     name: row.name,
@@ -111,6 +110,10 @@ const WaitingList = () => {
             placeholder="Search..."
             prefix={<SearchOutlined className="search-navs" />}
             style={{ width: 300 }}
+            value= {search}
+            onChange= {(e)=>{
+              setSearch(e.target.value)
+            }}
           />
         </Col>
 

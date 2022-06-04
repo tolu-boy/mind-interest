@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState} from "react";
 import { ArrowLeftOutlined, ArrowRightOutlined ,ExclamationCircleTwoTone } from "@ant-design/icons";
 import { Card, Row, Col, Button, Select,notification,Modal } from "antd";
 import background from "../../../assets/img/background.svg";
@@ -23,10 +23,12 @@ const UserProfile = () => {
 
   const { data: SingleUser } = useSingleUser(param.id);
   let user = SingleUser?.data.user ?? "";
+
  
   function handleChange(value) {
     console.log(`selected ${value}`);
   }
+
 
   const onTab1Change = (key) => {
     setActiveTabKey1(key);
@@ -172,6 +174,7 @@ const UserProfile = () => {
     setVisible(false)
     openNotificationWithIcon("success");
     setUserProfile('Suspended')
+    location.state.page = 'Suspended'
     };
   
     const handleCancel = () => {
@@ -193,6 +196,8 @@ const UserProfile = () => {
         setVisible1(false)
         openNotificationWithIcon1("success");
         setUserProfile('Active')
+        location.state.page = 'Active'
+
         };
       
         const handleCancel1 = () => {
@@ -206,15 +211,18 @@ const UserProfile = () => {
           });
         };
 
+        // useEffect(() => {
+        
+        // handleOk()
+        // }, [])
+        
 
   const cardHeader1 = (
     <div>
       <Row>
         <Col md={24} xs={24}>
           <Select defaultValue="30 days" onChange={handleChange}>
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="Yiminghe">yiminghe</Option>
+            <Option value="jack">10 days</Option>
           </Select>
         </Col>
         
@@ -322,7 +330,7 @@ const UserProfile = () => {
 
         <Col md={10}>
           <Row>
-          {userProfile === 'Active' && (
+          {user.status === 0 && (
             <Col md={24}>
               <Button type="danger" block onClick={()=>{
                setVisible(true)
@@ -333,7 +341,7 @@ const UserProfile = () => {
             </Col>
           )}
 
-          {userProfile === 'Suspended' && (
+          {user.status === 1 && (
             <Col md={24}>
               <Button className="buttonAccept" block onClick={()=>{
                 setVisible1(true)
@@ -422,14 +430,14 @@ const UserProfile = () => {
                     <li>Status:</li>
                   </Col>
                   
-                  {userProfile === 'Active' && (
+                  {user.status === 0 && (
                     <Col md={10} className="pb-4">
                     <li className="textEnd rev-green">{userProfile}</li>
                   </Col>
                   )}
                  
 
-                  {userProfile === 'Suspended' && (
+                  {user.status === 1 && (
                     <Col md={10} className="pb-4">
                     <li className="textEnd rev-red">{userProfile}</li>
                   </Col>

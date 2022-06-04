@@ -15,6 +15,7 @@ import avatar2 from "../../../assets/img/Avatar.svg";
 import useUsers from "queries/useUsers";
 import useTransactions from "queries/useTransactions";
 import useSessions from "queries/useSessions";
+import useUsersOverview from "queries/useOverviewUsers";
 
 
 const rowSelection = {
@@ -28,8 +29,12 @@ const rowSelection = {
 };
 
 const UsersOverview = () => {
+  const [search, setSearch] = useState("")
+
   const [selectionType] = useState("checkbox");
   const { data: users } = useUsers();
+  const { data: overview } = useUsersOverview(search);
+
   const { data: transactions } = useTransactions();
   const { data: sessions } = useSessions();
 
@@ -37,7 +42,7 @@ const UsersOverview = () => {
   const totalSessions = sessions ? sessions.data.total : 25;
   const totalUsers = users ? users.data.total : 25;
 
-  const mapUsers = users? users.data.users.map((row,i)=>({
+  const mapUsers = overview? overview.data.users.map((row,i)=>({
     key: i,
     name: row.name,
     phone: row.phone,
@@ -82,19 +87,15 @@ const UsersOverview = () => {
           {tags.map((tag) => {
             let color;
             let textColor;
-            if (tag === 0) {
-              color = "#DFFFF6";
-              textColor = "#00966D";
-              tag = "Waiting"
-            }
+          
   
-            if (tag === 1) {
+            if (tag === 0) {
               color = "#DFFFF6";
               textColor = "#00966D";
               tag = "Active"
             }
 
-            if (tag === 2) {
+            if (tag === 1) {
               color = "#FFED8A";
               textColor = "#AB6C0D";
               tag = "Suspended"
@@ -176,6 +177,10 @@ const UsersOverview = () => {
             placeholder="Search..."
             prefix={<SearchOutlined className="search-navs" />}
             style={{ width: 300 }}
+            value= {search}
+            onChange= {(e)=>{
+              setSearch(e.target.value)
+            }}
           />
         </Col>
 

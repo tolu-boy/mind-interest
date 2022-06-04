@@ -8,9 +8,9 @@ import { useHistory } from "react-router-dom";
 import useSuspendedUsers from "queries/useSuspendedUsers";
 
 const UsersSuspended = () => {
+  const [search, setSearch] = useState("")
   const history = useHistory();
-  const { data: SuspendedUsers } = useSuspendedUsers();
-
+  const { data: SuspendedUsers } = useSuspendedUsers(search);
   const mapSuspendedUsers = SuspendedUsers? SuspendedUsers.data.users.map((row,i)=>({
     key: i,
     name: row.name,
@@ -143,6 +143,10 @@ const UsersSuspended = () => {
             placeholder="Search..."
             prefix={<SearchOutlined className="search-navs" />}
             style={{ width: 300 }}
+            value= {search}
+            onChange= {(e)=>{
+              setSearch(e.target.value)
+            }}
           />
         </Col>
 

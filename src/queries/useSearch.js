@@ -2,7 +2,7 @@ import { useQuery} from "react-query";
 import { axios } from "../services/ApiService";
 
 const getSearch= async (q) => {
-  const { data } = await axios.get(`/search?name=${q} `, );
+  const { data } = await axios.get(`/search?name=${q}`);
 
 
   return data;

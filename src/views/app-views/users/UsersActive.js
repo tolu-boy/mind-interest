@@ -11,9 +11,9 @@ import useActiveUsers from "queries/useActiveUsers";
 import { APP_PREFIX_PATH } from 'configs/AppConfig'
 
 const UsersActive = () => {
+  const [search, setSearch] = useState("")
   const history = useHistory();
-
-  const { data: activeUsers } = useActiveUsers();
+  const { data: activeUsers } = useActiveUsers(search);
 
   const mapActiveUsers = activeUsers ? activeUsers.data.users.map((row,i)=>({
     key: i,
@@ -150,6 +150,10 @@ const UsersActive = () => {
             placeholder="Search..."
             prefix={<SearchOutlined className="search-navs" />}
             style={{ width: 300 }}
+            value= {search}
+            onChange= {(e)=>{
+              setSearch(e.target.value)
+            }}
           />
         </Col>
 

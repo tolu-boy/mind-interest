@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Layout,Input } from "antd";
+import { Layout} from "antd";
 import { MenuFoldOutlined, MenuUnfoldOutlined ,SearchOutlined} from '@ant-design/icons';
 import Logo from './Logo';
 // import NavPanel from './NavPanel';
@@ -10,6 +10,8 @@ import { NAV_TYPE_TOP, SIDE_NAV_COLLAPSED_WIDTH, SIDE_NAV_WIDTH } from 'constant
 import utils from 'utils'
 import NavNotification from './NavNotification';
 import NavProfile from './NavProfile';
+import useSearch from "queries/useSearch";
+import SearchBar from "./NavSearch/SearchBar";
 
 
 const { Header } = Layout;
@@ -17,6 +19,13 @@ const { Header } = Layout;
 export const HeaderNav = props => {
   const { navCollapsed, mobileNav, navType, headerNavColor, toggleCollapsedNav, onMobileNavToggle, isMobile, currentTheme } = props;
   const [searchActive, setSearchActive] = useState(false)
+
+  const [search1] = useState("")
+  const { data: therapists,refetch } = useSearch(search1,{
+    manual: true,
+
+  });
+
 
 
   const onSearchActive = () => {
@@ -84,8 +93,10 @@ export const HeaderNav = props => {
                 </li>
                 :
                 <li className="ant-menu-item ant-menu-item-only-child" style={{cursor: 'auto'}}>
-                  <Input placeholder="Search..."  prefix={<SearchOutlined className="search-navs" />} />
-
+                  {/* <Input placeholder="Search...nnn" 
+                   prefix={<SearchOutlined className="search-navs"/>}
+                     /> */}
+                     <SearchBar placeholder="Search" data={therapists} refetch={refetch}/>
                 </li>
               }
             </ul>

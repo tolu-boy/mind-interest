@@ -8,8 +8,10 @@ import { useHistory } from "react-router-dom";
 import useApprovedTherapists from "queries/useApprovedTherapits";
 
 const Approved = () => {
+
+  const [search, setSearch] = useState("")
   const history = useHistory();
-  const { data: ApprovedTherapists } = useApprovedTherapists();
+  const { data: ApprovedTherapists } = useApprovedTherapists(search);
    
   const mapApprovedTherapists = ApprovedTherapists? ApprovedTherapists.data.therapists.map((row,i)=>({
     key: i,
@@ -257,6 +259,10 @@ const Approved = () => {
             placeholder="Search..."
             prefix={<SearchOutlined className="search-navs" />}
             style={{ width: 300 }}
+            value= {search}
+            onChange= {(e)=>{
+              setSearch(e.target.value)
+            }}
           />
         </Col>
 

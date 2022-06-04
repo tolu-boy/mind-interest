@@ -64,6 +64,7 @@ const ProfileWaiting = () => {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [visible1, setVisible1] = useState(false);
   const [confirmLoading1, setConfirmLoading1] = useState(false);
+  
 
   const openNotificationWithIcon = (type) => {
     notification[type]({
@@ -86,8 +87,6 @@ const ProfileWaiting = () => {
   setVisible(false)
   openNotificationWithIcon("success");
   history.push(`/app/therapists/ProfileSuspended/${param.id}`);
-
-
   };
 
 

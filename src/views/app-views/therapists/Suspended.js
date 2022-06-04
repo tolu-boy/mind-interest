@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, Row, Col, Input, Table, Tag, Button } from "antd";
-import { ArrowUpOutlined, SearchOutlined} from "@ant-design/icons";
+import {  SearchOutlined} from "@ant-design/icons";
 import more from "../../../assets/img/mark.svg";
 import comment from "../../../assets/img/Comment.svg";
 import avatar2 from "../../../assets/img/Avatar.svg";
@@ -18,9 +18,10 @@ const rowSelection = {
 };
 
 const Suspended = () => {
+  const [search, setSearch] = useState("")
   const [selectionType] = useState("checkbox");
   const history = useHistory();
-  const { data: SuspendedTherapists } = useSuspendedTherapists();
+  const { data: SuspendedTherapists } = useSuspendedTherapists(search);
 
   const mapSuspendedTherapists = SuspendedTherapists? SuspendedTherapists.data.therapists.map((row,i)=>({
     key: i,
@@ -124,11 +125,7 @@ const Suspended = () => {
                     </Tag>
                   </Col>
 
-                  <Col md={12} xs={24}>
-                    <p className="rev-green">
-                      <ArrowUpOutlined /> 55.8%
-                    </p>
-                  </Col>
+                 
                 </Row>
               </div>
             );
@@ -137,36 +134,7 @@ const Suspended = () => {
       ),
     },
 
-    // {
-    //   title: "Sessions",
-    //   dataIndex: "age",
-    //   key: "address",
-    // },
 
-    // {
-    //   title: "Ratings",
-    //   dataIndex: "Ratings",
-    //   key: "Ratings",
-    //   render: (Ratings, text) => (
-    //     <span>
-    //       {Ratings.map((tag) => {
-    //         let color = "#00BA88";
-    //         let textColor = "#ffff";
-    //         return (
-    //           <div>
-    //             <Row>
-    //               <Col span={24}>
-    //                 <Tag color={color} style={{ color: textColor }} key={tag}>
-    //                   <StarFilled /> {tag}
-    //                 </Tag>
-    //               </Col>
-    //             </Row>
-    //           </div>
-    //         );
-    //       })}
-    //     </span>
-    //   ),
-    // },
 
     {
       title: "Action",
@@ -203,6 +171,10 @@ const Suspended = () => {
             placeholder="Search..."
             prefix={<SearchOutlined className="search-navs" />}
             style={{ width: 300 }}
+            value= {search}
+            onChange= {(e)=>{
+              setSearch(e.target.value)
+            }}
           />
         </Col>
 

@@ -248,8 +248,8 @@ const ProfileSuspended = () => {
                   </Col>
 
                   <Col md={15}>
-                    <li className="proileName"> Dr. Festus King</li>
-                    <li className="proileWork pt-2 "> Family counselor</li>
+                    <li className="proileName"> {Therapist.name} </li>
+                    <li className="proileWork pt-2 "> {Therapist.specialty}</li>
                   </Col>
 
                   <Col md={3}>
