@@ -3,29 +3,89 @@ import { Card, Row, Col, Select, Avatar, Button } from "antd";
 import {
   COLOR_1,
   COLOR_TEXT,
-  COLOR_2,
-  COLOR_4,
+  // COLOR_2,
+  // COLOR_4,
 
-  COLOR_4_LIGHT,
+  // COLOR_4_LIGHT,
 } from "constants/ChartConstant";
-import Chart from "react-apexcharts";
+// import Chart from "react-apexcharts";
 
 import { Line, Doughnut } from "react-chartjs-2";
 import { ArrowUpOutlined } from "@ant-design/icons";
-import profileImg from "../../../assets/img/thumb-1.jpg";
-import left1 from "../../../assets/img/left1.svg";
+// import profileImg from "../../../assets/img/thumb-1.jpg";
+// import left1 from "../../../assets/img/left1.svg";
 import refundImg from "../../../assets/img/refund-img.png";
 import phone1 from "../../../assets/img/phone1.svg";
 import phone2 from "../../../assets/img/phone2.svg";
-import avatar from "../../../assets/img/Avatar.svg";
+// import avatar from "../../../assets/img/Avatar.svg";
+import useDevices from "queries/useDevices";
+import useTherapists from "queries/useTherapists";
+import useActiveUsers from "queries/useActiveUsers";
 
 const Statistics = () => {
+//devices
+  const { data: devices } = useDevices()
+  const deviceStats = devices ? devices.data: []
+  let totalDevices = deviceStats.android + deviceStats.ios
+  let android =  (deviceStats.android /totalDevices)   * 100
+  let ios =  (deviceStats.ios /totalDevices)   * 100
+
+
+  // therapists
+  const { data: therapists } = useTherapists()
+  const therapistStats = therapists ? therapists.data.therapists: []
+
+ let therapistsArray = therapistStats.map((item)=>{
+ return item.createdAt.slice(0,10)
+  })
+
+  var map = therapistsArray.reduce(function(obj, b) {
+    obj[b] = ++obj[b] || 1;
+    return obj;
+  }, {});
+
+  let labelsArray =[];
+  let valueArray = [];
+  const keys = Object.keys(map);
+  keys.forEach((key, index) => {
+     labelsArray.push(keys[0])
+      valueArray.push(map[key])  
+});
+
+// Active users 
+
+const { data: activeUsers } = useActiveUsers("");
+const activeUsersStats = activeUsers ? activeUsers.data.users : [];
+
+let activeUsersStatsArray = activeUsersStats.map((item)=>{
+  return item.createdAt.slice(0,10)
+   })
+ 
+   let usersMap = activeUsersStatsArray.reduce(function(obj, b) {
+    obj[b] = ++obj[b] || 1;
+    return obj;
+  }, {});
+
+  let usersLabelsArray =[];
+  let usersValueArray = [];
+  const userkeys = Object.keys(usersMap);
+  userkeys.forEach((key, index) => {
+    usersLabelsArray.push(keys[0])
+      usersValueArray.push(usersMap[key])  
+});
+  
+console.log( usersLabelsArray,usersValueArray,'ppp');
+
+
+
+
+
   const data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: labelsArray,
     datasets: [
       {
         label: "false",
-        data: [70, 59, 80, 50, 70, 55, 100],
+        data: valueArray,
         fill: false,
         backgroundColor: "transparent",
         borderColor: COLOR_1,
@@ -75,8 +135,8 @@ const Statistics = () => {
           },
           ticks: {
             display: true,
-            max: 100,
-            stepSize: 20,
+            max: 3,
+            stepSize: 0.7,
             fontColor: COLOR_TEXT,
             fontSize: 13,
             padding: 10,
@@ -86,90 +146,90 @@ const Statistics = () => {
     },
   };
 
-  const Chartstate = {
-    series: [
-      {
-        name: "Google",
-        data: [44, 55, 41, 67, 22, 43],
-      },
-      {
-        name: "Snapchat",
-        data: [13, 23, 20, 8, 13, 27],
-      },
+  // const Chartstate = {
+  //   series: [
+  //     {
+  //       name: "Google",
+  //       data: [44, 55, 41, 67, 22, 43],
+  //     },
+  //     {
+  //       name: "Snapchat",
+  //       data: [13, 23, 20, 8, 13, 27],
+  //     },
 
-      {
-        name: "Word of mouth",
-        data: [11, 17, 15, 15, 21, 14],
-      },
+  //     {
+  //       name: "Word of mouth",
+  //       data: [11, 17, 15, 15, 21, 14],
+  //     },
 
-      {
-        name: "IG or Facebook",
-        data: [11, 17, 15, 15, 21, 14],
-      },
+  //     {
+  //       name: "IG or Facebook",
+  //       data: [11, 17, 15, 15, 21, 14],
+  //     },
 
-      {
-        name: "Other",
-        data: [11, 17, 15, 15, 21, 14],
-      },
-    ],
-    options: {
+  //     {
+  //       name: "Other",
+  //       data: [11, 17, 15, 15, 21, 14],
+  //     },
+  //   ],
+  //   options: {
 
-        dataLabels: {
-            enabled: false
-          },
-          legend: {
-            show: false
-          },
+  //       dataLabels: {
+  //           enabled: false
+  //         },
+  //         legend: {
+  //           show: false
+  //         },
 
-      chart: {
-        stacked: true,
-        toolbar: {
-          show: false,
-        },
-        zoom: {
-          enabled: true,
-        },
-      },
-      colors: ["#3F91F5", "#FFBC99", "#B1E5FC", "#CABDFF", "#FFD88D"],
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            legend: {
-              position: "bottom",
-              offsetX: -10,
-              offsetY: 0,
-            },
-          },
-        },
-      ],
-      plotOptions: {
-        bar: {
-          horizontal: false,
-        },
-      },
-      xaxis: {
-        categories: [
-          "Google",
-          "Snapchat",
-          "Word of mouth",
-          "IG or Facebook",
-          "Other",
-        ],
-      },
+  //     chart: {
+  //       stacked: true,
+  //       toolbar: {
+  //         show: false,
+  //       },
+  //       zoom: {
+  //         enabled: true,
+  //       },
+  //     },
+  //     colors: ["#3F91F5", "#FFBC99", "#B1E5FC", "#CABDFF", "#FFD88D"],
+  //     responsive: [
+  //       {
+  //         breakpoint: 480,
+  //         options: {
+  //           legend: {
+  //             position: "bottom",
+  //             offsetX: -10,
+  //             offsetY: 0,
+  //           },
+  //         },
+  //       },
+  //     ],
+  //     plotOptions: {
+  //       bar: {
+  //         horizontal: false,
+  //       },
+  //     },
+  //     xaxis: {
+  //       categories: [
+  //         "Google",
+  //         "Snapchat",
+  //         "Word of mouth",
+  //         "IG or Facebook",
+  //         "Other",
+  //       ],
+  //     },
       
-      fill: {
-        opacity: 1,
-      },
-    },
-  };
+  //     fill: {
+  //       opacity: 1,
+  //     },
+  //   },
+  // };
 
   const data1 = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: usersLabelsArray,
     datasets: [
       {
         label: "Series A",
-        data: [65, 59, 80, 81, 56, 55, 40],
+        data: usersValueArray,
         fill: false,
         backgroundColor: "transparent",
         borderColor: COLOR_1,
@@ -177,27 +237,7 @@ const Statistics = () => {
         pointHoverBackgroundColor: COLOR_1,
         pointHoverBorderColor: COLOR_1,
       },
-      {
-        label: "Series B",
-        data: [28, 48, 40, 19, 86, 27, 90],
-        fill: false,
-        backgroundColor: "transparent",
-        borderColor: COLOR_2,
-        pointBackgroundColor: COLOR_2,
-        pointHoverBackgroundColor: COLOR_2,
-        pointHoverBorderColor: COLOR_2,
-      },
-
-      {
-        label: "Series c",
-        data: [48, 58, 10, 29, 36, 77, 60],
-        fill: false,
-        backgroundColor: "transparent",
-        borderColor: COLOR_4,
-        pointBackgroundColor: COLOR_4,
-        pointHoverBackgroundColor: COLOR_4,
-        pointHoverBorderColor: COLOR_4_LIGHT,
-      },
+    
     ],
   };
   const options1 = {
@@ -240,8 +280,8 @@ const Statistics = () => {
           },
           ticks: {
             display: true,
-            max: 100,
-            stepSize: 20,
+            max: 3,
+            stepSize: 0.7,
             fontColor: COLOR_TEXT,
             fontSize: 13,
             padding: 10,
@@ -255,7 +295,7 @@ const Statistics = () => {
     labels: ["Download Sales", "In-Store Sales", "Mail Sales"],
     datasets: [
       {
-        data: [40, 60],
+        data: [ios, android],
         backgroundColor: ["#8E59FF", "#F4BF6F"],
         pointBackgroundColor: ["#8E59FF", "#F4BF6F"],
       },
@@ -267,31 +307,31 @@ const Statistics = () => {
 
     legend: {
       display: false,
-    },
+    },    
   };
 
 
 
 
-  const data3 = {
-    labels: ["New User", "Returning user"],
+  // const data3 = {
+  //   labels: ["New User", "Returning user"],
 
-    datasets: [
-      {
-        data: [30, 70],
-        backgroundColor: ["#B5E4CA", "#3F91F5"],
-        pointBackgroundColor: ["#8E59FF", "#F4BF6F"],
-      },
-    ],
-  };
+  //   datasets: [
+  //     {
+  //       data: [30, 70],
+  //       backgroundColor: ["#B5E4CA", "#3F91F5"],
+  //       pointBackgroundColor: ["#8E59FF", "#F4BF6F"],
+  //     },
+  //   ],
+  // };
 
-  const options3 = {
-    responsive: true,
+  // const options3 = {
+  //   responsive: true,
 
-    legend: {
-      position: 'bottom',
-    },
-  };
+  //   legend: {
+  //     position: 'bottom',
+  //   },
+  // };
 
   const { Option } = Select;
 
@@ -317,23 +357,23 @@ const Statistics = () => {
     </div>
   );
 
-  const Traffic = (
-    <div>
-      <Row>
-        <Col md={19} xs={24}>
-          <p className="top-rated-color1">Traffic channel</p>
-        </Col>
+  // const Traffic = (
+  //   <div>
+  //     <Row>
+  //       <Col md={19} xs={24}>
+  //         <p className="top-rated-color1">Traffic channel</p>
+  //       </Col>
 
-        <Col md={5} xs={24}>
-          <Select defaultValue="Last 7 days" onChange={handleChange}>
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="Yiminghe">yiminghe</Option>
-          </Select>
-        </Col>
-      </Row>
-    </div>
-  );
+  //       <Col md={5} xs={24}>
+  //         <Select defaultValue="Last 7 days" onChange={handleChange}>
+  //           <Option value="jack">Jack</Option>
+  //           <Option value="lucy">Lucy</Option>
+  //           <Option value="Yiminghe">yiminghe</Option>
+  //         </Select>
+  //       </Col>
+  //     </Row>
+  //   </div>
+  // );
 
   const ActiveUsers = (
     <div>
@@ -374,54 +414,17 @@ const Statistics = () => {
 
             <Line data={data} options={options} />
 
-            <Row className="pt-4" gutter={24}>
-              <Col md={19}>
-                <p className="">
-                  Welcome
-                  <span className="top-rated-color1">
-                    18 new users <br />
-                  </span>
-                  with a personal message 😎
-                </p>
-              </Col>
-
-              <Col span={4} className="pb-5">
-                <Button> Send Message</Button>
-              </Col>
-
-              <Col span={6} className="">
-                <Avatar src={profileImg} />
-
-                <br />
-                <p className="top-rated-color1 pt-2"> Gladys</p>
-              </Col>
-
-              <Col span={6}>
-                <Avatar src={profileImg} />
-                <p className="top-rated-color1 pt-2"> Gladys</p>
-              </Col>
-
-              <Col span={6}>
-                <Avatar src={profileImg} />
-                <p className="top-rated-color1 pt-2"> Gladys</p>
-              </Col>
-
-              <Col span={6} className="p-left2">
-                <Avatar src={left1} />
-
-                <p className="top-rated-color1 pt-2"> View all</p>
-              </Col>
-            </Row>
+            
           </Card>
 
-          <Card title={Traffic}>
+          {/* <Card title={Traffic}>
             <Chart
               options={Chartstate.options}
               series={Chartstate.series}
               type="bar"
               height={300}
             />
-          </Card>
+          </Card> */}
 
           <Card title={ActiveUsers}>
             <Line data={data1} options={options1} />
@@ -460,18 +463,18 @@ const Statistics = () => {
               <Col md={12} className="pl-2">
                 <img src={phone1} alt="" />
                 <li className="pt-2">ios</li>
-                <li className="top-rated-color-1"> 40%</li>
+                <li className="top-rated-color-1"> { Math.round(ios)} %</li>
               </Col>
 
               <Col md={12}>
                 <img src={phone2} alt="" />
                 <li className="pt-2">Andriod</li>
-                <li className="top-rated-color-1"> 60%</li>
+                <li className="top-rated-color-1"> { Math.round(android)} %</li>
               </Col>
             </Row>
           </Card>
 
-          <Card title="Message">
+          {/* <Card title="Message">
             <Row gutter={16}>
               <Col md={4}>
                 <img src={avatar} alt="" />
@@ -519,10 +522,10 @@ const Statistics = () => {
                 <Button block> View all message </Button>
               </Col>
             </Row>
-          </Card>
+          </Card> */}
 
 
-          <Card title='New customer'>
+          {/* <Card title='New customer'>
 
           <Doughnut
               data={data3}
@@ -531,7 +534,7 @@ const Statistics = () => {
               height={228}
             />
           
-          </Card>
+          </Card> */}
         </Col>
       </Row>
     </div>

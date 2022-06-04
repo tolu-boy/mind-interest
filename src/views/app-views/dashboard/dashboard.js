@@ -46,22 +46,41 @@ const Dashboard = () => {
   const { data: transactions } = useTransactions();
   const { data: sessions } = useSessions();
   const { data: refunds } = useRefunds();
-  const { data: therapists } = useTherapists();
+  // const { data: therapists } = useTherapists();
    const { data: ApprovedTherapists } = useActiveTherapists();
 
   const totalAmount = transactions ? transactions.data.totalAmount : 1200000;
   const totalSessions = sessions ? sessions.data.total : 25;
   const totalRefunds = refunds ? refunds.data.total : 25;
   const totalActiveUsers = ApprovedTherapists ? ApprovedTherapists.data.total : 25;  
-  var  months = ["Jan", "Feb", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  // var  months = ["Jan", "Feb", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
+// therapists
+const { data: therapists } = useTherapists()
+const therapistStats = therapists ? therapists.data.therapists: []
 
+let therapistsArray = therapistStats.map((item)=>{
+return item.createdAt.slice(0,10)
+})
+
+var map = therapistsArray.reduce(function(obj, b) {
+  obj[b] = ++obj[b] || 1;
+  return obj;
+}, {});
+
+let labelsArray =[];
+let valueArray = [];
+const keys = Object.keys(map);
+keys.forEach((key, index) => {
+   labelsArray.push(keys[0])
+    valueArray.push(map[key])  
+});
 
   const Chartstate = {
     series: [
       {
         name: "Active Therapists",
-        data: therapists ? therapists.data.therapists.slice(0,5).map(x=> new Date(x.createdAt).getMonth()) :[],
+        data: valueArray,
       },
   
     ],
@@ -71,15 +90,15 @@ const Dashboard = () => {
       colors:["#F6CC8D"],
       xaxis:{
         tickPlacement: 'on',
-        categories:therapists ? therapists.data.therapists.slice(0,5).map(x=>x.name) :[]
+        categories:labelsArray
       },
       yaxis: {
-        labels: {
-          formatter: function(value) {
-            return months[value]
+        // labels: {
+        //   formatter: function(value) {
+        //     return months[value]
           
-          }
-        }
+        //   }
+        // }
       },
       
       
