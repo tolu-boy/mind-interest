@@ -14,7 +14,7 @@ import {
 import profileImg from "../../../assets/img/thumb-1.jpg";
 import useTransactions from "queries/useTransactions";
 import useSessions from "queries/useSessions";
-import useRefunds from "queries/useRefunds";
+// import useRefunds from "queries/useRefunds";
 import useTherapists from "queries/useTherapists";
 import useActiveTherapists from "queries/useActiveTherapists";
 import Chart from "react-apexcharts";
@@ -46,13 +46,13 @@ const Dashboard = () => {
   // other apis used on the page
   const { data: transactions } = useTransactions();
   const { data: sessions } = useSessions();
-  const { data: refunds } = useRefunds();
+  // const { data: refunds } = useRefunds();
   //Active therapists
    const { data: ApprovedTherapists } = useActiveTherapists();
 
   const totalAmount = transactions ? transactions.data.totalAmount : 1200000;
   const totalSessions = sessions ? sessions.data.total : 25;
-  const totalRefunds = refunds ? refunds.data.total : 25;
+  // const totalRefunds = refunds ? refunds.data.total : 25;
   const totalActiveUsers = ApprovedTherapists ? ApprovedTherapists.data.total : 25;  
 
 // therapists
