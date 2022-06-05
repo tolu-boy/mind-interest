@@ -16,7 +16,7 @@ function SearchBar({ placeholder, data, refetch }) {
   let mapuser = data ? data.data.users : [];
   let searchedResult = [...mapuser, ...mapTherapist];
 
-  console.log(filteredData);
+//   console.log(filteredData);
 
   const handleFilter = (event) => {
     const searchWord = event.target.value;
@@ -29,7 +29,6 @@ function SearchBar({ placeholder, data, refetch }) {
     if (searchWord === "") {
       setFilteredData([]);
     } else if (newFilter.length === 0) {
-      console.log("oooo");
       setFilteredData([{ name: "No results found for query" }]);
     } else {
       setFilteredData(newFilter);

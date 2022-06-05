@@ -3,7 +3,7 @@ import { Card, Row, Col, Avatar, Button } from "antd";
 import toatalrev from "../../../assets/img/totalrev.png";
 import therapypic from "../../../assets/img/therapypic.png";
 import activeuserspic from "../../../assets/img/activeuserspic.png";
-import refundImg from "../../../assets/img/refund-img.png";
+// import refundImg from "../../../assets/img/refund-img.png";
 import avatar from "../../../assets/img/Avatar.svg";
 import dot from "../../../assets/img/Dot1.svg";
 import {
@@ -288,7 +288,7 @@ keys.forEach((key, index) => {
 
 
           <Col md={8} xs={24} className="p-left2">
-            <Card title="Refund requests">
+            {/* <Card title="Refund requests">
               <Row>
                 <Col span={6}>
                   <Avatar src={refundImg} />
@@ -305,7 +305,7 @@ keys.forEach((key, index) => {
                   <Button block> Review refund requests </Button>
                 </Col>
               </Row>
-            </Card>
+            </Card> */}
           </Col>
 
 
