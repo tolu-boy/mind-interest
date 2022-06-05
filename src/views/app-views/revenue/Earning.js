@@ -3,11 +3,12 @@ import { Card, Row, Col, Select, Avatar, Button, Table, Tag } from "antd";
 import earning from "../../../assets/img/earning.svg";
 import payout from "../../../assets/img/payout.svg";
 import totalrevenue1 from "../../../assets/img/totalrevenue1.svg";
-import ChartWidget from "components/shared-components/ChartWidget";
+// import ChartWidget from "components/shared-components/ChartWidget";
 import profileImg from "../../../assets/img/thumb-1.jpg";
 import useEarning from "queries/useEarning";
 import useTherapists from "queries/useTherapists";
 import { ArrowUpOutlined, ArrowDownOutlined } from "@ant-design/icons";
+import Chart from "react-apexcharts";
 
 const Earning = () => {
   const item = [];
@@ -31,6 +32,31 @@ const Earning = () => {
         amount: row.amount,
       }))
     : [];
+
+
+const transactionStats =  earnings ? earnings.data.transactions : [];
+
+let transactionStatsArray = transactionStats.map((item)=>{
+  return item.createdAt.slice(0,10)
+   })
+
+
+ 
+   let transactionMap = transactionStatsArray.reduce(function(obj, b) {
+    obj[b] = ++obj[b] || 1;
+    return obj;
+  }, {});
+
+
+
+  let transactionLabelsArray =[];
+  let transactionValueArray = [];
+  const transactionkeys = Object.keys(transactionMap);
+  transactionkeys.forEach((key, index) => {
+    transactionLabelsArray.push(key)
+    transactionValueArray.push(transactionMap[key])  
+});
+
 
   const columns = [
     {
@@ -117,31 +143,56 @@ const Earning = () => {
 
         <Col md={4} xs={24}>
           <Select defaultValue="Last 7 days" onChange={handleChange}>
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="Yiminghe">yiminghe</Option>
+            <Option value="jack">last week</Option>
+           
           </Select>
         </Col>
       </Row>
     </div>
   );
 
-  const weeklyRevenueData = {
+  // const weeklyRevenueData = {
+  //   series: [
+  //     {
+  //       name: "Earning",
+  //       data: transactionValueArray,
+  //     },
+  //   ],
+  //   categories: [transactionLabelsArray]
+  // };
+
+  const Chartstate = {
     series: [
       {
-        name: "Earning",
-        data: [45, 52, 38, 24, 33, 26, 21],
+        name: "Active Therapists",
+        data: transactionValueArray,
       },
+  
     ],
-    categories: [
-      "08 Jul",
-      "09 Jul",
-      "10 Jul",
-      "11 Jul",
-      "12 Jul",
-      "13 Jul",
-      "14 Jul",
-    ],
+
+   
+    options :{
+      colors:["#F6CC8D"],
+      xaxis:{
+        tickPlacement: 'on',
+        categories:transactionLabelsArray
+      },
+     
+      
+      
+      dataLabels: {
+        formatter:(val)=>{
+          return ''
+        }
+      },
+      chart: {
+        toolbar: {
+          show: true,
+        },
+      
+      },
+    }
+  
   };
 
   const FilterByNameInput = (
@@ -258,7 +309,7 @@ const Earning = () => {
       <Row gutter={16}>
         <Col md={16}>
           <Card title={cardHeader}>
-            <ChartWidget
+            {/* <ChartWidget
               card={false}
               series={weeklyRevenueData.series}
               xAxis={weeklyRevenueData.categories}
@@ -266,7 +317,15 @@ const Earning = () => {
               height={250}
               type="bar"
               customOptions={{ colors: "#F6CC8D" }}
-              // direction={direction}
+              direction={direction}
+            /> */}
+
+            <Chart
+              options={Chartstate.options}
+              series={Chartstate.series}
+              type="bar"
+              height={300}
+              // width= {500}
             />
           </Card>
         </Col>

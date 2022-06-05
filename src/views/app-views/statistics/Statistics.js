@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Row, Col, Select, Avatar, Button } from "antd";
+import { Card, Row, Col, Select } from "antd";
 import {
   COLOR_1,
   COLOR_TEXT,
@@ -14,7 +14,7 @@ import { Line, Doughnut } from "react-chartjs-2";
 import { ArrowUpOutlined } from "@ant-design/icons";
 // import profileImg from "../../../assets/img/thumb-1.jpg";
 // import left1 from "../../../assets/img/left1.svg";
-import refundImg from "../../../assets/img/refund-img.png";
+// import refundImg from "../../../assets/img/refund-img.png";
 import phone1 from "../../../assets/img/phone1.svg";
 import phone2 from "../../../assets/img/phone2.svg";
 // import avatar from "../../../assets/img/Avatar.svg";
@@ -39,18 +39,25 @@ const Statistics = () => {
  return item.createdAt.slice(0,10)
   })
 
+
   var map = therapistsArray.reduce(function(obj, b) {
     obj[b] = ++obj[b] || 1;
     return obj;
   }, {});
 
+
+
   let labelsArray =[];
   let valueArray = [];
   const keys = Object.keys(map);
   keys.forEach((key, index) => {
-     labelsArray.push(keys[0])
+    //  labelsArray.push(keys[0])
+    labelsArray.push(key)
+
       valueArray.push(map[key])  
 });
+
+
 
 // Active users 
 
@@ -60,21 +67,23 @@ const activeUsersStats = activeUsers ? activeUsers.data.users : [];
 let activeUsersStatsArray = activeUsersStats.map((item)=>{
   return item.createdAt.slice(0,10)
    })
+
+
  
    let usersMap = activeUsersStatsArray.reduce(function(obj, b) {
     obj[b] = ++obj[b] || 1;
     return obj;
   }, {});
 
+
   let usersLabelsArray =[];
   let usersValueArray = [];
   const userkeys = Object.keys(usersMap);
   userkeys.forEach((key, index) => {
-    usersLabelsArray.push(keys[0])
+    usersLabelsArray.push(key)
       usersValueArray.push(usersMap[key])  
 });
   
-console.log( usersLabelsArray,usersValueArray,'ppp');
 
 
 
@@ -135,7 +144,7 @@ console.log( usersLabelsArray,usersValueArray,'ppp');
           },
           ticks: {
             display: true,
-            max: 3,
+            max: 4.9,
             stepSize: 0.7,
             fontColor: COLOR_TEXT,
             fontSize: 13,
@@ -432,7 +441,7 @@ console.log( usersLabelsArray,usersValueArray,'ppp');
         </Col>
 
         <Col md={8}>
-          <Card title="Refund requests">
+          {/* <Card title="Refund requests">
             <Row>
               <Col span={6}>
                 <Avatar src={refundImg} />
@@ -449,7 +458,7 @@ console.log( usersLabelsArray,usersValueArray,'ppp');
                 <Button block> Review refund requests </Button>
               </Col>
             </Row>
-          </Card>
+          </Card> */}
 
           <Card title="Top device">
             <Doughnut

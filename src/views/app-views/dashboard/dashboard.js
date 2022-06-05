@@ -43,17 +43,17 @@ const FilterByNameInput = (
 
 
 const Dashboard = () => {
+  // other apis used on the page
   const { data: transactions } = useTransactions();
   const { data: sessions } = useSessions();
   const { data: refunds } = useRefunds();
-  // const { data: therapists } = useTherapists();
+  //Active therapists
    const { data: ApprovedTherapists } = useActiveTherapists();
 
   const totalAmount = transactions ? transactions.data.totalAmount : 1200000;
   const totalSessions = sessions ? sessions.data.total : 25;
   const totalRefunds = refunds ? refunds.data.total : 25;
   const totalActiveUsers = ApprovedTherapists ? ApprovedTherapists.data.total : 25;  
-  // var  months = ["Jan", "Feb", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 // therapists
 const { data: therapists } = useTherapists()
@@ -72,7 +72,7 @@ let labelsArray =[];
 let valueArray = [];
 const keys = Object.keys(map);
 keys.forEach((key, index) => {
-   labelsArray.push(keys[0])
+   labelsArray.push(key)
     valueArray.push(map[key])  
 });
 
@@ -92,14 +92,7 @@ keys.forEach((key, index) => {
         tickPlacement: 'on',
         categories:labelsArray
       },
-      yaxis: {
-        // labels: {
-        //   formatter: function(value) {
-        //     return months[value]
-          
-        //   }
-        // }
-      },
+     
       
       
       dataLabels: {
@@ -261,7 +254,7 @@ keys.forEach((key, index) => {
             <Card title="Recent activities">
               <Row>
               {(sessions) ? <>
-                { sessions?.data.sessions.slice(0,10).map((item) => (
+                { sessions?.data.sessions.slice(0,10).reverse().map((item) => (
                   <Col span={12}  className="pb-3">
                     <Row>
                       <Col span={4}>
@@ -270,7 +263,7 @@ keys.forEach((key, index) => {
 
                       <Col span={17}>
                         <p className="top-rated-color1">
-                          Demi Wikinson
+                          {item.user}
                           <span className="p-message"> {new Date(item.createdAt ).toDateString()}</span>
                         </p>
                         <p>

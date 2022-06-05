@@ -214,9 +214,7 @@ const Overview =  () => {
 
         <Col md={4} xs={24}>
           <Select defaultValue="This week" onChange={handleChange}>
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="Yiminghe">yiminghe</Option>
+            <Option value="jack"> last week</Option>
           </Select>
         </Col>
       </Row>
