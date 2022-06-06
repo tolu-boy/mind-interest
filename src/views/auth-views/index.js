@@ -18,7 +18,9 @@ export const AppViews = () => {
         <Route path={`${AUTH_PREFIX_PATH}/Reset`} component={lazy(() => import(`./authentication/forgot-password/Reset`))} />
         <Route path={`${AUTH_PREFIX_PATH}/error-1`} component={lazy(() => import(`./errors/error-page-1`))} />
         <Route path={`${AUTH_PREFIX_PATH}/error-2`} component={lazy(() => import(`./errors/error-page-2`))} />
+        <Route path={`${AUTH_PREFIX_PATH}/Logout`} component={lazy(() => import(`./authentication/logout/logout`))} />
         <Redirect from={`${AUTH_PREFIX_PATH}`} to={`${AUTH_PREFIX_PATH}/login`} />
+        
       </Switch>
     </Suspense>
     

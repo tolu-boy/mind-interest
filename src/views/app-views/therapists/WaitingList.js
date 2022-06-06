@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Row, Col, Input, Table, Button } from "antd";
+import { Card, Row, Col, Input, Table, Button,Image } from "antd";
 
 import more from "../../../assets/img/More.svg";
 import comment from "../../../assets/img/Comment.svg";
@@ -29,7 +29,8 @@ const WaitingList = () => {
     name: row.name,
     Qualification: row.educational_qualification,
     NPA: row.NPA_reg_num,
-    id:row.id
+    id:row.id,
+    profile_img : row.profile_img
 
   })) : []; 
 
@@ -45,7 +46,13 @@ const WaitingList = () => {
           <div>
             <Row>
               <Col md={10} xs={24}>
-                <img src={avatar2} alt="products" className="product-img" />
+                {/* <img src={avatar2} alt="products" className="product-img" /> */}
+                <Image
+                 src={(!record.profile_img || null )? avatar2 : record.profile_img} 
+                 width={50}   
+                 height={50}
+                 preview={false}   
+                 alt="products" className="product-img" />
               </Col>
 
               <Col md={14} xs={24}>

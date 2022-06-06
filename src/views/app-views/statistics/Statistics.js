@@ -144,8 +144,8 @@ let activeUsersStatsArray = activeUsersStats.map((item)=>{
           },
           ticks: {
             display: true,
-            max: 4.9,
-            stepSize: 0.7,
+            // max: 4.9,
+            // stepSize: 0.7,
             fontColor: COLOR_TEXT,
             fontSize: 13,
             padding: 10,

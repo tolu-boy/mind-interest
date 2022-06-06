@@ -5,7 +5,7 @@ import {
   ArrowRightOutlined,
   ExclamationCircleTwoTone
 } from "@ant-design/icons";
-import { Card, Row, Col, Button, Select,notification,Modal } from "antd";
+import { Card, Row, Col, Button, Select,notification,Modal,Image } from "antd";
 import background from "../../../assets/img/background.svg";
 import profile from "../../../assets/img/profile.svg";
 import Chart from "react-apexcharts";
@@ -245,7 +245,13 @@ const ProfileApproved = () => {
               >
                 <Row>
                   <Col md={5}>
-                    <img alt="example" src={profile} className="profilePic" />
+                    {/* <img alt="example" src={profile} className="profilePic" /> */}
+                    <Image
+                 src={(!Therapist.profile_img || null )? profile : Therapist.profile_img} 
+                 width={50}   
+                 height={50}
+                 preview={false}   
+                 alt="products" className="product-img" />
                   </Col>
 
                   <Col md={15}>

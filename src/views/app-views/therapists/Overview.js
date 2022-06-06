@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Row, Col, Select, Input, Table, Tag } from "antd";
+import { Card, Row, Col, Select, Input, Table, Tag,Image } from "antd";
 import { ArrowUpOutlined, SearchOutlined} from "@ant-design/icons";
 
 import over1 from "../../../assets/img/over1.svg";
@@ -50,7 +50,7 @@ const Overview =  () => {
     price: row.hourly_rate,
     Earnings: [row.balance],
     tags: [row.approval_status],
-    // schedule: row.updatedAt
+    profile_img: row.profile_img
 
   })) : []; 
 
@@ -66,7 +66,12 @@ const Overview =  () => {
           <div>
             <Row>
               <Col md={10} xs={24}>
-                <img src={avatar2} alt="products" className="product-img" />
+                <Image
+                 src={(!record.profile_img || null )? avatar2 : record.profile_img} 
+                 width={50}  
+                 height={50} 
+                 preview={false}   
+                 alt="products" className="product-img" />
               </Col>
   
               <Col md={14} xs={24}>

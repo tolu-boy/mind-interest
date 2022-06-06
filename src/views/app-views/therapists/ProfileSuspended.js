@@ -5,7 +5,7 @@ import {
   ArrowRightOutlined,
   ExclamationCircleTwoTone
 } from "@ant-design/icons";
-import { Card, Row, Col, Button, Select,notification,Modal } from "antd";
+import { Card, Row, Col, Button, Select,notification,Modal,Image } from "antd";
 import background from "../../../assets/img/background.svg";
 import profile from "../../../assets/img/profile.svg";
 import Chart from "react-apexcharts";
@@ -111,6 +111,7 @@ const ProfileSuspended = () => {
         <Row>
           <Col md={3}>
             <img src={avatar2} alt="products" className="product-img" />
+            
           </Col>
 
           <Col md={17} className="pt-2">
@@ -177,9 +178,8 @@ const ProfileSuspended = () => {
 
         <Col md={10} xs={24}>
           <Select defaultValue="30 days" onChange={handleChange}>
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="Yiminghe">yiminghe</Option>
+            <Option value="jack"> 5 days</Option>
+
           </Select>
         </Col>
       </Row>
@@ -191,9 +191,8 @@ const ProfileSuspended = () => {
       <Row>
         <Col md={24} xs={24}>
           <Select defaultValue="30 days" onChange={handleChange}>
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="Yiminghe">yiminghe</Option>
+            <Option value="jack"> 5 days</Option>
+
           </Select>
         </Col>
       </Row>
@@ -244,7 +243,12 @@ const ProfileSuspended = () => {
               >
                 <Row>
                   <Col md={5}>
-                    <img alt="example" src={profile} className="profilePic" />
+                    <Image
+                 src={(!Therapist.profile_img || null )? profile : Therapist.profile_img} 
+                 width={50}   
+                 height={50}
+                 preview={false}   
+                 alt="products" className="product-img" />
                   </Col>
 
                   <Col md={15}>

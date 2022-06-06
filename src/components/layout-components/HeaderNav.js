@@ -8,7 +8,7 @@ import NavSearch  from './NavSearch';
 import { toggleCollapsedNav, onMobileNavToggle } from 'redux/actions/Theme';
 import { NAV_TYPE_TOP, SIDE_NAV_COLLAPSED_WIDTH, SIDE_NAV_WIDTH } from 'constants/ThemeConstant';
 import utils from 'utils'
-import NavNotification from './NavNotification';
+// import NavNotification from './NavNotification';
 import NavProfile from './NavProfile';
 import useSearch from "queries/useSearch";
 import SearchBar from "./NavSearch/SearchBar";
@@ -102,7 +102,7 @@ export const HeaderNav = props => {
             </ul>
           </div>
           <div className="nav-right">
-          <NavNotification />
+          {/* <NavNotification /> */}
           <NavProfile />
          {/* <NavPanel direction={direction} /> */}
 

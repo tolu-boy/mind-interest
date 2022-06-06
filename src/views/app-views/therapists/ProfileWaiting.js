@@ -5,7 +5,7 @@ import {
   ArrowRightOutlined,
   ExclamationCircleTwoTone
 } from "@ant-design/icons";
-import { Card, Row, Col, Button, Select,Modal,notification} from "antd";
+import { Card, Row, Col, Button, Select,Modal,notification,Image} from "antd";
 import background from "../../../assets/img/background.svg";
 import profile from "../../../assets/img/profile.svg";
 import Chart from "react-apexcharts";
@@ -152,9 +152,8 @@ const ProfileWaiting = () => {
 
         <Col md={10} xs={24}>
           <Select defaultValue="30 days" onChange={handleChange}>
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="Yiminghe">yiminghe</Option>
+            <Option value="jack"> 5 days ago</Option>
+           
           </Select>
         </Col>
       </Row>
@@ -166,9 +165,8 @@ const ProfileWaiting = () => {
       <Row>
         <Col md={24} xs={24}>
           <Select defaultValue="30 days" onChange={handleChange}>
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="Yiminghe">yiminghe</Option>
+            <Option value="jack">3 days</Option>
+          
           </Select>
         </Col>
       </Row>
@@ -248,7 +246,13 @@ const ProfileWaiting = () => {
               >
                 <Row>
                   <Col md={5}>
-                    <img alt="example" src={profile} className="profilePic" />
+                    {/* <img alt="example" src={profile} className="profilePic" /> */}
+                    <Image
+                 src={(!Therapist.profile_img || null )? profile : Therapist.profile_img} 
+                 width={50}   
+                 height={50}
+                 preview={false}   
+                 alt="products" className="product-img" />
                   </Col>
 
                   <Col md={15}>

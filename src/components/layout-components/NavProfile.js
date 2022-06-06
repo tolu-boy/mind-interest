@@ -1,13 +1,7 @@
 import React from "react";
 import { Menu, Dropdown, Avatar } from "antd";
 import { connect } from 'react-redux'
-import { 
-  EditOutlined, 
-  SettingOutlined, 
-  ShopOutlined, 
-  QuestionCircleOutlined, 
-  LogoutOutlined 
-} from '@ant-design/icons';
+import { EditOutlined, UserOutlined , LogoutOutlined,DollarCircleOutlined } from '@ant-design/icons';
 import Icon from 'components/util-components/Icon';
 import { signOut } from 'redux/actions/Auth';
 import { useStore } from '../../zustand';
@@ -16,26 +10,22 @@ import { useStore } from '../../zustand';
 
 const menuItem = [
 	{
-		title: "Edit Profile",
+		title: "Overview",
 		icon: EditOutlined ,
-		path: "/"
+		path: "/therapists/Overview"
     },
     
     {
-		title: "Account Setting",
-		icon: SettingOutlined,
-		path: "/"
+		title: "Users",
+		icon: UserOutlined,
+		path: "/UsersOverview"
     },
     {
-		title: "Billing",
-		icon: ShopOutlined ,
-		path: "/"
+		title: "Earnings",
+		icon: DollarCircleOutlined  ,
+		path: "/Earning"
 	},
-    {
-		title: "Help Center",
-		icon: QuestionCircleOutlined,
-		path: "/"
-	}
+   
 ]
 
 export const NavProfile = ({signOut}) => {
@@ -54,10 +44,10 @@ export const NavProfile = ({signOut}) => {
     <div className="nav-profile nav-dropdown">
       <div className="nav-profile-header">
         <div className="d-flex">
-          <Avatar size={45} src={profileImg} />
+          {/* <Avatar size={45} src={profileImg} /> */}
           <div className="pl-3">
-            <h4 className="mb-0">Charlie Howard</h4>
-            <span className="text-muted">Frontend Developer</span>
+            <h4 className="mb-0"> Quick Navigation </h4>
+            {/* <span className="text-muted">Mind interest</span> */}
           </div>
         </div>
       </div>
@@ -68,13 +58,12 @@ export const NavProfile = ({signOut}) => {
               <Menu.Item key={i}>
                 <a href={el.path}>
                   <Icon type={el.icon} />
-                  <span className="font-weight-normal">{el.title}</span>
+                  <span className="font-weight-normal">{el.title} </span>
                 </a>
               </Menu.Item>
             );
           })}
           <Menu.Item key={menuItem.length + 1} onClick={()=>{
-            console.log('signout')
             clearToken()
             setAuth(false)
             localStorage.setItem("auth",  false );

@@ -6,7 +6,7 @@ import {
   PieChartOutlined,
   LogoutOutlined
 } from '@ant-design/icons';
-import { APP_PREFIX_PATH } from 'configs/AppConfig'
+import { APP_PREFIX_PATH, AUTH_PREFIX_PATH } from 'configs/AppConfig'
 // import diamond from '../assets/svg/Union.svg'
 
 const dashBoardNavTree = [
@@ -196,7 +196,7 @@ const dashBoardNavTree = [
 
 {
   key: 'Logout',
-  path: `${APP_PREFIX_PATH}/Logout`,
+  path: `${AUTH_PREFIX_PATH }/Logout`,
   title: 'Logout',
   icon: LogoutOutlined,
   breadcrumb: false,

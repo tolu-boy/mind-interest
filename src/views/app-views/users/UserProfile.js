@@ -1,7 +1,7 @@
 
 import React, { useState} from "react";
 import { ArrowLeftOutlined, ArrowRightOutlined ,ExclamationCircleTwoTone } from "@ant-design/icons";
-import { Card, Row, Col, Button, Select,notification,Modal } from "antd";
+import { Card, Row, Col, Button, Select,notification,Modal,Image } from "antd";
 import background from "../../../assets/img/background.svg";
 import profile from "../../../assets/img/profile.svg";
 import avatar2 from "../../../assets/img/Avatar.svg";
@@ -298,7 +298,11 @@ const UserProfile = () => {
               >
                 <Row>
                   <Col md={5}>
-                    <img alt="example" src={profile} className="profilePic" />
+                    <Image
+                 src={(!user.profile_img || null )? profile : user.profile_img} 
+                 width={50}   
+                 preview={false}   
+                 alt="products" className="product-img" />
                   </Col>
 
                   <Col md={15}>

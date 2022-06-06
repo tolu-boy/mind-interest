@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Row, Col, Select, Input, Table, Tag } from "antd";
+import { Card, Row, Col, Select, Input, Table, Tag,Image } from "antd";
 import { ArrowUpOutlined, SearchOutlined } from "@ant-design/icons";
 
 import over1 from "../../../assets/img/over1.svg";
@@ -48,7 +48,8 @@ const UsersOverview = () => {
     phone: row.phone,
     dateJoined: new Date(row.createdAt).toDateString(),
     LatestAcess : new Date(row.updatedAt).toDateString(),
-    tags: [row.status]
+    tags: [row.status],
+    profile_img : row.profile_img 
 
   })) : []; 
   
@@ -62,7 +63,11 @@ const UsersOverview = () => {
           <div>
             <Row>
               <Col md={10} xs={24}>
-                <img src={avatar2} alt="products" className="product-img" />
+              <Image
+                 src={(!record.profile_img || null )? avatar2 : record.profile_img} 
+                 width={50}   
+                 preview={false}   
+                 alt="products" className="product-img" />
               </Col>
   
               <Col md={14} xs={24}>

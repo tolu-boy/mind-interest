@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Row, Col, Avatar, Button } from "antd";
+import { Card, Row, Col, Image, Button } from "antd";
 import toatalrev from "../../../assets/img/totalrev.png";
 import therapypic from "../../../assets/img/therapypic.png";
 import activeuserspic from "../../../assets/img/activeuserspic.png";
@@ -11,7 +11,7 @@ import {
   ArrowDownOutlined,
 
 } from "@ant-design/icons";
-import profileImg from "../../../assets/img/thumb-1.jpg";
+// import profileImg from "../../../assets/img/thumb-1.jpg";
 import useTransactions from "queries/useTransactions";
 import useSessions from "queries/useSessions";
 // import useRefunds from "queries/useRefunds";
@@ -224,7 +224,11 @@ keys.forEach((key, index) => {
                {therapists.data.therapists.slice(0,3).map((item)=>(
                  < >
                 <Col md={6} xs={6}>
-                  <Avatar src={profileImg} />
+                <Image
+                 src={(!item.profile_img || null )? avatar : item.profile_img} 
+                 width={50}   
+                 preview={false}   
+                 alt="products" className="product-img" />
                 </Col>
 
                 <Col md={10} xs={10}>
@@ -258,7 +262,12 @@ keys.forEach((key, index) => {
                   <Col span={12}  className="pb-3">
                     <Row>
                       <Col span={4}>
-                        <img src={item.user_profile_img === ''?avatar : item.user_profile_img } alt="" />
+                        <Image
+                 src={(!item.user_profile_img || null )? avatar : item.user_profile_img} 
+                 width={50} 
+                 height={50}  
+                 preview={false}   
+                 alt="products" className="product-img" />
                       </Col>
 
                       <Col span={17}>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Row, Col, Input, Table, Tag, Button } from "antd";
+import { Card, Row, Col, Input, Table, Tag, Button,Image } from "antd";
 import {  SearchOutlined} from "@ant-design/icons";
 import more from "../../../assets/img/mark.svg";
 import comment from "../../../assets/img/Comment.svg";
@@ -29,7 +29,8 @@ const Suspended = () => {
     price: row.hourly_rate,
     Earnings: [row.balance],
     tags: [row.approval_status],
-    id:row.id
+    id:row.id,
+    profile_img: row.profile_img
 
   })) : []; 
 
@@ -43,7 +44,13 @@ const Suspended = () => {
           <div>
             <Row>
               <Col md={10} xs={24}>
-                <img src={avatar2} alt="products" className="product-img" />
+                {/* <img src={avatar2} alt="products" className="product-img" /> */}
+                <Image
+                 src={(!record.profile_img || null )? avatar2 : record.profile_img} 
+                 width={50}   
+                 height={50}
+                 preview={false}   
+                 alt="products" className="product-img" />
               </Col>
 
               <Col md={14} xs={24}>
