@@ -1,55 +1,55 @@
 import React, { useState } from "react";
 import {
   ArrowLeftOutlined,
-  ArrowUpOutlined,
+  // ArrowUpOutlined,
   ArrowRightOutlined,
   ExclamationCircleTwoTone
 } from "@ant-design/icons";
 import { Card, Row, Col, Button, Select,notification,Modal,Image } from "antd";
 import background from "../../../assets/img/background.svg";
 import profile from "../../../assets/img/profile.svg";
-import Chart from "react-apexcharts";
+// import Chart from "react-apexcharts";
 import avatar2 from "../../../assets/img/Avatar.svg";
 import useSingleTherapist from "queries/useSingleTherapist";
 import { useParams ,useHistory} from "react-router-dom";
 import ApiService from "services/ApiService";
-const chartState = {
-  series: [
-    {
-      name: "Desktops",
-      data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
-    },
-  ],
-  options: {
-    chart: {
-      type: "line",
-      zoom: {
-        enabled: false,
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      curve: "smooth",
-      width: 3,
-    },
-    colors: ["#12B76A"],
-    xaxis: {
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-      ],
-    },
-  },
-};
+// const chartState = {
+//   series: [
+//     {
+//       name: "Desktops",
+//       data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
+//     },
+//   ],
+//   options: {
+//     chart: {
+//       type: "line",
+//       zoom: {
+//         enabled: false,
+//       },
+//     },
+//     dataLabels: {
+//       enabled: false,
+//     },
+//     stroke: {
+//       curve: "smooth",
+//       width: 3,
+//     },
+//     colors: ["#12B76A"],
+//     xaxis: {
+//       categories: [
+//         "Jan",
+//         "Feb",
+//         "Mar",
+//         "Apr",
+//         "May",
+//         "Jun",
+//         "Jul",
+//         "Aug",
+//         "Sep",
+//       ],
+//     },
+//   },
+// };
 
 const ProfileSuspended = () => {
   const { Option } = Select;
@@ -169,22 +169,22 @@ const ProfileSuspended = () => {
 
   const [activeTabKey1, setActiveTabKey1] = useState("Booking");
 
-  const cardHeader = (
-    <div>
-      <Row>
-        <Col md={14} xs={24}>
-          <p className="top-rated-color1">Sessions</p>
-        </Col>
+  // const cardHeader = (
+  //   <div>
+  //     <Row>
+  //       <Col md={14} xs={24}>
+  //         <p className="top-rated-color1">Sessions</p>
+  //       </Col>
 
-        <Col md={10} xs={24}>
-          <Select defaultValue="30 days" onChange={handleChange}>
-            <Option value="jack"> 5 days</Option>
+  //       <Col md={10} xs={24}>
+  //         <Select defaultValue="30 days" onChange={handleChange}>
+  //           <Option value="jack"> 5 days</Option>
 
-          </Select>
-        </Col>
-      </Row>
-    </div>
-  );
+  //         </Select>
+  //       </Col>
+  //     </Row>
+  //   </div>
+  // );
 
   const cardHeader1 = (
     <div>
@@ -263,36 +263,36 @@ const ProfileSuspended = () => {
               </Card>
             </Col>
 
-            <Col md={12}>
+            <Col md={24}>
               <Card title="Overview">
                 <Row>
-                  <Col md={12}>
+                  <Col md={16}>
                     <p className="PostponedSessions">Postponed sessions</p>
                     <p className="profileOverviewText">30</p>
                   </Col>
 
-                  <Col md={12}>
+                  <Col md={8}>
                     <p className="PostponedSessions">Postponed sessions</p>
                     <p className="profileOverviewText1">12</p>
                   </Col>
 
-                  <Col md={12}>
+                  <Col md={16}>
                     <p className="PostponedSessions">Cancelled sessions</p>
                     <p className="profileOverviewText rev-red">7</p>
                   </Col>
 
-                  <Col md={6} className="mb-4 pb-4">
+                  <Col md={8} className="mb-4 pb-4">
                     <p className="PostponedSessions">Income</p>
-                    <li className="IncomeText">₦460k</li>
+                    <li className="IncomeText">{Therapist.income}</li>
                     <li className="incomePercent mt-2">
-                      <ArrowUpOutlined /> 37.8%
+                      {/* <ArrowUpOutlined /> 37.8% */}
                     </li>
                   </Col>
                 </Row>
               </Card>
             </Col>
 
-            <Col md={12}>
+            {/* <Col md={12}>
               <Card title={cardHeader}>
                 <li className="rev-green">
                   <ArrowUpOutlined /> 100%
@@ -302,7 +302,7 @@ const ProfileSuspended = () => {
                   series={chartState.series}
                 />
               </Card>
-            </Col>
+            </Col> */}
 
             <Col md={24}>
               <Card

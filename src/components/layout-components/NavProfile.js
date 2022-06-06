@@ -5,7 +5,7 @@ import { EditOutlined, UserOutlined , LogoutOutlined,DollarCircleOutlined } from
 import Icon from 'components/util-components/Icon';
 import { signOut } from 'redux/actions/Auth';
 import { useStore } from '../../zustand';
-
+import logoImg from '../../assets/img/logo-login.svg'
 
 
 const menuItem = [
@@ -39,7 +39,7 @@ export const NavProfile = ({signOut}) => {
        })
 
   
-  const profileImg = "/img/avatars/thumb-1.jpg";
+  // const profileImg = "/img/avatars/thumb-1.jpg";
   const profileMenu = (
     <div className="nav-profile nav-dropdown">
       <div className="nav-profile-header">
@@ -84,7 +84,7 @@ export const NavProfile = ({signOut}) => {
     <Dropdown placement="bottomRight" overlay={profileMenu} trigger={["click"]}>
       <Menu className="d-flex align-item-center" mode="horizontal">
         <Menu.Item key="profile">
-          <Avatar src={profileImg} />
+          <Avatar src={logoImg} />
         </Menu.Item>
       </Menu>
     </Dropdown>
