@@ -1,11 +1,10 @@
 import React from "react";
 import { Menu, Dropdown, Avatar } from "antd";
 import { connect } from 'react-redux'
-import { EditOutlined, UserOutlined , LogoutOutlined,DollarCircleOutlined } from '@ant-design/icons';
+import { EditOutlined, UserOutlined , LogoutOutlined,DollarCircleOutlined,UserAddOutlined } from '@ant-design/icons';
 import Icon from 'components/util-components/Icon';
 import { signOut } from 'redux/actions/Auth';
 import { useStore } from '../../zustand';
-import logoImg from '../../assets/img/logo-login.svg'
 
 
 const menuItem = [
@@ -84,7 +83,7 @@ export const NavProfile = ({signOut}) => {
     <Dropdown placement="bottomRight" overlay={profileMenu} trigger={["click"]}>
       <Menu className="d-flex align-item-center" mode="horizontal">
         <Menu.Item key="profile">
-          <Avatar src={logoImg} />
+          <Avatar icon={<UserAddOutlined />}  className='blue-color'/>
         </Menu.Item>
       </Menu>
     </Dropdown>
