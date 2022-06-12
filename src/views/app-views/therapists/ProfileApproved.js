@@ -227,8 +227,10 @@ const ProfileApproved = () => {
         <p> Are you sure you want to suspend this Therapist ?</p>
       </Modal>
 
-      <p className="profile-heading">
-        <span className="pr-2">
+      <p className="profile-heading" >
+        <span className="pr-2" onClick={()=>{
+        history.push('/app/therapists/Approved')
+      }}>
           <ArrowLeftOutlined />
         </span>
         Therapists / Profile details
@@ -259,9 +261,7 @@ const ProfileApproved = () => {
                     <li className="proileWork pt-2 "> {Therapist.specialty}</li>
                   </Col>
 
-                  <Col md={3}>
-                    <Button type="primary"> Message</Button>
-                  </Col>
+                  
                 </Row>
               </Card>
             </Col>
@@ -270,7 +270,7 @@ const ProfileApproved = () => {
               <Card title="Overview">
                 <Row>
                   <Col md={16}>
-                    <p className="PostponedSessions">Postponed sessions</p>
+                    <p className="PostponedSessions">Booked session</p>
                     <p className="profileOverviewText">30</p>
                   </Col>
 
@@ -451,13 +451,7 @@ const ProfileApproved = () => {
                     <h4> Activity and Device</h4>
                   </Col>
 
-                  <Col md={14}>
-                    <li>Last seen:</li>
-                  </Col>
-
-                  <Col md={10} className="pb-4">
-                    <li className="textEnd">2 hours ago</li>
-                  </Col>
+                 
 
                   <Col md={14}>
                     <li>Sessions:</li>

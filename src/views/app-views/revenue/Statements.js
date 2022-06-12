@@ -1,13 +1,18 @@
 import React, { useState } from "react";
-import { Card, Row, Col, Select, Button, Table, Tag } from "antd";
+import { Card, Row, Col, Table, Tag } from "antd";
 import earning from "../../../assets/img/earning.svg";
 import payout from "../../../assets/img/payout.svg";
 import fees from "../../../assets/img/fees.svg";
 import useStatements from "queries/useStatements";
+import useEarning from "queries/useEarning";
+import {formatter } from "services/ApiService";
 
 const Statements = () => {
   const { data: statements } = useStatements();
+  const { data: earnings } = useEarning();
+
   const item = [];
+
 
   statements?.data?.payouts.map((earn) => {
     return item.push(earn);
@@ -23,8 +28,8 @@ const Statements = () => {
         date: new Date(row.createdAt).toDateString(),
         tags: [row.status],
         refrence: row.reference,
-        amount: row.amount,
-        fees: statements.data.fee,
+        amount:  formatter.format(row.amount ).replace(".00"," "),
+        fees:  formatter.format(statements.data.fee ).replace(".00"," "),
       }))
     : [];
 
@@ -98,11 +103,7 @@ const Statements = () => {
 
   const [selectionType] = useState("checkbox");
 
-  const { Option } = Select;
 
-  function handleChange(value) {
-    console.log(`selected ${value}`);
-  }
 
   const cardHeader = (
     <div>
@@ -111,17 +112,11 @@ const Statements = () => {
           <p className="top-rated-color1">Transactions</p>
         </Col>
 
-        <Col md={4} xs={24}>
-          <Select defaultValue="Last 30 days" onChange={handleChange}>
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="Yiminghe">yiminghe</Option>
-          </Select>
-        </Col>
+      
 
-        <Col md={4} xs={24}>
+        {/* <Col md={4} xs={24}>
           <Button type="primary"> Download Csv</Button>
-        </Col>
+        </Col> */}
       </Row>
     </div>
   );
@@ -143,7 +138,7 @@ const Statements = () => {
                   <p className="t-rev">Earning</p>
                 </Col>
                 <Col span={24}>
-                  <h6 className="rev-amount">₦246,889</h6>
+                  <h6 className="rev-amount"> {formatter.format(earnings? earnings.data.earning: "247k" ).replace(".00"," ")}</h6>
                 </Col>
               </Row>
             </div>
@@ -168,7 +163,7 @@ const Statements = () => {
                 </Col>
                 <Col span={24}>
                   <h6 className="rev-amount">
-                    ₦{statements ? statements.data.payoutsTotalAmount : "45000"}
+                    {formatter.format(statements ? statements.data.payoutsTotalAmount : "45000" ).replace(".00"," ")}
                   </h6>
                 </Col>
               </Row>
@@ -187,10 +182,9 @@ const Statements = () => {
                 </Col>
                 <Col span={24}>
                   <h6 className="rev-amount">
-                    ₦
-                    {statements
+                      {formatter.format(statements
                       ? statements.data.transactionsTotalAmount
-                      : "45000"}
+                      : "45000" ).replace(".00"," ")}
                   </h6>
                 </Col>
               </Row>

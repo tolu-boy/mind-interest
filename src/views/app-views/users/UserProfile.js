@@ -1,7 +1,7 @@
 
 import React, { useState} from "react";
 import { ArrowLeftOutlined, ArrowRightOutlined ,ExclamationCircleTwoTone } from "@ant-design/icons";
-import { Card, Row, Col, Button, Select,notification,Modal,Image } from "antd";
+import { Card, Row, Col, Button,notification,Modal,Image } from "antd";
 import background from "../../../assets/img/background.svg";
 import profile from "../../../assets/img/profile.svg";
 import avatar2 from "../../../assets/img/Avatar.svg";
@@ -12,7 +12,6 @@ import ApiService from "services/ApiService";
 
 
 const UserProfile = () => {
-  const { Option } = Select;
   const location = useLocation();
   const param = useParams();
   const [visible, setVisible] = useState(false);
@@ -25,9 +24,7 @@ const UserProfile = () => {
   let user = SingleUser?.data.user ?? "";
 
  
-  function handleChange(value) {
-    console.log(`selected ${value}`);
-  }
+
 
 
   const onTab1Change = (key) => {
@@ -219,14 +216,7 @@ const UserProfile = () => {
 
   const cardHeader1 = (
     <div>
-      <Row>
-        <Col md={24} xs={24}>
-          <Select defaultValue="30 days" onChange={handleChange}>
-            <Option value="jack">10 days</Option>
-          </Select>
-        </Col>
-        
-      </Row>
+      
     </div>
   );
 
@@ -309,9 +299,7 @@ const UserProfile = () => {
                     <li className="proileName">{user.name}</li>
                   </Col>
 
-                  <Col md={3}>
-                    <Button type="primary"> Message</Button>
-                  </Col>
+                 
                 </Row>
               </Card>
             </Col>
@@ -464,14 +452,7 @@ const UserProfile = () => {
                     <h4> Activity and Device</h4>
                   </Col>
 
-                  <Col md={14}>
-                    <li>Last seen:</li>
-                  </Col>
-
-                  <Col md={10} className="pb-4">
-                    <li className="textEnd">{new Date(user.updatedAt).toDateString()}</li>
-                  </Col>
-
+                  
                   <Col md={14}>
                     <li>Sessions:</li>
                   </Col>

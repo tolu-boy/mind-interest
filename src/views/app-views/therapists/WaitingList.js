@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import { Card, Row, Col, Input, Table, Button,Image } from "antd";
-
-import more from "../../../assets/img/More.svg";
-import comment from "../../../assets/img/Comment.svg";
 import { SearchOutlined } from "@ant-design/icons";
 import avatar2 from "../../../assets/img/Avatar.svg";
 import { useHistory } from "react-router-dom";
@@ -124,10 +121,7 @@ const WaitingList = () => {
           />
         </Col>
 
-        <Col md={2} xs={24}>
-          <img src={more} alt="more" />
-          <img src={comment} alt="more" className="pl-2" />
-        </Col>
+       
       </Row>
     </div>
   );
@@ -141,11 +135,7 @@ const WaitingList = () => {
           <h3 className="dash-heading"> Waiting List </h3>
         </Col>
 
-        <Col md={2} xs={24} className="pb-5 pt-3">
-          <Button type="primary" size="small">
-            Add New
-          </Button>
-        </Col>
+      
       </Row>
 
       <Card title={cardHeader1}>

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Card, Row, Col, Select, Table, Tag } from "antd";
+import { Card, Row, Col,  Table, Tag } from "antd";
 import earning from "../../../assets/img/earning.svg";
 import payout from "../../../assets/img/payout.svg";
 import usePayouts from "queries/usePayouts";
+import { formatter } from "services/ApiService";
 
 const Payouts = () => {
   const { data: payouts } = usePayouts();
@@ -12,7 +13,7 @@ const Payouts = () => {
         date: new Date(row.createdAt).toDateString(),
         tags: ["Debit"],
         method: ["Paystack"],
-        amount: row.amount,
+        amount:  formatter.format(row.amount ).replace(".00"," "),
         id: row.id,
       }))
     : [];
@@ -90,11 +91,6 @@ const Payouts = () => {
 
   const [selectionType] = useState("checkbox");
 
-  const { Option } = Select;
-
-  function handleChange(value) {
-    console.log(`selected ${value}`);
-  }
 
   const cardHeader = (
     <div>
@@ -103,13 +99,7 @@ const Payouts = () => {
           <p className="top-rated-color1">Payout history</p>
         </Col>
 
-        <Col md={3} xs={24}>
-          <Select defaultValue="All time" onChange={handleChange}>
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="Yiminghe">yiminghe</Option>
-          </Select>
-        </Col>
+       
       </Row>
     </div>
   );
@@ -134,7 +124,7 @@ const Payouts = () => {
 
                   <Col md={24}>
                     <h6 className="rev-amount">
-                      ₦{payouts ? payouts.data.currentBal : "246k"}
+                      {formatter.format(payouts ? payouts.data.currentBal : "246k").replace(".00"," ")}
                     </h6>
                   </Col>
                 </Row>
@@ -156,7 +146,8 @@ const Payouts = () => {
 
                   <Col md={24}>
                     <h6 className="rev-amount">
-                      ₦{payouts ? payouts.data.available : "100k"}
+                      {formatter.format(payouts ? payouts.data.available : "100k").replace(".00"," ")}
+
                     </h6>
                   </Col>
                 </Row>

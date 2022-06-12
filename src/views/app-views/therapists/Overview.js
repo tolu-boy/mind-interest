@@ -1,20 +1,18 @@
 import React, { useState } from "react";
-import { Card, Row, Col, Select, Input, Table, Tag,Image } from "antd";
-import { ArrowUpOutlined, SearchOutlined} from "@ant-design/icons";
+import { Card, Row, Col, Input, Table, Tag,Image } from "antd";
+import { SearchOutlined} from "@ant-design/icons";
 
 import over1 from "../../../assets/img/over1.svg";
 import over2 from "../../../assets/img/over2.svg";
 import over3 from "../../../assets/img/over3.svg";
-import more from "../../../assets/img/More.svg";
-import comment from "../../../assets/img/Comment.svg";
-
 import snake1 from "../../../assets/img/snake1.svg";
 import snake2 from "../../../assets/img/snake2.svg";
 import snake3 from "../../../assets/img/snake3.svg";
 import avatar2 from "../../../assets/img/Avatar.svg";
 import useTransactions from "queries/useTransactions";
 import useSearch from   "queries/useSearch";
-
+import usePayouts from "queries/usePayouts";
+import { formatter } from "services/ApiService";
 
 
 
@@ -35,20 +33,19 @@ const Overview =  () => {
   const [selectionType] = useState("checkbox");
   const [search, setSearch] = useState("")
 
-  const { Option } = Select;
 
-  function handleChange(value) {
-    console.log(`selected ${value}`);
-  }
   const { data: therapists } = useSearch(search);
   const { data: transactions } = useTransactions();
+  const { data: payouts } = usePayouts();
+
   const totalAmount = transactions ? transactions.data.totalAmount : 1200000;
+  const totalPayout = payouts ? payouts.data.payoutsTotalAmount: 1200
   let mapTherapist = therapists? therapists.data.therapists.map((row,i)=>({
     key: i,
     name: row.name,
     specialty: row.specialty,
-    price: row.hourly_rate,
-    Earnings: [row.balance],
+    price:  formatter.format(row.hourly_rate).replace(".00", " "),
+    Earnings: [formatter.format(row.balance ).replace(".00", " ") ],
     tags: [row.approval_status],
     profile_img: row.profile_img
 
@@ -153,11 +150,7 @@ const Overview =  () => {
                     </Tag>
                   </Col>
   
-                  {/* <Col md={12} xs={24}>
-                    <p className="rev-green">
-                      <ArrowUpOutlined /> 55.8%
-                    </p>
-                  </Col> */}
+                  
                 </Row>
               </div>
             );
@@ -217,11 +210,7 @@ const Overview =  () => {
           <p className="top-rated-color1">Overview</p>
         </Col>
 
-        <Col md={4} xs={24}>
-          <Select defaultValue="This week" onChange={handleChange}>
-            <Option value="jack"> last week</Option>
-          </Select>
-        </Col>
+       
       </Row>
     </div>
   );
@@ -245,10 +234,7 @@ const Overview =  () => {
           />
         </Col>
 
-        <Col md={2} xs={24}>
-          <img src={more} alt="more" />
-          <img src={comment} alt="more" className="pl-2" />
-        </Col>
+       
       </Row>
     </div>
   );
@@ -266,27 +252,24 @@ const Overview =  () => {
                   <img src={over1} alt="over1" />
                 </Col>
 
-                <Col md={24} xs={24} className="pt-2 minus5">
+                <Col md={16} xs={24} className="pt-2 minus5">
                   <p className="top-rated-color1"> Total Revenue</p>
                 </Col>
+
+                <Col md={8} xs={24} className="d-none1">
+                      <img src={snake1} alt="over1" />
+                    </Col>
 
                 <Col md={24} xs={24} className="minus13">
                   <Row>
                     <Col md={16} xs={24}>
-                      <p className="rev-amount">₦{totalAmount}</p>
+                      <p className="rev-amount"> {formatter.format(totalAmount).replace('.00'," ")}</p>
                     </Col>
-                    <Col md={8} xs={24} className="d-none1">
-                      <img src={snake1} alt="over1" />
-                    </Col>
+                   
                   </Row>
                 </Col>
 
-                <Col md={10} xs={24}>
-                  <p className="rev-green usersTextBackground">
-                    <ArrowUpOutlined /> 37.8%
-                    <span className="rev-normal"> this week</span>
-                  </p>
-                </Col>
+                
               </Row>
             </Card>
           </Col>
@@ -298,27 +281,24 @@ const Overview =  () => {
                   <img src={over2} alt="over2" />
                 </Col>
 
-                <Col md={24} xs={24} className="pt-2 minus5">
+                <Col md={16} xs={24} className="pt-2 minus5">
                   <p className="top-rated-color1"> Therapists</p>
                 </Col>
+
+                <Col md={8} xs={24} className="d-none1">
+                      <img src={snake2} alt="over1" />
+                    </Col>
 
                 <Col md={24} xs={24} className="minus13">
                   <Row>
                     <Col md={16}>
                       <p className="rev-amount">65</p>
                     </Col>
-                    <Col md={8} className="d-none1">
-                      <img src={snake2} alt="over1" />
-                    </Col>
+                   
                   </Row>
                 </Col>
 
-                <Col md={10} xs={24}>
-                  <p className="rev-red usersTextBackground">
-                    <ArrowUpOutlined /> 37.8%
-                    <span className="rev-normal"> this week</span>
-                  </p>
-                </Col>
+    
               </Row>
             </Card>
           </Col>
@@ -330,27 +310,24 @@ const Overview =  () => {
                   <img src={over3} alt="over3" />
                 </Col>
 
-                <Col md={24} xs={24} className="pt-2 minus5">
+                <Col md={16} xs={24} className="pt-2 minus5">
                   <p className="top-rated-color1"> Payouts</p>
                 </Col>
+
+                <Col md={8} xs={24} className="d-none1">
+                      <img src={snake3} alt="over1" />
+                    </Col>
 
                 <Col md={24} xs={24} className="minus13">
                   <Row>
                     <Col md={16} xs={24}>
-                      <p className="rev-amount">644k</p>
+                      <p className="rev-amount"> {formatter.format(totalPayout).replace('.00'," ")}</p>
                     </Col>
-                    <Col md={8} className="d-none1">
-                      <img src={snake3} alt="over3" />
-                    </Col>
+
                   </Row>
                 </Col>
 
-                <Col span={10}>
-                  <p className="rev-green usersTextBackground">
-                    <ArrowUpOutlined /> 37.8%
-                    <span className="rev-normal"> this week</span>
-                  </p>
-                </Col>
+                
               </Row>
             </Card>
           </Col>

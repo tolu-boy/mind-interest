@@ -6,11 +6,6 @@ import activeuserspic from "../../../assets/img/activeuserspic.png";
 // import refundImg from "../../../assets/img/refund-img.png";
 import avatar from "../../../assets/img/Avatar.svg";
 import dot from "../../../assets/img/Dot1.svg";
-import {
-  ArrowUpOutlined,
-  ArrowDownOutlined,
-
-} from "@ant-design/icons";
 // import profileImg from "../../../assets/img/thumb-1.jpg";
 import useTransactions from "queries/useTransactions";
 import useSessions from "queries/useSessions";
@@ -18,7 +13,8 @@ import useSessions from "queries/useSessions";
 import useTherapists from "queries/useTherapists";
 import useActiveTherapists from "queries/useActiveTherapists";
 import Chart from "react-apexcharts";
-
+import { formatter } from "services/ApiService";
+import { useHistory } from "react-router-dom";
 
 
 
@@ -110,12 +106,16 @@ keys.forEach((key, index) => {
   
   };
 
+
+  const history = useHistory();
+
+
   return (
     <div className="dashboard">
       <h3 className="dash-heading"> Dashboard</h3>
 
       <div>
-        <Card bordered={false}>
+        <Card bordered={false} className="pb-3">
           <Row>
             <Col xs={24} sm={12} md={8} lg={8} xl={8} className="Card-border">
               <div>
@@ -128,15 +128,9 @@ keys.forEach((key, index) => {
                     <p className="t-rev">Total Revenue</p>
                   </Col>
                   <Col span={24}>
-                    <h6 className="rev-amount">₦ {totalAmount}</h6>
+                    <h6 className="rev-amount">  {formatter.format(totalAmount).replace('.00'," ")}</h6>
                   </Col>
-
-                  <Col span={24}>
-                    <p className="rev-green">
-                      <ArrowUpOutlined /> 37.8%
-                      <span className="rev-normal"> this week</span>
-                    </p>
-                  </Col>
+                 
                 </Row>
               </div>
             </Col>
@@ -162,12 +156,7 @@ keys.forEach((key, index) => {
                     <h6 className="rev-amount"> {totalSessions}</h6>
                   </Col>
 
-                  <Col span={24}>
-                    <p className="rev-red">
-                      <ArrowDownOutlined /> 37.8%
-                      <span className="rev-normal"> this week</span>
-                    </p>
-                  </Col>
+                 
                 </Row>
               </div>
             </Col>
@@ -186,12 +175,7 @@ keys.forEach((key, index) => {
                     <h6 className="rev-amount">{totalActiveUsers}</h6>
                   </Col>
 
-                  <Col span={24}>
-                    <p className="rev-green">
-                      <ArrowUpOutlined /> 37.8%
-                      <span className="rev-normal"> this week</span>
-                    </p>
-                  </Col>
+                 
                 </Row>
               </div>
             </Col>
@@ -206,7 +190,7 @@ keys.forEach((key, index) => {
             <Chart
               options={Chartstate.options}
               series={Chartstate.series}
-              type="bar"
+              type="bar"at
               height={300}
               // width= {500}
             />
@@ -221,12 +205,15 @@ keys.forEach((key, index) => {
             >
               <Row>
               {(therapists) ? <>
-               {therapists.data.therapists.slice(0,3).map((item)=>(
+               {therapists.data.therapists
+                .sort((a, b) => (b.income > a.income ? 1 : -1))
+               .map((item)=>(
                  < >
                 <Col md={6} xs={6}>
                 <Image
                  src={(!item.profile_img || null )? avatar : item.profile_img} 
                  width={50}   
+                 height={50}  
                  preview={false}   
                  alt="products" className="product-img" />
                 </Col>
@@ -237,18 +224,25 @@ keys.forEach((key, index) => {
                 </Col>
 
                 <Col md={8} xs={8} className="pb-2">
-                  <p className="top-rated-color2"> N{item.last_dues}</p>
+                  <p className="top-rated-color2 text-center"> 
+                  {formatter.format(item.income).replace(".00"," ")}
+
+                  </p>
                 </Col>
                 </>
 
-               ))}
+               )).slice(0,3)}
                </> : <div> No therapist avaliable </div>}
 
               
                
 
                 <Col md={24} xs={24} className="mt-3">
-                  <Button block> All Therapists</Button>
+                  <Button block onClick={()=>{
+                    history.push({
+                    pathname: `/app/therapists/Overview`,
+                  });
+                  }}> All Therapists</Button>
                 </Col>
               </Row>
             </Card>
@@ -276,7 +270,7 @@ keys.forEach((key, index) => {
                           <span className="p-message"> {new Date(item.createdAt ).toDateString()}</span>
                         </p>
                         <p>
-                          Is in session with
+                         had a session with
                           <span className="gold-color"> Dr. {item.therapist}</span>
                         </p>
                       </Col>

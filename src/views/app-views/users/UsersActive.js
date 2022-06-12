@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Card, Row, Col,  Input, Table, Tag, Button,Image } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 
-import more from "../../../assets/img/More.svg";
-import comment from "../../../assets/img/Comment.svg";
 
 import avatar2 from "../../../assets/img/Avatar.svg";
 import { useHistory } from "react-router-dom";
@@ -162,10 +160,7 @@ const UsersActive = () => {
           />
         </Col>
 
-        <Col md={2} xs={24}>
-          <img src={more} alt="more" />
-          <img src={comment} alt="more" className="pl-2" />
-        </Col>
+        
       </Row>
     </div>
   );

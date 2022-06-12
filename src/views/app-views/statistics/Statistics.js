@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Row, Col, Select } from "antd";
+import { Card, Row, Col} from "antd";
 import {
   COLOR_1,
   COLOR_TEXT,
@@ -11,7 +11,6 @@ import {
 // import Chart from "react-apexcharts";
 
 import { Line, Doughnut } from "react-chartjs-2";
-import { ArrowUpOutlined } from "@ant-design/icons";
 // import profileImg from "../../../assets/img/thumb-1.jpg";
 // import left1 from "../../../assets/img/left1.svg";
 // import refundImg from "../../../assets/img/refund-img.png";
@@ -342,11 +341,7 @@ let activeUsersStatsArray = activeUsersStats.map((item)=>{
   //   },
   // };
 
-  const { Option } = Select;
-
-  function handleChange(value) {
-    console.log(`selected ${value}`);
-  }
+  
 
   const cardHeader = (
     <div>
@@ -355,13 +350,7 @@ let activeUsersStatsArray = activeUsersStats.map((item)=>{
           <p className="top-rated-color1">Revenue</p>
         </Col>
 
-        <Col md={5} xs={24}>
-          <Select defaultValue="Last 28 days" onChange={handleChange}>
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="Yiminghe">yiminghe</Option>
-          </Select>
-        </Col>
+        
       </Row>
     </div>
   );
@@ -391,13 +380,7 @@ let activeUsersStatsArray = activeUsersStats.map((item)=>{
           <p className="top-rated-color1">Active users</p>
         </Col>
 
-        <Col md={5} xs={24}>
-          <Select defaultValue="Last 7 days" onChange={handleChange}>
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="Yiminghe">yiminghe</Option>
-          </Select>
-        </Col>
+       
       </Row>
     </div>
   );
@@ -413,12 +396,7 @@ let activeUsersStatsArray = activeUsersStats.map((item)=>{
                 <h3 className="dash-heading"> 4,079 users</h3>
               </Col>
 
-              <Col span={24}>
-                <p className="rev-green">
-                  <ArrowUpOutlined /> 37.8%
-                  <span className="rev-normal"> vs. Jan 8, 2022</span>
-                </p>
-              </Col>
+           
             </Row>
 
             <Line data={data} options={options} />

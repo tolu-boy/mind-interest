@@ -227,8 +227,10 @@ const ProfileWaiting = () => {
       </Modal>
 
 
-      <p className="profile-heading">
-        <span className="pr-2">
+      <p className="profile-heading" >
+        <span className="pr-2" onClick={()=>{
+        history.push('/app/therapists/WaitingList')
+      }}>
           <ArrowLeftOutlined />
         </span>
         Therapists / Profile details
@@ -267,9 +269,7 @@ const ProfileWaiting = () => {
                     </li>
                   </Col>
 
-                  <Col md={3}>
-                    <Button type="primary"> Message</Button>
-                  </Col>
+                
                 </Row>
               </Card>
             </Col>
@@ -278,7 +278,7 @@ const ProfileWaiting = () => {
               <Card title="Overview">
                 <Row>
                   <Col md={16}>
-                    <p className="PostponedSessions">Postponed sessions</p>
+                    <p className="PostponedSessions">Booked session</p>
                     <p className="profileOverviewText">0</p>
                   </Col>
 
@@ -489,13 +489,7 @@ const ProfileWaiting = () => {
                     <h4> Activity and Device</h4>
                   </Col>
 
-                  <Col md={14}>
-                    <li>Last seen:</li>
-                  </Col>
-
-                  <Col md={10} className="pb-4">
-                    <li className="textEnd">2 hours ago</li>
-                  </Col>
+                  
 
                   <Col md={14}>
                     <li>Sessions:</li>

@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { Card, Row, Col, Select, Input, Table, Tag,Image } from "antd";
+import { Card, Row, Col, Input, Table, Tag,Image } from "antd";
 import { ArrowUpOutlined, SearchOutlined } from "@ant-design/icons";
 
 import over1 from "../../../assets/img/over1.svg";
 import over2 from "../../../assets/img/over2.svg";
 import over3 from "../../../assets/img/over3.svg";
-import more from "../../../assets/img/More.svg";
-import comment from "../../../assets/img/Comment.svg";
+
 
 import snake1 from "../../../assets/img/snake1.svg";
 import snake2 from "../../../assets/img/snake2.svg";
@@ -146,11 +145,6 @@ const UsersOverview = () => {
     // },
   ];
 
-  const { Option } = Select;
-
-  function handleChange(value) {
-    console.log(`selected ${value}`);
-  }
 
   const cardHeader = (
     <div>
@@ -159,12 +153,7 @@ const UsersOverview = () => {
           <p className="top-rated-color1">Overview </p>
         </Col>
 
-        <Col md={4} xs={24}>
-          <Select defaultValue="This week" onChange={handleChange}>
-            <Option value="jack">last week</Option>
-           
-          </Select>
-        </Col>
+
       </Row>
     </div>
   );
@@ -188,10 +177,7 @@ const UsersOverview = () => {
           />
         </Col>
 
-        <Col md={2} xs={24}>
-          <img src={more} alt="more" />
-          <img src={comment} alt="more" className="pl-2" />
-        </Col>
+       
       </Row>
     </div>
   );

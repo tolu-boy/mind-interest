@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Card, Row, Col, Input, Table, Tag, Button,Image } from "antd";
 import {  SearchOutlined} from "@ant-design/icons";
-import more from "../../../assets/img/mark.svg";
-import comment from "../../../assets/img/Comment.svg";
+
 import avatar2 from "../../../assets/img/Avatar.svg";
 import { useHistory } from "react-router-dom";
 import useSuspendedTherapists from "queries/useSuspendedTherapists";
+import { formatter } from "services/ApiService";
 
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
@@ -26,8 +26,8 @@ const Suspended = () => {
   const mapSuspendedTherapists = SuspendedTherapists? SuspendedTherapists.data.therapists.map((row,i)=>({
     key: i,
     name: row.name,
-    price: row.hourly_rate,
-    Earnings: [row.balance],
+    price: formatter.format(row.hourly_rate ).replace(".00", " "),
+    Earnings: [ formatter.format(row.balance ).replace(".00", " ")],
     tags: [row.approval_status],
     id:row.id,
     profile_img: row.profile_img
@@ -185,10 +185,7 @@ const Suspended = () => {
           />
         </Col>
 
-        <Col md={2} xs={24}>
-          <img src={comment} alt="more" />
-          <img src={more} alt="more" className="pl-2" />
-        </Col>
+       
       </Row>
     </div>
   );

@@ -12,6 +12,12 @@ export const axios = globalAxios.create({
   )
 
 
+  export const formatter = Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+  });
+
+
   
   ApiService.rejectTherapist = async (id) => {
     const response = await axios.patch( `/suspend-therapist/${id}`);

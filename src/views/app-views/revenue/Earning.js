@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Row, Col, Select, Avatar, Button, Table, Tag } from "antd";
+import { Card, Row, Col,  Avatar, Button, Table, Tag } from "antd";
 import earning from "../../../assets/img/earning.svg";
 import payout from "../../../assets/img/payout.svg";
 import totalrevenue1 from "../../../assets/img/totalrevenue1.svg";
@@ -7,10 +7,13 @@ import totalrevenue1 from "../../../assets/img/totalrevenue1.svg";
 import profileImg from "../../../assets/img/thumb-1.jpg";
 import useEarning from "queries/useEarning";
 import useTherapists from "queries/useTherapists";
-import { ArrowUpOutlined, ArrowDownOutlined } from "@ant-design/icons";
 import Chart from "react-apexcharts";
+import { useHistory } from "react-router-dom";
+import { formatter } from "services/ApiService";
 
 const Earning = () => {
+  const history = useHistory();
+
   const item = [];
   const { data: earnings } = useEarning();
   const { data: therapist } = useTherapists();
@@ -29,7 +32,7 @@ const Earning = () => {
         date: new Date(row.createdAt).toDateString(),
         tags: [row.status],
         reference: row.reference,
-        amount: row.amount,
+        amount: formatter.format(row.amount).replace(".00"," "),
       }))
     : [];
 
@@ -120,11 +123,7 @@ let transactionStatsArray = transactionStats.map((item)=>{
 
   const [selectionType] = useState("checkbox");
 
-  const { Option } = Select;
-
-  function handleChange(value) {
-    console.log(`selected ${value}`);
-  }
+ 
 
   const cardHeader = (
     <div>
@@ -141,12 +140,7 @@ let transactionStatsArray = transactionStats.map((item)=>{
           <p>All time</p>
         </Col>
 
-        <Col md={4} xs={24}>
-          <Select defaultValue="Last 7 days" onChange={handleChange}>
-            <Option value="jack">last week</Option>
-           
-          </Select>
-        </Col>
+        
       </Row>
     </div>
   );
@@ -231,16 +225,11 @@ let transactionStatsArray = transactionStats.map((item)=>{
                 </Col>
                 <Col span={24}>
                   <h6 className="rev-amount">
-                    ₦{earnings ? earnings.data.earning : "24000"}
+                    {formatter.format(earnings ? earnings.data.earning : "24000").replace(".00"," ")}
+
                   </h6>
                 </Col>
 
-                <Col span={24}>
-                  <p className="earning-green">
-                    <ArrowUpOutlined /> 37.8%
-                    <span className="rev-normal"> this week</span>
-                  </p>
-                </Col>
               </Row>
             </div>
           </Col>
@@ -264,16 +253,11 @@ let transactionStatsArray = transactionStats.map((item)=>{
                 </Col>
                 <Col span={24}>
                   <h6 className="rev-amount">
-                    ₦{earnings ? earnings.data.payout : 74000}
+                  {formatter.format(earnings ? earnings.data.payout : 74000).replace(".00"," ")}
                   </h6>
                 </Col>
 
-                <Col span={24}>
-                  <p className="rev-red">
-                    <ArrowDownOutlined /> 37.8%
-                    <span className="rev-normal"> this week</span>
-                  </p>
-                </Col>
+               
               </Row>
             </div>
           </Col>
@@ -290,16 +274,12 @@ let transactionStatsArray = transactionStats.map((item)=>{
                 </Col>
                 <Col span={24}>
                   <h6 className="rev-amount">
-                    ₦{earnings ? earnings.data.revenue : "1000000"}
+                    {formatter.format(earnings ? earnings.data.revenue : "1000000").replace(".00"," ")}
+
                   </h6>
                 </Col>
 
-                <Col span={24}>
-                  <p className="rev-green">
-                    <ArrowUpOutlined /> 37.8%
-                    <span className="rev-normal"> this week</span>
-                  </p>
-                </Col>
+                
               </Row>
             </div>
           </Col>
@@ -347,7 +327,10 @@ let transactionStatsArray = transactionStats.map((item)=>{
                         </Col>
 
                         <Col md={8} xs={8} className="mb-4">
-                          <p className="top-rated-color2"> N {item.income}</p>
+                          <p className="top-rated-color2 text-center"> 
+                          {formatter.format(item.income).replace(".00"," ")}
+
+                          </p>
                         </Col>
                       </>
                     ))
@@ -355,8 +338,11 @@ let transactionStatsArray = transactionStats.map((item)=>{
                 : []}
 
               <Col md={24} xs={24} className="mt-3">
-                <Button block> All Therapists</Button>
-              </Col>
+              <Button block onClick={()=>{
+                    history.push({
+                    pathname: `/app/therapists/Overview`,
+                  });
+                  }}> All Therapists</Button>              </Col>
             </Row>
           </Card>
         </Col>
