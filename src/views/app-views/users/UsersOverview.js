@@ -15,6 +15,7 @@ import useUsers from "queries/useUsers";
 import useTransactions from "queries/useTransactions";
 import useSessions from "queries/useSessions";
 import useUsersOverview from "queries/useOverviewUsers";
+import { formatter } from "services/ApiService";
 
 
 const rowSelection = {
@@ -202,7 +203,7 @@ const UsersOverview = () => {
                 <Col md={24} xs={24} className="minus13">
                   <Row>
                     <Col md={16} xs={24}>
-                      <p className="rev-amount">₦{totalAmount}</p>
+                      <p className="rev-amount"> {formatter.format(totalAmount ).replace(".00", " ")} </p>
                     </Col>
                     <Col md={8} xs={24} className="d-none1">
                       <img src={snake1} alt="over1" />
@@ -210,12 +211,7 @@ const UsersOverview = () => {
                   </Row>
                 </Col>
 
-                <Col md={10} xs={24}>
-                  <p className="rev-green usersTextBackground">
-                    <ArrowUpOutlined /> 37.8%
-                    <span className="rev-normal"> this week</span>
-                  </p>
-                </Col>
+                
               </Row>
             </Card>
           </Col>
@@ -242,12 +238,7 @@ const UsersOverview = () => {
                   </Row>
                 </Col>
 
-                <Col md={10} xs={24}>
-                  <p className="rev-red usersTextBackground">
-                    <ArrowUpOutlined /> 37.8%
-                    <span className="rev-normal"> this week</span>
-                  </p>
-                </Col>
+               
               </Row>
             </Card>
           </Col>
@@ -274,12 +265,7 @@ const UsersOverview = () => {
                   </Row>
                 </Col>
 
-                <Col md={10} xs={24}>
-                  <p className="rev-green usersTextBackground">
-                    <ArrowUpOutlined /> 37.8%
-                    <span className="rev-normal"> this week</span>
-                  </p>
-                </Col>
+               
               </Row>
             </Card>
           </Col>
