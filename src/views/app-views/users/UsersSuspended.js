@@ -7,6 +7,8 @@ import useSuspendedUsers from "queries/useSuspendedUsers";
 
 const UsersSuspended = () => {
   const [search, setSearch] = useState("")
+  const [loading, setLoading] = useState(false);
+
   const history = useHistory();
   const { data: SuspendedUsers } = useSuspendedUsers(search);
   const mapSuspendedUsers = SuspendedUsers? SuspendedUsers.data.users.map((row,i)=>({
@@ -150,7 +152,9 @@ const UsersSuspended = () => {
             style={{ width: 300 }}
             value= {search}
             onChange= {(e)=>{
+              setLoading(true)
               setSearch(e.target.value)
+              setTimeout(() => setLoading(false), 1000)
             }}
           />
         </Col>
@@ -172,6 +176,8 @@ const UsersSuspended = () => {
           }}
           columns={columns}
           dataSource={mapSuspendedUsers}
+          loading={loading}
+
         />
       </Card>
     </div>

@@ -32,6 +32,8 @@ const Statistics = () => {
 
   // therapists
   const { data: therapists } = useTherapists()
+  const therapistTotal = therapists ? therapists.data.total: "25"
+
   const therapistStats = therapists ? therapists.data.therapists: []
 
  let therapistsArray = therapistStats.map((item)=>{
@@ -154,83 +156,7 @@ let activeUsersStatsArray = activeUsersStats.map((item)=>{
     },
   };
 
-  // const Chartstate = {
-  //   series: [
-  //     {
-  //       name: "Google",
-  //       data: [44, 55, 41, 67, 22, 43],
-  //     },
-  //     {
-  //       name: "Snapchat",
-  //       data: [13, 23, 20, 8, 13, 27],
-  //     },
-
-  //     {
-  //       name: "Word of mouth",
-  //       data: [11, 17, 15, 15, 21, 14],
-  //     },
-
-  //     {
-  //       name: "IG or Facebook",
-  //       data: [11, 17, 15, 15, 21, 14],
-  //     },
-
-  //     {
-  //       name: "Other",
-  //       data: [11, 17, 15, 15, 21, 14],
-  //     },
-  //   ],
-  //   options: {
-
-  //       dataLabels: {
-  //           enabled: false
-  //         },
-  //         legend: {
-  //           show: false
-  //         },
-
-  //     chart: {
-  //       stacked: true,
-  //       toolbar: {
-  //         show: false,
-  //       },
-  //       zoom: {
-  //         enabled: true,
-  //       },
-  //     },
-  //     colors: ["#3F91F5", "#FFBC99", "#B1E5FC", "#CABDFF", "#FFD88D"],
-  //     responsive: [
-  //       {
-  //         breakpoint: 480,
-  //         options: {
-  //           legend: {
-  //             position: "bottom",
-  //             offsetX: -10,
-  //             offsetY: 0,
-  //           },
-  //         },
-  //       },
-  //     ],
-  //     plotOptions: {
-  //       bar: {
-  //         horizontal: false,
-  //       },
-  //     },
-  //     xaxis: {
-  //       categories: [
-  //         "Google",
-  //         "Snapchat",
-  //         "Word of mouth",
-  //         "IG or Facebook",
-  //         "Other",
-  //       ],
-  //     },
-      
-  //     fill: {
-  //       opacity: 1,
-  //     },
-  //   },
-  // };
+  
 
   const data1 = {
     labels: usersLabelsArray,
@@ -393,7 +319,7 @@ let activeUsersStatsArray = activeUsersStats.map((item)=>{
           <Card title={cardHeader}>
             <Row>
               <Col md={24}>
-                <h3 className="dash-heading"> 4,079 users</h3>
+                <h3 className="dash-heading"> {therapistTotal } Therapists </h3>
               </Col>
 
            

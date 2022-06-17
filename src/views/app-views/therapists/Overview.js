@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Row, Col, Input, Table, Tag,Image } from "antd";
+import { Card, Row, Col, Input, Table, Tag,Image,Button } from "antd";
 import { SearchOutlined} from "@ant-design/icons";
 
 import over1 from "../../../assets/img/over1.svg";
@@ -13,7 +13,8 @@ import useTransactions from "queries/useTransactions";
 import useSearch from   "queries/useSearch";
 import usePayouts from "queries/usePayouts";
 import { formatter } from "services/ApiService";
-
+import { useHistory } from "react-router-dom";
+import { StarFilled } from "@ant-design/icons";
 
 
 const rowSelection = {
@@ -27,11 +28,13 @@ const rowSelection = {
 };
 
 const Overview =  () => {
-  
+  const history = useHistory();
+
 
 
   const [selectionType] = useState("checkbox");
   const [search, setSearch] = useState("")
+  const [loading, setLoading] = useState(false);
 
 
   const { data: therapists } = useSearch(search);
@@ -47,7 +50,10 @@ const Overview =  () => {
     price:  formatter.format(row.hourly_rate).replace(".00", " "),
     Earnings: [formatter.format(row.balance ).replace(".00", " ") ],
     tags: [row.approval_status],
-    profile_img: row.profile_img
+    profile_img: row.profile_img,
+    id:row.id,
+    Ratings: [row.rating]
+
 
   })) : []; 
 
@@ -99,8 +105,8 @@ const Overview =  () => {
             let color;
             let textColor;
             if (tag === 0) {
-              color = "#DFFFF6";
-              textColor = "#00966D";
+              color = "#3F91F5";
+              textColor = "#ffff";
               tag = "Waiting"
             }
   
@@ -158,6 +164,73 @@ const Overview =  () => {
         </span>
       ),
     },
+
+
+    {
+      title: "Ratings",
+      dataIndex: "Ratings",
+      key: "Ratings",
+      render: (Ratings, text) => (
+        <span>
+          {Ratings.map((tag) => {
+            let color = "#00BA88";
+            let textColor = "#ffff";
+
+            if (tag <= 2.5) {
+              color = "#F3190E";
+              textColor = "#ffff";
+             
+            }
+
+            if (tag <= 3.9 && tag >= 2.5) {
+              color = "#FFED8A";
+              textColor = "#ffff";
+             
+            }
+
+            if (tag > 3.9) {
+              color = "#00BA88";
+              textColor = "#ffff";
+             
+            }
+          
+
+            return (
+              <div>
+                <Row>
+                  <Col span={24}>
+                    <Tag color={color} style={{ color: textColor }} key={tag}>
+                      <StarFilled /> {tag}
+                    </Tag>
+                  </Col>
+                </Row>
+              </div>
+            );
+          })}
+        </span>
+      ),
+    },
+  
+
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <span>
+          <Button
+            size="small"
+            type="primary"
+            onClick={() => {
+              history.push({
+                pathname: `/app/therapists/Profile/${record.id}`,
+              });
+            }}
+          >
+            View 
+          </Button>
+        </span>
+      ),
+    },
   
     // {
     //   title: "Sessions",
@@ -165,31 +238,7 @@ const Overview =  () => {
     //   key: "schedule",
     // },
   
-    // {
-    //   title: "Ratings",
-    //   dataIndex: "Ratings",
-    //   key: "Ratings",
-    //   render: (Ratings, text) => (
-    //     <span>
-    //       {Ratings.map((tag) => {
-    //         let color = "#00BA88";
-    //         let textColor = "#ffff";
-    //         return (
-    //           <div>
-    //             <Row>
-    //               <Col span={24}>
-    //                 <Tag color={color} style={{ color: textColor }} key={tag}>
-    //                   <StarFilled /> {tag}
-    //                 </Tag>
-    //               </Col>
-    //             </Row>
-    //           </div>
-    //         );
-    //       })}
-    //     </span>
-    //   ),
-    // },
-  
+    
     // {
     //   title: "Action",
     //   key: "action",
@@ -229,7 +278,10 @@ const Overview =  () => {
             style={{ width: 300 }}
             value= {search}
             onChange= {(e)=>{
+              setLoading(true)
               setSearch(e.target.value)
+              setTimeout(() => setLoading(false), 1500)
+
             }}
           />
         </Col>
@@ -262,7 +314,7 @@ const Overview =  () => {
 
                 <Col md={24} xs={24} className="minus13">
                   <Row>
-                    <Col md={16} xs={24}>
+                    <Col md={24} xs={24}>
                       <p className="rev-amount"> {formatter.format(totalAmount).replace('.00'," ")}</p>
                     </Col>
                    
@@ -342,6 +394,7 @@ const Overview =  () => {
           }}
           columns={columns}
           dataSource={mapTherapist}
+          loading= {loading}
         />
       </Card>
     </div>

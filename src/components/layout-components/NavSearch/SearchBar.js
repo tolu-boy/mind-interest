@@ -68,19 +68,19 @@ function SearchBar({ placeholder, data, refetch }) {
                   setWordEntered("");
                 } else if (value.approval_status === 0) {
                   history.push({
-                    pathname: `${APP_PREFIX_PATH}/therapists/ProfileWaiting/${value.id}`,
+                    pathname: `${APP_PREFIX_PATH}/therapists/Profile/${value.id}`,
                   });
                   setFilteredData([]);
                   setWordEntered("");
                 } else if (value.approval_status === 1) {
                   history.push({
-                    pathname: `${APP_PREFIX_PATH}/therapists/ProfileApproved/${value.id}`,
+                    pathname: `${APP_PREFIX_PATH}/therapists/Profile/${value.id}`,
                   });
                   setFilteredData([]);
                   setWordEntered("");
                 } else if (value.approval_status === 2) {
                   history.push({
-                    pathname: `${APP_PREFIX_PATH}/therapists/ProfileSuspended/${value.id}`,
+                    pathname: `${APP_PREFIX_PATH}/therapists/Profile/${value.id}`,
                   });
                   setFilteredData([]);
                   setWordEntered("");

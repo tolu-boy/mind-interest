@@ -165,6 +165,10 @@ color:  #FFDF00 !important;
 
 }
 
+.mntp-2{
+  margin-top: -10px;
+}
+
 .profile-heading{
   color: #4E4B66;
   font-size: 16px;
@@ -366,6 +370,7 @@ span.ant-input-affix-wrapper.login-password {
   padding-right: 8px !important;
 
 }
+
 
 /* .t-hidden{
   display: none;

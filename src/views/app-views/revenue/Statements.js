@@ -57,7 +57,7 @@ const Statements = () => {
             }
 
             if (!tag) {
-              tag = "sale";
+              tag = "Sale";
               color = "#00BA88";
 
               textColor = "#fff";

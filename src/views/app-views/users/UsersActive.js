@@ -10,6 +10,8 @@ import { APP_PREFIX_PATH } from 'configs/AppConfig'
 
 const UsersActive = () => {
   const [search, setSearch] = useState("")
+  const [loading, setLoading] = useState(false);
+
   const history = useHistory();
   const { data: activeUsers } = useActiveUsers(search);
 
@@ -155,7 +157,9 @@ const UsersActive = () => {
             style={{ width: 300 }}
             value= {search}
             onChange= {(e)=>{
+              setLoading(true)
               setSearch(e.target.value)
+              setTimeout(() => setLoading(false), 1500)  
             }}
           />
         </Col>
@@ -177,6 +181,8 @@ const UsersActive = () => {
           }}
           columns={columns}
           dataSource={mapActiveUsers}
+          loading={loading}
+
         />
       </Card>
     </div>

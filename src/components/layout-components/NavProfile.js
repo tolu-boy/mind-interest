@@ -11,18 +11,18 @@ const menuItem = [
 	{
 		title: "Overview",
 		icon: EditOutlined ,
-		path: "/therapists/Overview"
+		path: "/app/therapists/Overview"
     },
     
     {
 		title: "Users",
 		icon: UserOutlined,
-		path: "/UsersOverview"
+		path: "/app/users/UsersOverview"
     },
     {
 		title: "Earnings",
 		icon: DollarCircleOutlined  ,
-		path: "/Earning"
+		path: "/app/revenue/Earning"
 	},
    
 ]

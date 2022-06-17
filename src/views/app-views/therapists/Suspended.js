@@ -6,6 +6,7 @@ import avatar2 from "../../../assets/img/Avatar.svg";
 import { useHistory } from "react-router-dom";
 import useSuspendedTherapists from "queries/useSuspendedTherapists";
 import { formatter } from "services/ApiService";
+import { StarFilled } from "@ant-design/icons";
 
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
@@ -19,6 +20,8 @@ const rowSelection = {
 
 const Suspended = () => {
   const [search, setSearch] = useState("")
+  const [loading, setLoading] = useState(false);
+
   const [selectionType] = useState("checkbox");
   const history = useHistory();
   const { data: SuspendedTherapists } = useSuspendedTherapists(search);
@@ -30,7 +33,9 @@ const Suspended = () => {
     Earnings: [ formatter.format(row.balance ).replace(".00", " ")],
     tags: [row.approval_status],
     id:row.id,
-    profile_img: row.profile_img
+    profile_img: row.profile_img,
+    Ratings: [row.rating]
+
 
   })) : []; 
 
@@ -141,7 +146,51 @@ const Suspended = () => {
       ),
     },
 
+    {
+      title: "Ratings",
+      dataIndex: "Ratings",
+      key: "Ratings",
+      render: (Ratings, text) => (
+        <span>
+          {Ratings.map((tag) => {
+            let color = "#00BA88";
+            let textColor = "#ffff";
 
+            if (tag <= 2.5) {
+              color = "#F3190E";
+              textColor = "#ffff";
+             
+            }
+
+            if (tag <= 3.9 && tag >= 2.5) {
+              color = "#FFED8A";
+              textColor = "#ffff";
+             
+            }
+
+            if (tag > 3.9) {
+              color = "#00BA88";
+              textColor = "#ffff";
+             
+            }
+          
+
+            return (
+              <div>
+                <Row>
+                  <Col span={24}>
+                    <Tag color={color} style={{ color: textColor }} key={tag}>
+                      <StarFilled /> {tag}
+                    </Tag>
+                  </Col>
+                </Row>
+              </div>
+            );
+          })}
+        </span>
+      ),
+    },
+  
 
     {
       title: "Action",
@@ -153,7 +202,7 @@ const Suspended = () => {
             type="primary"
             onClick={() => {
               history.push({
-                pathname: `/app/therapists/ProfileSuspended/${record.id}`,
+                pathname: `/app/therapists/Profile/${record.id}`,
               });
             }}
           >
@@ -180,7 +229,9 @@ const Suspended = () => {
             style={{ width: 300 }}
             value= {search}
             onChange= {(e)=>{
+              setLoading(true)
               setSearch(e.target.value)
+              setTimeout(() => setLoading(false), 1500)
             }}
           />
         </Col>
@@ -202,6 +253,7 @@ const Suspended = () => {
           }}
           columns={columns}
           dataSource={mapSuspendedTherapists}
+          loading={loading}
         />
       </Card>
     </div>

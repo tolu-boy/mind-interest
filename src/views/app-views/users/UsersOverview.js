@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import { Card, Row, Col, Input, Table, Tag,Image } from "antd";
-import { ArrowUpOutlined, SearchOutlined } from "@ant-design/icons";
-
+import { Card, Row, Col, Input, Table, Tag,Image,Button } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 import over1 from "../../../assets/img/over1.svg";
 import over2 from "../../../assets/img/over2.svg";
 import over3 from "../../../assets/img/over3.svg";
-
-
 import snake1 from "../../../assets/img/snake1.svg";
 import snake2 from "../../../assets/img/snake2.svg";
 import snake3 from "../../../assets/img/snake3.svg";
@@ -16,6 +13,7 @@ import useTransactions from "queries/useTransactions";
 import useSessions from "queries/useSessions";
 import useUsersOverview from "queries/useOverviewUsers";
 import { formatter } from "services/ApiService";
+import { useHistory } from "react-router-dom";
 
 
 const rowSelection = {
@@ -30,6 +28,8 @@ const rowSelection = {
 
 const UsersOverview = () => {
   const [search, setSearch] = useState("")
+  const [loading, setLoading] = useState(false);
+
 
   const [selectionType] = useState("checkbox");
   const { data: users } = useUsers();
@@ -49,9 +49,13 @@ const UsersOverview = () => {
     dateJoined: new Date(row.createdAt).toDateString(),
     LatestAcess : new Date(row.updatedAt).toDateString(),
     tags: [row.status],
-    profile_img : row.profile_img 
+    profile_img : row.profile_img,
+    id : row.id,
+
 
   })) : []; 
+  const history = useHistory();
+
   
   const columns = [
     {
@@ -133,17 +137,22 @@ const UsersOverview = () => {
       key: "LatestAcess",
     },
   
-    // {
-    //   title: "Action",
-    //   key: "action",
-    //   render: (text, record) => (
-    //     <span>
-    //       <Button size="small" type="primary">
-    //         View
-    //       </Button>
-    //     </span>
-    //   ),
-    // },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <span>
+          <Button size="small" type="primary"  onClick={() => {
+            history.push({
+              pathname: `/app/users/UserProfile/${record.id}`,
+              state: { page: "Suspended" },
+            });
+          }} >
+            View
+          </Button>
+        </span>
+      ),
+    },
   ];
 
 
@@ -173,8 +182,9 @@ const UsersOverview = () => {
             style={{ width: 300 }}
             value= {search}
             onChange= {(e)=>{
+              setLoading(true)
               setSearch(e.target.value)
-            }}
+              setTimeout(() => setLoading(false), 1500)            }}
           />
         </Col>
 
@@ -196,18 +206,21 @@ const UsersOverview = () => {
                   <img src={over1} alt="over1" />
                 </Col>
 
-                <Col md={24} xs={24} className="pt-2 minus5">
+                <Col md={16} xs={24} className="pt-2 minus5">
                   <p className="top-rated-color1"> Total Revenue</p>
                 </Col>
+
+                    <Col md={8} xs={24} className="d-none1">
+                      <img src={snake1} alt="over1" />
+                    </Col>
+                
 
                 <Col md={24} xs={24} className="minus13">
                   <Row>
                     <Col md={16} xs={24}>
                       <p className="rev-amount"> {formatter.format(totalAmount ).replace(".00", " ")} </p>
                     </Col>
-                    <Col md={8} xs={24} className="d-none1">
-                      <img src={snake1} alt="over1" />
-                    </Col>
+
                   </Row>
                 </Col>
 
@@ -280,6 +293,7 @@ const UsersOverview = () => {
           }}
           columns={columns}
           dataSource={mapUsers}
+          loading={loading}
         />
       </Card>
     </div>

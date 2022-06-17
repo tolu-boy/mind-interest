@@ -10,6 +10,7 @@ import useTherapists from "queries/useTherapists";
 import Chart from "react-apexcharts";
 import { useHistory } from "react-router-dom";
 import { formatter } from "services/ApiService";
+import { StarFilled } from "@ant-design/icons";
 
 const Earning = () => {
   const history = useHistory();
@@ -324,6 +325,15 @@ let transactionStatsArray = transactionStats.map((item)=>{
 
                         <Col md={10} xs={10}>
                           <p className="top-rated-color1">{item.name}</p>
+                          {item.rating ? (
+                              Array(item.rating)
+                                .fill()
+                                .map((v, i) => (
+                                  <StarFilled className="gold-color " />
+                                ))
+                            ) : (
+                              <li className="mntp-2">No rating avaliable</li>
+                            )}
                         </Col>
 
                         <Col md={8} xs={8} className="mb-4">

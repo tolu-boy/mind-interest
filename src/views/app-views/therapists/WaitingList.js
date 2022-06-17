@@ -18,6 +18,9 @@ const rowSelection = {
 const WaitingList = () => {
 
   const [search, setSearch] = useState("")
+  const [loading, setLoading] = useState(false);
+
+  
   const [selectionType] = useState("checkbox");
   const history = useHistory();
   const { data: WaitingTherapits } = useWaitingTherapists(search);
@@ -92,7 +95,7 @@ const WaitingList = () => {
             type="primary"
             onClick={() => {
               history.push({
-                pathname: `/app/therapists/ProfileWaiting/${record.id}`,
+                pathname: `/app/therapists/Profile/${record.id}`,
               });
             }}
           >
@@ -116,7 +119,9 @@ const WaitingList = () => {
             style={{ width: 300 }}
             value= {search}
             onChange= {(e)=>{
+              setLoading(true)
               setSearch(e.target.value)
+              setTimeout(() => setLoading(false), 1500)
             }}
           />
         </Col>
@@ -146,6 +151,7 @@ const WaitingList = () => {
           }}
           columns={columns}
           dataSource={mapWaitingTherapits}
+          loading={loading}
         />
       </Card>
     </div>

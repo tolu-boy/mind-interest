@@ -5,7 +5,7 @@ import { Card, Row, Col, Button,notification,Modal,Image } from "antd";
 import background from "../../../assets/img/background.svg";
 import profile from "../../../assets/img/profile.svg";
 import avatar2 from "../../../assets/img/Avatar.svg";
-import { useLocation  ,useParams} from "react-router-dom";
+import { useLocation  ,useParams,useHistory} from "react-router-dom";
 import useSingleUser from "queries/useSingleUser";
 import ApiService from "services/ApiService";
 
@@ -14,18 +14,15 @@ import ApiService from "services/ApiService";
 const UserProfile = () => {
   const location = useLocation();
   const param = useParams();
+  const history = useHistory();
+
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [visible1, setVisible1] = useState(false);
   const [confirmLoading1, setConfirmLoading1] = useState(false);
   const [userProfile, setUserProfile] = useState(location.state.page)
-
   const { data: SingleUser } = useSingleUser(param.id);
   let user = SingleUser?.data.user ?? "";
-
- 
-
-
 
   const onTab1Change = (key) => {
     setActiveTabKey1(key);
@@ -175,7 +172,6 @@ const UserProfile = () => {
     };
   
     const handleCancel = () => {
-      console.log("Clicked cancel button");
       setVisible(false);
     };
     const openNotificationWithIcon = (type) => {
@@ -208,12 +204,7 @@ const UserProfile = () => {
           });
         };
 
-        // useEffect(() => {
-        
-        // handleOk()
-        // }, [])
-        
-
+      
   const cardHeader1 = (
     <div>
       
@@ -271,7 +262,9 @@ const UserProfile = () => {
         <p> Are you sure you want to suspend this user ?</p>
       </Modal>
       <p className="profile-heading">
-        <span className="pr-2">
+        <span className="pr-2"  onClick={()=>{
+        history.goBack()
+      }}>
           <ArrowLeftOutlined />
         </span>
         User / Profile details
@@ -466,7 +459,7 @@ const UserProfile = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">Android 11</li>
+                    <li className="textEnd">{user.device}</li>
                   </Col>
                 </Row>
               </Card>
