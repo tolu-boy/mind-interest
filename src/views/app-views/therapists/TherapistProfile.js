@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   ArrowLeftOutlined,
   // ArrowUpOutlined,
-  ArrowRightOutlined,
   ExclamationCircleTwoTone
 } from "@ant-design/icons";
 import { Card, Row, Col, Button,notification,Modal,Image } from "antd";
@@ -286,7 +285,6 @@ const TherapistProfile = () => {
                 onTabChange={(key) => {
                   onTab1Change(key);
                 }}
-                actions={[<ArrowLeftOutlined />, <ArrowRightOutlined />]}
               >
                 {contentList[activeTabKey1]}
               </Card>

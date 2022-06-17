@@ -1,6 +1,6 @@
 
 import React, { useState} from "react";
-import { ArrowLeftOutlined, ArrowRightOutlined ,ExclamationCircleTwoTone } from "@ant-design/icons";
+import { ArrowLeftOutlined,ExclamationCircleTwoTone } from "@ant-design/icons";
 import { Card, Row, Col, Button,notification,Modal,Image } from "antd";
 import background from "../../../assets/img/background.svg";
 import profile from "../../../assets/img/profile.svg";
@@ -305,7 +305,6 @@ const UserProfile = () => {
                 onTabChange={(key) => {
                   onTab1Change(key);
                 }}
-                actions={[<ArrowLeftOutlined />, <ArrowRightOutlined />]}
               >
                 {contentList[activeTabKey1]}
               </Card>
