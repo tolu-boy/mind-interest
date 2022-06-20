@@ -1,7 +1,7 @@
 
 import React, { useState} from "react";
 import { ArrowLeftOutlined,ExclamationCircleTwoTone } from "@ant-design/icons";
-import { Card, Row, Col, Button,notification,Modal,Image } from "antd";
+import { Card, Row, Col, Button,notification,Modal,Image,List } from "antd";
 import background from "../../../assets/img/background.svg";
 import profile from "../../../assets/img/profile.svg";
 import avatar2 from "../../../assets/img/Avatar.svg";
@@ -23,6 +23,8 @@ const UserProfile = () => {
   const [userProfile, setUserProfile] = useState(location.state.page)
   const { data: SingleUser } = useSingleUser(param.id);
   let user = SingleUser?.data.user ?? "";
+  let userBooking = SingleUser?.data.bookings ?? "";
+
 
   const onTab1Change = (key) => {
     setActiveTabKey1(key);
@@ -42,7 +44,7 @@ const UserProfile = () => {
   const contentList = {
     Booking: (
       <div>
-        <Row>
+        {/* <Row>
           <Col md={3}>
             <img src={avatar2} alt="products" className="product-img" />
           </Col>
@@ -55,46 +57,47 @@ const UserProfile = () => {
             <li className="sessionBooked"> Session booked</li>
             <li className="sessionTime pt-2"> 30 minutes ago</li>
           </Col>
+        
+        </Row> */}
+        
 
-          <Col md={3}>
-            <img src={avatar2} alt="products" className="product-img" />
-          </Col>
+        <List
+          pagination={{
+            onChange: (page) => {
+              console.log(page);
+            },
+            pageSize: 7,
+          }}
+          dataSource={userBooking}
+          renderItem={(item) => (
+            <List.Item className="border-none">
+              <Col md={3}>
+                <img
+                  src={
+                    !item.user_profile_img || null
+                      ? avatar2
+                      : item.user_profile_img
+                  }
+                  alt="products"
+                  className="product-img"
+                />
+              </Col>
 
-          <Col md={16} className="pt-2">
-            <p> Dr. Festus King</p>
-          </Col>
+              <Col md={17} className="pt-2">
+                <p> {item.therapist}</p>
+              </Col>
 
-          <Col md={5} className="pt-2 mb-3 textEnd">
-            <li className="sessionBooked rev-red"> Session cancelled</li>
-            <li className="sessionTime pt-2"> 12:56 pm</li>
-          </Col>
+              <Col md={4} className="pt-2 mb-3" style={{ padding: 0 }}>
+                <li className="sessionBooked"> {item.status}</li>
+                <li className="sessionTime pt-2">
+                 
+                  {new Date(item.createdAt).toDateString()}
+                </li>
+              </Col>
+            </List.Item>
+          )}
+        />
 
-          <Col md={3}>
-            <img src={avatar2} alt="products" className="product-img" />
-          </Col>
-
-          <Col md={16} className="pt-2">
-            <p> Dr. Festus King</p>
-          </Col>
-
-          <Col md={5} className="pt-2 mb-3 textEnd">
-            <li className="sessionBooked"> Session booked</li>
-            <li className="sessionTime pt-2"> 30 minutes ago</li>
-          </Col>
-
-          <Col md={3}>
-            <img src={avatar2} alt="products" className="product-img" />
-          </Col>
-
-          <Col md={16} className="pt-2">
-            <p> Dr. Festus King</p>
-          </Col>
-
-          <Col md={5} className="pt-2 mb-3 textEnd">
-            <li className="sessionBooked gold-color ">Session Postponed</li>
-            <li className="sessionTime pt-2"> 12 Feb 2022</li>
-          </Col>
-        </Row>
       </div>
     ),
     Activity: (

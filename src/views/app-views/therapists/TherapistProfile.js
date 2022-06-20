@@ -2,25 +2,25 @@ import React, { useState } from "react";
 import {
   ArrowLeftOutlined,
   // ArrowUpOutlined,
-  ExclamationCircleTwoTone
+  ExclamationCircleTwoTone,
 } from "@ant-design/icons";
-import { Card, Row, Col, Button,notification,Modal,Image } from "antd";
+import { Card, Row, Col, Button, notification, Modal, Image, List } from "antd";
 import background from "../../../assets/img/background.svg";
 import profile from "../../../assets/img/profile.svg";
 import avatar2 from "../../../assets/img/Avatar.svg";
-import { useParams,useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import useSingleTherapist from "queries/useSingleTherapist";
 import ApiService from "services/ApiService";
 import { formatter } from "services/ApiService";
 
 const TherapistProfile = () => {
-
   const param = useParams();
   const history = useHistory();
 
-
   const { data: SingleTherapist } = useSingleTherapist(param.id);
   let Therapist = SingleTherapist?.data.therapist ?? "";
+  let booking = SingleTherapist ? SingleTherapist.data.bookings : [];
+
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [visible1, setVisible1] = useState(false);
@@ -29,8 +29,7 @@ const TherapistProfile = () => {
   const [text, setText] = useState("");
   const [message, setMessage] = useState("");
 
-
-
+  // console.log(booking);
 
   const openNotificationWithIcon = (type) => {
     notification[type]({
@@ -40,18 +39,16 @@ const TherapistProfile = () => {
   };
 
   const handleOk = async () => {
-  setConfirmLoading(true);
-  await ApiService.rejectTherapist(param.id)
-  setConfirmLoading(false);
-  setVisible(false)
-  openNotificationWithIcon("success");
+    setConfirmLoading(true);
+    await ApiService.rejectTherapist(param.id);
+    setConfirmLoading(false);
+    setVisible(false);
+    openNotificationWithIcon("success");
   };
 
   const handleCancel = () => {
     setVisible(false);
   };
-
-
 
   const openNotificationWithIcon1 = (type) => {
     notification[type]({
@@ -62,21 +59,15 @@ const TherapistProfile = () => {
 
   const handleOk1 = async () => {
     setConfirmLoading1(true);
-    await ApiService.acceptTherapist(param.id)
+    await ApiService.acceptTherapist(param.id);
     setConfirmLoading1(false);
-    setVisible1(false)
-    openNotificationWithIcon1("success");  
-    };
-  
-    const handleCancel1 = () => {
-      setVisible1(false);
-    };
-   
-  
-   
+    setVisible1(false);
+    openNotificationWithIcon1("success");
+  };
 
-
- 
+  const handleCancel1 = () => {
+    setVisible1(false);
+  };
 
   const onTab1Change = (key) => {
     setActiveTabKey1(key);
@@ -96,7 +87,7 @@ const TherapistProfile = () => {
   const contentList = {
     Booking: (
       <div>
-        <Row>
+        {/* <Row>
           <Col md={3}>
             <img src={avatar2} alt="products" className="product-img" />
           </Col>
@@ -110,45 +101,45 @@ const TherapistProfile = () => {
             <li className="sessionTime pt-2"> 30 minutes ago</li>
           </Col>
 
-          <Col md={3}>
-            <img src={avatar2} alt="products" className="product-img" />
-          </Col>
 
-          <Col md={17} className="pt-2">
-            <p> Dr. Festus King</p>
-          </Col>
+       
+        </Row> */}
+        <List
+          pagination={{
+            onChange: (page) => {
+              console.log(page);
+            },
+            pageSize: 7,
+          }}
+          dataSource={booking}
+          renderItem={(item) => (
+            <List.Item className="border-none">
+              <Col md={3}>
+                <img
+                  src={
+                    !item.user_profile_img || null
+                      ? avatar2
+                      : item.user_profile_img
+                  }
+                  alt="products"
+                  className="product-img"
+                />
+              </Col>
 
-          <Col md={4} className="pt-2 mb-3">
-            <li className="sessionBooked"> Session booked</li>
-            <li className="sessionTime pt-2"> 30 minutes ago</li>
-          </Col>
+              <Col md={17} className="pt-2">
+                <p> {item.therapist}</p>
+              </Col>
 
-          <Col md={3}>
-            <img src={avatar2} alt="products" className="product-img" />
-          </Col>
-
-          <Col md={17} className="pt-2">
-            <p> Dr. Festus King</p>
-          </Col>
-
-          <Col md={4} className="pt-2 mb-3">
-            <li className="sessionBooked"> Session booked</li>
-            <li className="sessionTime pt-2"> 30 minutes ago</li>
-          </Col>
-
-          <Col md={3}>
-            <img src={avatar2} alt="products" className="product-img" />
-          </Col>
-
-          <Col md={17} className="pt-2">
-            <p> Dr. Festus King</p>
-          </Col>
-
-          <Col md={4} className="pt-2 mb-3">
-            <li className="sessionBooked"> Session booked</li>
-            <li className="sessionTime pt-2"> 30 minutes ago</li>
-          </Col>
-        </Row>
+              <Col md={4} className="pt-2 mb-3" style={{ padding: 0 }}>
+                <li className="sessionBooked"> {item.status}</li>
+                <li className="sessionTime pt-2">
+                  {" "}
+                  {new Date(item.createdAt).toDateString()}
+                </li>
+              </Col>
+            </List.Item>
+          )}
+        />
       </div>
     ),
     Activity: <p>content2</p>,
@@ -181,13 +172,9 @@ const TherapistProfile = () => {
     </div>
   );
 
-
-  
   return (
     <div>
-
-
-<Modal
+      <Modal
         title={deleteTitle}
         visible={visible}
         onOk={handleOk}
@@ -207,12 +194,13 @@ const TherapistProfile = () => {
         <p> {text}</p>
       </Modal>
 
-
-      
-      <p className="profile-heading" >
-        <span className="pr-2" onClick={()=>{
-        history.goBack()
-      }}>
+      <p className="profile-heading">
+        <span
+          className="pr-2"
+          onClick={() => {
+            history.goBack();
+          }}
+        >
           <ArrowLeftOutlined />
         </span>
         Therapists / Profile details
@@ -231,19 +219,23 @@ const TherapistProfile = () => {
                   <Col md={5}>
                     {/* <img alt="example" src={profile} className="profilePic" /> */}
                     <Image
-                 src={(!Therapist.profile_img || null )? profile : Therapist.profile_img} 
-                 width={50}   
-                 height={50}
-                 preview={false}   
-                 alt="products" className="product-img" />
+                      src={
+                        !Therapist.profile_img || null
+                          ? profile
+                          : Therapist.profile_img
+                      }
+                      width={50}
+                      height={50}
+                      preview={false}
+                      alt="products"
+                      className="product-img"
+                    />
                   </Col>
 
                   <Col md={15}>
                     <li className="proileName"> {Therapist.name}</li>
                     <li className="proileWork pt-2 "> {Therapist.specialty}</li>
                   </Col>
-
-                  
                 </Row>
               </Card>
             </Col>
@@ -270,13 +262,12 @@ const TherapistProfile = () => {
                     <p className="PostponedSessions">Income</p>
                     <li className="IncomeText">{Therapist.income}</li>
                     <li className="incomePercent mt-2">
-                        {/* <ArrowUpOutlined /> 37.8% */}
+                      {/* <ArrowUpOutlined /> 37.8% */}
                     </li>
                   </Col>
                 </Row>
               </Card>
             </Col>
-
 
             <Col md={24}>
               <Card
@@ -294,71 +285,73 @@ const TherapistProfile = () => {
 
         <Col md={10}>
           <Row gutter={16}>
-            
-
-
-          {Therapist.approval_status === 1 && (
-            <Col md={24}>
-              <Button type="danger" block onClick={()=>{
-               setVisible(true)
-               setHeader("Suspend Therapist")
-               setText("Are you sure you want to Suspend this Therapist")
-                setMessage("The Therapist has been suspended")
-
-              }}>
-                Suspend
-              </Button>
-            </Col>
-          )}
-
+            {Therapist.approval_status === 1 && (
+              <Col md={24}>
+                <Button
+                  type="danger"
+                  block
+                  onClick={() => {
+                    setVisible(true);
+                    setHeader("Suspend Therapist");
+                    setText("Are you sure you want to Suspend this Therapist");
+                    setMessage("The Therapist has been suspended");
+                  }}
+                >
+                  Suspend
+                </Button>
+              </Col>
+            )}
 
             {Therapist.approval_status === 2 && (
-            <Col md={24}>
-              <Button className="buttonAccept" block onClick={()=>{
-               setVisible1(true)
-               setHeader("Restore Therapist")
-               setText("Are you sure you want to Restore this Therapist")
-               setMessage("The Therapist has been Restored")
+              <Col md={24}>
+                <Button
+                  className="buttonAccept"
+                  block
+                  onClick={() => {
+                    setVisible1(true);
+                    setHeader("Restore Therapist");
+                    setText("Are you sure you want to Restore this Therapist");
+                    setMessage("The Therapist has been Restored");
+                  }}
+                >
+                  Restore
+                </Button>
+              </Col>
+            )}
 
-              }}>
-                Restore
-              </Button>
-            </Col>
-          )}
+            {Therapist.approval_status === 0 && (
+              <>
+                <Col md={12}>
+                  <Button
+                    block
+                    className="buttonReject"
+                    onClick={() => {
+                      setVisible(true);
+                      setHeader("Reject Therapist");
+                      setText("Are you sure you want to Reject this Therapist");
+                      setMessage("The Therapist has been Rejected");
+                    }}
+                  >
+                    Reject
+                  </Button>
+                </Col>
 
-
-         
-
-
-          {Therapist.approval_status === 0 && (
-           <>
-           <Col md={12}>
-              <Button block className="buttonReject" onClick={()=>{
-                               setVisible(true)
-                               setHeader("Reject Therapist")
-                               setText("Are you sure you want to Reject this Therapist")
-                               setMessage("The Therapist has been Rejected")
-
-              }} >
-                Reject
-              </Button>
-            </Col>
-
-            <Col md={12}>
-              <Button block className="buttonAccept" onClick={()=>{
-                               setVisible1(true)
-                               setHeader("Accept Therapist")
-                               setText("Are you sure you want to Accept this Therapist")
-                               setMessage("The Therapist has been Accepted")
-
-
-              }}>
-                Accept
-              </Button>
-            </Col>
-           </>
-          )}
-
+                <Col md={12}>
+                  <Button
+                    block
+                    className="buttonAccept"
+                    onClick={() => {
+                      setVisible1(true);
+                      setHeader("Accept Therapist");
+                      setText("Are you sure you want to Accept this Therapist");
+                      setMessage("The Therapist has been Accepted");
+                    }}
+                  >
+                    Accept
+                  </Button>
+                </Col>
+              </>
+            )}
 
             <Col md={24} className="pt-4">
               <Card title="Profile details">
@@ -368,7 +361,12 @@ const TherapistProfile = () => {
                   </Col>
 
                   <Col md={4} className="pb-4">
-                    <li className="textEnd"> {formatter.format(Therapist.hourly_rate ).replace('.00'," ")}</li>
+                    <li className="textEnd">
+                      {" "}
+                      {formatter
+                        .format(Therapist.hourly_rate)
+                        .replace(".00", " ")}
+                    </li>
                   </Col>
 
                   <Col md={20}>
@@ -400,7 +398,9 @@ const TherapistProfile = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">{Therapist.educational_qualification}</li>
+                    <li className="textEnd">
+                      {Therapist.educational_qualification}
+                    </li>
                   </Col>
 
                   <Col md={14}>
@@ -408,7 +408,11 @@ const TherapistProfile = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">{ new Date(Therapist.date_of_first_registration ).toDateString()}</li>
+                    <li className="textEnd">
+                      {new Date(
+                        Therapist.date_of_first_registration
+                      ).toDateString()}
+                    </li>
                   </Col>
 
                   <Col md={14}>
@@ -432,9 +436,7 @@ const TherapistProfile = () => {
                   </Col>
 
                   <Col md={12} className="pb-4">
-                    <li className="textEnd">
-                    {Therapist.address}
-                    </li>
+                    <li className="textEnd">{Therapist.address}</li>
                   </Col>
 
                   <Col md={24} className="pb-4">
@@ -459,22 +461,20 @@ const TherapistProfile = () => {
 
                   {Therapist.approval_status === 0 && (
                     <Col md={10} className="pb-4">
-                    <li className="textEnd "> Waiting </li>
-                  </Col>
+                      <li className="textEnd "> Waiting </li>
+                    </Col>
                   )}
-                 
 
                   {Therapist.approval_status === 1 && (
                     <Col md={10} className="pb-4">
-                    <li className="textEnd rev-green">Active</li>
-                  </Col>
+                      <li className="textEnd rev-green">Active</li>
+                    </Col>
                   )}
-
 
                   {Therapist.approval_status === 2 && (
                     <Col md={10} className="pb-4">
-                    <li className="textEnd rev-red">Suspended</li>
-                  </Col>
+                      <li className="textEnd rev-red">Suspended</li>
+                    </Col>
                   )}
 
                   <Col md={14}>
@@ -482,7 +482,11 @@ const TherapistProfile = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">{ new Date(Therapist.date_of_first_registration ).toDateString()}</li>
+                    <li className="textEnd">
+                      {new Date(
+                        Therapist.date_of_first_registration
+                      ).toDateString()}
+                    </li>
                   </Col>
 
                   <Col md={24} className="pb-4">
@@ -492,8 +496,6 @@ const TherapistProfile = () => {
                   <Col md={24} className="pb-4">
                     <h4> Activity and Device</h4>
                   </Col>
-
-                 
 
                   <Col md={14}>
                     <li>Sessions:</li>
