@@ -1,18 +1,18 @@
-
-import React, { useState} from "react";
-import { ArrowLeftOutlined,ExclamationCircleTwoTone } from "@ant-design/icons";
-import { Card, Row, Col, Button,notification,Modal,Image,List } from "antd";
+import React, { useState } from "react";
+import { ArrowLeftOutlined, ExclamationCircleTwoTone } from "@ant-design/icons";
+import { Card, Row, Col, Button, notification, Modal, Image, List } from "antd";
 import background from "../../../assets/img/background.svg";
 import profile from "../../../assets/img/profile.svg";
 import avatar2 from "../../../assets/img/Avatar.svg";
-import { useLocation  ,useParams,useHistory} from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import useSingleUser from "queries/useSingleUser";
+import useUserReviews from "queries/useUserReviews";
 import ApiService from "services/ApiService";
-
-
+import { useMutation, useQueryClient } from "react-query";
+import { StarFilled } from "@ant-design/icons";
 
 const UserProfile = () => {
-  const location = useLocation();
+  // const location = useLocation();
   const param = useParams();
   const history = useHistory();
 
@@ -20,11 +20,27 @@ const UserProfile = () => {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [visible1, setVisible1] = useState(false);
   const [confirmLoading1, setConfirmLoading1] = useState(false);
-  const [userProfile, setUserProfile] = useState(location.state.page)
+  // const [userProfile, setUserProfile] = useState(location.state.page)
   const { data: SingleUser } = useSingleUser(param.id);
+  const { data: UserReviews } = useUserReviews(param.id);
+
   let user = SingleUser?.data.user ?? "";
   let userBooking = SingleUser?.data.bookings ?? "";
+  let reviews = UserReviews ? UserReviews.data.reviews : [];
 
+  const queryClient = useQueryClient();
+
+  const suspendUsersMutation = useMutation(ApiService.SuspendUsers, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("SingleUser");
+    },
+  });
+
+  const activateUsersMutation = useMutation(ApiService.ActivateUsers, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("SingleUser");
+    },
+  });
 
   const onTab1Change = (key) => {
     setActiveTabKey1(key);
@@ -36,8 +52,8 @@ const UserProfile = () => {
       tab: "Booking",
     },
     {
-      key: "Activity",
-      tab: "Activity",
+      key: "Reviews",
+      tab: "Reviews",
     },
   ];
 
@@ -59,13 +75,9 @@ const UserProfile = () => {
           </Col>
         
         </Row> */}
-        
 
         <List
           pagination={{
-            onChange: (page) => {
-              console.log(page);
-            },
             pageSize: 7,
           }}
           dataSource={userBooking}
@@ -90,74 +102,39 @@ const UserProfile = () => {
               <Col md={4} className="pt-2 mb-3" style={{ padding: 0 }}>
                 <li className="sessionBooked"> {item.status}</li>
                 <li className="sessionTime pt-2">
-                 
                   {new Date(item.createdAt).toDateString()}
                 </li>
               </Col>
             </List.Item>
           )}
         />
-
       </div>
     ),
-    Activity: (
+    Reviews: (
       <div>
-        <Row>
-          <Col md={20}>
-            <li>
-              <span className="sessionTime top-rated-color1"> Emeka</span>{" "}
-              failed login attempt, verification code incorrect
-            </li>
-          </Col>
+        <List
+          pagination={{
+            pageSize: 7,
+          }}
+          dataSource={reviews}
+          renderItem={(item) => (
+            <List.Item className="border-none">
+              <Col md={20} className="pt-2">
+                <p> {item.review === null ? "No review yet" : item.review}</p>
+              </Col>
 
-          <Col md={4} className=" mb-5">
-            <li className="sessionTime  "> 30 minutes ago</li>
-          </Col>
-
-          <Col md={20}>
-            <li>
-              <span className="sessionTime top-rated-color1"> Emeka</span>{" "}
-              failed login attempt, verification code incorrect
-            </li>
-          </Col>
-
-          <Col md={4} className=" mb-5">
-            <li className="sessionTime  "> 30 minutes ago</li>
-          </Col>
-
-          <Col md={20}>
-            <li>
-              <span className="sessionTime top-rated-color1"> Emeka</span>{" "}
-              failed card payment
-            </li>
-          </Col>
-
-          <Col md={4} className=" mb-5">
-            <li className="sessionTime  "> 30 minutes ago</li>
-          </Col>
-
-          <Col md={20}>
-            <li>
-              <span className="sessionTime top-rated-color1"> Emeka</span>{" "}
-              received a notification
-            </li>
-          </Col>
-
-          <Col md={4} className=" mb-5">
-            <li className="sessionTime  "> 13 Feb 2022</li>
-          </Col>
-
-          <Col md={20}>
-            <li>
-              <span className="sessionTime top-rated-color1"> Emeka</span>{" "}
-              received a notification
-            </li>
-          </Col>
-
-          <Col md={4} className=" mb-5">
-            <li className="sessionTime  "> 13 Feb 2022</li>
-          </Col>
-        </Row>
+              <Col md={4} className="pt-2">
+                {item.rating ? (
+                  Array(item.rating)
+                    .fill()
+                    .map((v, i) => <StarFilled className="gold-color " />)
+                ) : (
+                  <li className="mntp-2">No rating avaliable</li>
+                )}
+              </Col>
+            </List.Item>
+          )}
+        />
       </div>
     ),
   };
@@ -166,53 +143,50 @@ const UserProfile = () => {
 
   const handleOk = async () => {
     setConfirmLoading(true);
-    await ApiService.SuspendUsers(param.id)
+    // await ApiService.SuspendUsers(param.id)
+    await suspendUsersMutation.mutateAsync(param.id);
+
     setConfirmLoading(false);
-    setVisible(false)
+    setVisible(false);
     openNotificationWithIcon("success");
-    setUserProfile('Suspended')
-    location.state.page = 'Suspended'
-    };
-  
-    const handleCancel = () => {
-      setVisible(false);
-    };
-    const openNotificationWithIcon = (type) => {
-      notification[type]({
-        message: "Suspend User",
-        description: `The user has been suspended`,
-      });
-    };
+    // setUserProfile('Suspended')
+    // location.state.page = 'Suspended'
+  };
 
+  const handleCancel = () => {
+    setVisible(false);
+  };
+  const openNotificationWithIcon = (type) => {
+    notification[type]({
+      message: "Suspend User",
+      description: `The user has been suspended`,
+    });
+  };
 
-    const handleOk1 = async () => {
-        setConfirmLoading1(true);
-        await ApiService.ActivateUsers(param.id)
-        setConfirmLoading1(false);
-        setVisible1(false)
-        openNotificationWithIcon1("success");
-        setUserProfile('Active')
-        location.state.page = 'Active'
+  const handleOk1 = async () => {
+    setConfirmLoading1(true);
+    // await ApiService.ActivateUsers(param.id)
+    await activateUsersMutation.mutateAsync(param.id);
 
-        };
-      
-        const handleCancel1 = () => {
-          console.log("Clicked cancel button");
-          setVisible1(false);
-        };
-        const openNotificationWithIcon1 = (type) => {
-          notification[type]({
-            message: "Activate User",
-            description: `The user has been activated`,
-          });
-        };
+    setConfirmLoading1(false);
+    setVisible1(false);
+    openNotificationWithIcon1("success");
+    // setUserProfile('Active')
+    // location.state.page = 'Active'
+  };
 
-      
-  const cardHeader1 = (
-    <div>
-      
-    </div>
-  );
+  const handleCancel1 = () => {
+    console.log("Clicked cancel button");
+    setVisible1(false);
+  };
+  const openNotificationWithIcon1 = (type) => {
+    notification[type]({
+      message: "Activate User",
+      description: `The user has been activated`,
+    });
+  };
+
+  const cardHeader1 = <div></div>;
 
   const deleteTitle = (
     <div>
@@ -240,12 +214,9 @@ const UserProfile = () => {
     </div>
   );
 
-
-  
-
   return (
     <div>
-    <Modal
+      <Modal
         title={deleteTitle}
         visible={visible}
         onOk={handleOk}
@@ -265,9 +236,12 @@ const UserProfile = () => {
         <p> Are you sure you want to suspend this user ?</p>
       </Modal>
       <p className="profile-heading">
-        <span className="pr-2"  onClick={()=>{
-        history.goBack()
-      }}>
+        <span
+          className="pr-2"
+          onClick={() => {
+            history.goBack();
+          }}
+        >
           <ArrowLeftOutlined />
         </span>
         User / Profile details
@@ -285,17 +259,19 @@ const UserProfile = () => {
                 <Row>
                   <Col md={5}>
                     <Image
-                 src={(!user.profile_img || null )? profile : user.profile_img} 
-                 width={50}   
-                 preview={false}   
-                 alt="products" className="product-img" />
+                      src={
+                        !user.profile_img || null ? profile : user.profile_img
+                      }
+                      width={50}
+                      preview={false}
+                      alt="products"
+                      className="product-img"
+                    />
                   </Col>
 
                   <Col md={15}>
                     <li className="proileName">{user.name}</li>
                   </Col>
-
-                 
                 </Row>
               </Card>
             </Col>
@@ -317,48 +293,57 @@ const UserProfile = () => {
 
         <Col md={10}>
           <Row>
-          {user.status === 0 && (
-            <Col md={24}>
-              <Button type="danger" block onClick={()=>{
-               setVisible(true)
+            {user.status === 0 && (
+              <Col md={24}>
+                <Button
+                  type="danger"
+                  block
+                  onClick={() => {
+                    setVisible(true);
+                  }}
+                >
+                  Suspend
+                </Button>
+              </Col>
+            )}
 
-              }}>
-                Suspend
-              </Button>
-            </Col>
-          )}
-
-          {user.status === 1 && (
-            <Col md={24}>
-              <Button className="buttonAccept" block onClick={()=>{
-                setVisible1(true)
-              }}>
-                Restore
-              </Button>
-            </Col>
-          )}
-            
+            {user.status === 1 && (
+              <Col md={24}>
+                <Button
+                  className="buttonAccept"
+                  block
+                  onClick={() => {
+                    setVisible1(true);
+                  }}
+                >
+                  Restore
+                </Button>
+              </Col>
+            )}
 
             <Col md={24} className="pt-4">
               <Card title="Profile details">
                 <Row>
-            
                   <Col md={20}>
                     <li>Gender:</li>
                   </Col>
 
                   <Col md={4} className="pb-4">
-                    <li className="textEnd"> {user.gender ? user.gender : 'Male'}</li>
+                    <li className="textEnd">
+                      {" "}
+                      {user.gender ? user.gender : "Male"}
+                    </li>
                   </Col>
-
-                
 
                   <Col md={14}>
                     <li>Phone number:</li>
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd"> {user.phone ? user.phone : '09088656567'}</li>
+                    <li className="textEnd">
+                      {" "}
+                      {user.phone ? user.phone : "09088656567"}
+                    </li>
                   </Col>
 
                   <Col md={14}>
@@ -367,7 +352,9 @@ const UserProfile = () => {
 
                   <Col md={10} className="pb-4">
                     <li className="textEnd">
-                    {user.relationship_status ? user.relationship_status : 'Single'}
+                      {user.relationship_status
+                        ? user.relationship_status
+                        : "Single"}
                     </li>
                   </Col>
 
@@ -376,7 +363,12 @@ const UserProfile = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd"> {user.parental_status ? user.parental_status : 'None'} </li>
+                    <li className="textEnd">
+                      {" "}
+                      {user.parental_status
+                        ? user.parental_status
+                        : "None"}{" "}
+                    </li>
                   </Col>
 
                   <Col md={14}>
@@ -384,7 +376,10 @@ const UserProfile = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd"> {user.age_range ? user.age_range : '24 - 34'}</li>
+                    <li className="textEnd">
+                      {" "}
+                      {user.age_range ? user.age_range : "24 - 34"}
+                    </li>
                   </Col>
 
                   <Col md={14}>
@@ -392,10 +387,11 @@ const UserProfile = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd"> {user.need_to_talk? user.need_to_talk : 'Pretty often'}</li>
+                    <li className="textEnd">
+                      {" "}
+                      {user.need_to_talk ? user.need_to_talk : "Pretty often"}
+                    </li>
                   </Col>
-
-                 
 
                   <Col md={24} className="pb-4">
                     <hr className="border1" />
@@ -416,19 +412,17 @@ const UserProfile = () => {
                   <Col md={14}>
                     <li>Status:</li>
                   </Col>
-                  
+
                   {user.status === 0 && (
                     <Col md={10} className="pb-4">
-                    <li className="textEnd rev-green">{userProfile}</li>
-                  </Col>
+                      <li className="textEnd rev-green"> Active</li>
+                    </Col>
                   )}
-                 
 
                   {user.status === 1 && (
                     <Col md={10} className="pb-4">
-                    <li className="textEnd rev-red">{userProfile}</li>
-                  </Col>
-                  
+                      <li className="textEnd rev-red"> Suspended</li>
+                    </Col>
                   )}
 
                   <Col md={14}>
@@ -436,7 +430,9 @@ const UserProfile = () => {
                   </Col>
 
                   <Col md={10} className="pb-4">
-                    <li className="textEnd">{new Date(user.createdAt).toDateString()}</li>
+                    <li className="textEnd">
+                      {new Date(user.createdAt).toDateString()}
+                    </li>
                   </Col>
 
                   <Col md={24} className="pb-4">
@@ -447,7 +443,6 @@ const UserProfile = () => {
                     <h4> Activity and Device</h4>
                   </Col>
 
-                  
                   <Col md={14}>
                     <li>Sessions:</li>
                   </Col>

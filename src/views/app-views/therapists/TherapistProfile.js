@@ -10,16 +10,25 @@ import profile from "../../../assets/img/profile.svg";
 import avatar2 from "../../../assets/img/Avatar.svg";
 import { useParams, useHistory } from "react-router-dom";
 import useSingleTherapist from "queries/useSingleTherapist";
+import useTherapistReviews from "queries/useTherapistReview";
 import ApiService from "services/ApiService";
 import { formatter } from "services/ApiService";
+import { StarFilled } from "@ant-design/icons";
+
+// import useRejectTherapist from "mutations/useRejectTherapist";
+import { useMutation, useQueryClient } from "react-query";
 
 const TherapistProfile = () => {
   const param = useParams();
   const history = useHistory();
 
   const { data: SingleTherapist } = useSingleTherapist(param.id);
-  let Therapist = SingleTherapist?.data.therapist ?? "";
+  const { data: TherapistReviews } = useTherapistReviews(param.id);
+
+  // let Therapist = SingleTherapist?.data.therapist ?? "";
+  let Therapist = SingleTherapist ? SingleTherapist.data.therapist : [];
   let booking = SingleTherapist ? SingleTherapist.data.bookings : [];
+  let reviews = TherapistReviews ? TherapistReviews.data.reviews : [];
 
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -28,6 +37,19 @@ const TherapistProfile = () => {
   const [header, setHeader] = useState("");
   const [text, setText] = useState("");
   const [message, setMessage] = useState("");
+  const queryClient = useQueryClient();
+
+  const rejectTherapistMutation = useMutation(ApiService.rejectTherapist, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("SingleTherapist");
+    },
+  });
+
+  const acceptTherapistMutation = useMutation(ApiService.acceptTherapist, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("SingleTherapist");
+    },
+  });
 
   // console.log(booking);
 
@@ -40,7 +62,10 @@ const TherapistProfile = () => {
 
   const handleOk = async () => {
     setConfirmLoading(true);
-    await ApiService.rejectTherapist(param.id);
+    // await ApiService.rejectTherapist(param.id);
+    // rejectTherapistMutation.mutate(param.id)
+    await rejectTherapistMutation.mutateAsync(param.id);
+
     setConfirmLoading(false);
     setVisible(false);
     openNotificationWithIcon("success");
@@ -59,7 +84,9 @@ const TherapistProfile = () => {
 
   const handleOk1 = async () => {
     setConfirmLoading1(true);
-    await ApiService.acceptTherapist(param.id);
+    // await ApiService.acceptTherapist(param.id);
+    // await acceptTherapistMutation.mutate(param.id)
+    await acceptTherapistMutation.mutateAsync(param.id);
     setConfirmLoading1(false);
     setVisible1(false);
     openNotificationWithIcon1("success");
@@ -79,8 +106,8 @@ const TherapistProfile = () => {
       tab: "Booking",
     },
     {
-      key: "Activity",
-      tab: "Activity",
+      key: "Reviews",
+      tab: "Reviews",
     },
   ];
 
@@ -106,9 +133,6 @@ const TherapistProfile = () => {
         </Row> */}
         <List
           pagination={{
-            onChange: (page) => {
-              console.log(page);
-            },
             pageSize: 7,
           }}
           dataSource={booking}
@@ -142,7 +166,33 @@ const TherapistProfile = () => {
         />
       </div>
     ),
-    Activity: <p>content2</p>,
+    Reviews: (
+      <div>
+        <List
+          pagination={{
+            pageSize: 7,
+          }}
+          dataSource={reviews}
+          renderItem={(item) => (
+            <List.Item className="border-none">
+              <Col md={20} className="pt-2">
+                <p> {item.review === null ? "No review yet" : item.review}</p>
+              </Col>
+
+              <Col md={4} className="pt-2">
+                {item.rating ? (
+                  Array(item.rating)
+                    .fill()
+                    .map((v, i) => <StarFilled className="gold-color " />)
+                ) : (
+                  <li className="mntp-2">No rating avaliable</li>
+                )}
+              </Col>
+            </List.Item>
+          )}
+        />
+      </div>
+    ),
   };
 
   const [activeTabKey1, setActiveTabKey1] = useState("Booking");
@@ -181,7 +231,7 @@ const TherapistProfile = () => {
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
       >
-        <p> {text}</p>
+        <p> {text} </p>
       </Modal>
 
       <Modal
@@ -191,7 +241,7 @@ const TherapistProfile = () => {
         confirmLoading={confirmLoading1}
         onCancel={handleCancel1}
       >
-        <p> {text}</p>
+        <p> {text} </p>
       </Modal>
 
       <p className="profile-heading">

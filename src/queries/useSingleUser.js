@@ -8,6 +8,6 @@ const getSingleUser = async (id) => {
 
 export default function useSingleUser (id) {
 //   return useQuery("SingleTherapist",  getSingleTherapist(id));
-  return useQuery(['SingleTherapist', id] ,() =>getSingleUser(id))
+  return useQuery(['SingleUser', id] ,() =>getSingleUser(id))
 
 }
