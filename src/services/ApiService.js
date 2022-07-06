@@ -1,6 +1,8 @@
 import  globalAxios from 'axios'
+import { useStore } from '../zustand';
 
 const ApiService = {}
+
 
 
 export const axios = globalAxios.create({
@@ -10,6 +12,27 @@ export const axios = globalAxios.create({
       }
     }
   )
+
+  axios.interceptors.response.use(
+    response => response,
+    error => {
+      const {status} = error.response;
+      if (status === 401) {
+        console.log('ppppp 2000');
+        localStorage.setItem("auth",  false );
+        localStorage.setItem("token",  null );
+        localStorage.setItem("ip",  null );
+      useStore.setState({ auth: false })
+
+
+
+      }
+     return Promise.reject(error);
+   }
+  );
+
+
+
 
 
   export const formatter = Intl.NumberFormat("en-NG", {
@@ -37,6 +60,7 @@ export const axios = globalAxios.create({
     return response
     
   };
+ 
 
   ApiService.ActivateUsers = async (id) => {
     const response = await axios.patch( `/activate-user/${id}`);
@@ -46,3 +70,5 @@ export const axios = globalAxios.create({
 
   
 export default ApiService
+
+

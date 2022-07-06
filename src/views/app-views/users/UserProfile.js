@@ -100,10 +100,10 @@ const UserProfile = () => {
               </Col>
 
               <Col md={4} className="pt-2 mb-3" style={{ padding: 0 }}>
-                <li className="sessionBooked"> {item.status}</li>
-                <li className="sessionTime pt-2">
+                <div className="sessionBooked"> {item.status}</div>
+                <div className="sessionTime pt-2">
                   {new Date(item.createdAt).toDateString()}
-                </li>
+                </div>
               </Col>
             </List.Item>
           )}
@@ -129,7 +129,7 @@ const UserProfile = () => {
                     .fill()
                     .map((v, i) => <StarFilled className="gold-color " />)
                 ) : (
-                  <li className="mntp-2">No rating avaliable</li>
+                  <div className="mntp-2">No rating avaliable</div>
                 )}
               </Col>
             </List.Item>

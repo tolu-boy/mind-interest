@@ -72,7 +72,7 @@ export const NavProfile = ({signOut}) => {
           }}>
             <span>
               <LogoutOutlined />
-              <span className="font-weight-normal">Signs Out</span>
+              <span className="font-weight-normal">Sign Out</span>
             </span>
           </Menu.Item>
         </Menu>
