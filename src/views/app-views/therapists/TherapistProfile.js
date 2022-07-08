@@ -64,7 +64,7 @@ const TherapistProfile = () => {
     setConfirmLoading(true);
     // await ApiService.rejectTherapist(param.id);
     // rejectTherapistMutation.mutate(param.id)
-    await rejectTherapistMutation.mutateAsync(param.id);
+    await rejectTherapistMutation.mutateAsync(param.id,{});
 
     setConfirmLoading(false);
     setVisible(false);

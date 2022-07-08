@@ -6,9 +6,9 @@ import Views from './views';
 import { Route, Switch } from 'react-router-dom';
 import { ThemeSwitcherProvider } from "react-css-theme-switcher";
 import { THEME_CONFIG } from './configs/AppConfig';
-import {QueryClientProvider,QueryClient} from 'react-query'
+import {QueryClientProvider} from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
-
+import queryClient from 'utils/queryClient';
 
 const themes = {
   dark: `${process.env.PUBLIC_URL}/css/dark-theme.css`,
@@ -18,14 +18,9 @@ const themes = {
  
 
 
-const queryClient = new QueryClient()
+// const queryClient = new QueryClient()
 
 function App() {
-
-   
-  
-   
-
   return (
     <div className="App">
       <Provider store={store}>

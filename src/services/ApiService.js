@@ -1,5 +1,6 @@
 import  globalAxios from 'axios'
 import { useStore } from '../zustand';
+import queryClient from 'utils/queryClient';
 
 const ApiService = {}
 
@@ -18,18 +19,16 @@ export const axios = globalAxios.create({
     error => {
       const {status} = error.response;
       if (status === 401) {
-        console.log('ppppp 2000');
         localStorage.setItem("auth",  false );
         localStorage.setItem("token",  null );
         localStorage.setItem("ip",  null );
-      useStore.setState({ auth: false })
-
-
-
+        useStore.setState({ auth: false })
+        queryClient.clear()
       }
      return Promise.reject(error);
    }
   );
+
 
 
 
