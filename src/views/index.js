@@ -66,7 +66,7 @@ export const Views = (props) => {
 
         </Switch>
       </ConfigProvider>
-    </IntlProvider>
+     </IntlProvider>
   )
 }
 

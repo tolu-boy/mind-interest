@@ -75,7 +75,7 @@ const Dashboard = () => {
     series: [
       {
         name: "Active Therapists",
-        data: valueArray,
+        data: valueArray.slice(0,8),
       },
     ],
 
@@ -100,13 +100,14 @@ const Dashboard = () => {
   };
 
   const history = useHistory();
-
   return (
     <div className="dashboard">
       <h3 className="dash-heading"> Dashboard</h3>
 
       <div>
-        <Card bordered={false} className="pb-3">
+        <Card 
+        // bordered={false}
+         className="pb-3">
           <Row>
             <Col xs={24} sm={12} md={8} lg={8} xl={8} className="Card-border">
               <div>
@@ -188,17 +189,18 @@ const Dashboard = () => {
           <Col md={8} xs={24} className="p-left2">
             <Card
               title={FilterByNameInput}
-              bordered={true}
+              // bordered={true}
               className="side-card"
             >
-              <Row>
+              <Row >
                 {therapists ? (
                   <>
                     {therapists.data.therapists
                       .sort((a, b) => (b.income > a.income ? 1 : -1))
-                      .map((item) => (
-                        <>
-                          <Col md={6} xs={6}>
+                      .map((item,i) => (
+                        <Col md={24}  key={i}>
+                        <Row >
+                          <Col md={6} xs={6} >
                             <Image
                               src={
                                 !item.profile_img || null
@@ -219,21 +221,22 @@ const Dashboard = () => {
                               Array(item.rating)
                                 .fill()
                                 .map((v, i) => (
-                                  <StarFilled className="gold-color " />
+                                  <StarFilled className="gold-color " key={i} />
                                 ))
                             ) : (
-                              <li className="mntp-2">No rating avaliable</li>
+                              <li className="mntp-2" key={i} >No rating avaliable</li>
                             )}
                           </Col>
 
-                          <Col md={8} xs={8} className="pb-5">
+                          <Col md={8} xs={8} className="pb-4">
                             <p className="top-rated-color2 text-center">
                               {formatter
                                 .format(item.income)
                                 .replace(".00", " ")}
                             </p>
                           </Col>
-                        </>
+                          </Row>
+                        </Col>
                       ))
                       .slice(0, 3)
                       }
@@ -267,8 +270,8 @@ const Dashboard = () => {
                     {sessions?.data.sessions
                       .slice(0, 10)
                       .reverse()
-                      .map((item) => (
-                        <Col span={12} className="pb-3">
+                      .map((item,i) => (
+                        <Col span={12} className="pb-3"   key={i}  >
                           <Row>
                             <Col span={4}>
                               <Image

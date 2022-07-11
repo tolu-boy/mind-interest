@@ -11,7 +11,7 @@ const rejectTherapists = async (id) => {
 
 
 
-  export default function useRejectTherapist(value) {
+  export default function useTherapistReject(value) {
     return useMutation(rejectTherapists(value));
   
   }

@@ -15,7 +15,7 @@ export const MobileNav = ({
   onMobileNavToggle,
   routeInfo,
   hideGroupTitle,
-  localization = true,
+  localization = false,
 }) => {
   const props = { sideNavTheme, routeInfo, hideGroupTitle, localization };
 

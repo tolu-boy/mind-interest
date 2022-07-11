@@ -160,7 +160,7 @@ let transactionStatsArray = transactionStats.map((item)=>{
     series: [
       {
         name: "Active Therapists",
-        data: transactionValueArray,
+        data: transactionValueArray.slice(0,8),
       },
   
     ],

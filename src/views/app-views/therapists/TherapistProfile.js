@@ -14,7 +14,7 @@ import useTherapistReviews from "queries/useTherapistReview";
 import ApiService from "services/ApiService";
 import { formatter } from "services/ApiService";
 import { StarFilled } from "@ant-design/icons";
-
+// import useTherapistReject from "mutations/useTherapistReject";
 // import useRejectTherapist from "mutations/useRejectTherapist";
 import { useMutation, useQueryClient } from "react-query";
 
@@ -24,7 +24,7 @@ const TherapistProfile = () => {
 
   const { data: SingleTherapist } = useSingleTherapist(param.id);
   const { data: TherapistReviews } = useTherapistReviews(param.id);
-
+  // const  TherapistReject =  useTherapistReject(param.id)
   // let Therapist = SingleTherapist?.data.therapist ?? "";
   let Therapist = SingleTherapist ? SingleTherapist.data.therapist : [];
   let booking = SingleTherapist ? SingleTherapist.data.bookings : [];
@@ -64,8 +64,11 @@ const TherapistProfile = () => {
     setConfirmLoading(true);
     // await ApiService.rejectTherapist(param.id);
     // rejectTherapistMutation.mutate(param.id)
-    await rejectTherapistMutation.mutateAsync(param.id,{});
-
+    await rejectTherapistMutation.mutateAsync(param.id);
+    // await  TherapistReject.mutateAsync(param.id,{ onSuccess: () => {
+    //     queryClient.invalidateQueries("SingleTherapist");
+    //     console.log('llll');
+    //   }})
     setConfirmLoading(false);
     setVisible(false);
     openNotificationWithIcon("success");
